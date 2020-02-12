@@ -1,0 +1,6 @@
+projects:
+  app:
+    schemaPath: schema.graphql
+    extensions:
+      endpoints:
+        default: 'https://dev-waqt.appointy.com/graphql'

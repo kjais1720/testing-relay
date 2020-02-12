@@ -1,0 +1,9178 @@
+# source: https://dev-waqt.appointy.com/graphql
+# timestamp: Wed Feb 12 2020 13:47:30 GMT+0530 (India Standard Time)
+
+type Acceptance {
+  acceptedDate: Timestamp
+  id: ID!
+  issuerName: String!
+  place: String!
+  policyId: String!
+  signerData: SignerData
+  sourceId: String!
+  version: Int!
+}
+
+input AcceptanceInput {
+  acceptedDate: Timestamp
+  id: ID
+  issuerName: String
+  place: String
+  policyId: String
+  signerData: SignerDataInput
+  sourceId: String
+  version: Int
+}
+
+type AcceptanceNode {
+  cursor: String!
+  node: Acceptance
+}
+
+type AcceptancePolicy {
+  contentUrl: String!
+  policyId: String!
+  sourceId: String!
+  version: Int!
+}
+
+enum Action {
+  """MERCHANT_LEVEL"""
+  MERCHANT_LEVEL
+
+  """PLATFORM_LEVEL"""
+  PLATFORM_LEVEL
+}
+
+input AddBenefitToMembershipInput {
+  benefitBag: BenefitBagInput
+  clientMutationId: String
+  membershipId: String
+}
+
+type AddBenefitToMembershipPayload {
+  clientMutationId: String!
+  payload: Membership
+}
+
+input AddCartItemInput {
+  clientMutationId: String
+  customerId: String
+  item: CartItemInput
+  parent: String
+}
+
+type AddCartItemPayload {
+  clientMutationId: String!
+  payload: Cart
+}
+
+input AddCustomersInput {
+  appId: String
+  clientMutationId: String
+  customers: [AppointmentCustomerInput]
+  skipValidation: Boolean
+}
+
+type AddCustomersPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type Addon implements Node {
+  addonType: String!
+  attachOn: AttachOn!
+  id: ID!
+  metadata: Map
+  priority: Int!
+  serviceIds: [String!]!
+  title: String!
+  variants: [AddonVariant!]!
+}
+
+input AddonInput {
+  addonType: String
+  attachOn: AttachOn
+  id: ID
+  metadata: Map
+  priority: Int
+  serviceIds: [String]
+  title: String
+  variants: [AddonVariantInput]
+}
+
+type AddonVariant {
+  cost: Price
+  metadata: Map
+  title: String!
+}
+
+input AddonVariantInput {
+  cost: PriceInput
+  metadata: Map
+  title: String
+}
+
+type Address {
+  country: String!
+  latitude: Float!
+  locality: String!
+  longitude: Float!
+  postalCode: String!
+  region: String!
+  streetAddress: String!
+}
+
+input AddressInput {
+  country: String
+  latitude: Float
+  locality: String
+  longitude: Float
+  postalCode: String
+  region: String
+  streetAddress: String
+}
+
+type AllowedDay {
+  allowedTimes: Timeslot
+  day: DayOfWeek!
+  timeZone: String!
+}
+
+input AllowedDayInput {
+  allowedTimes: TimeslotInput
+  day: DayOfWeek
+  timeZone: String
+}
+
+type App {
+  active: Boolean!
+  appType: AppType
+  appTypeId: String!
+  category: AppCategory!
+  classification: AppClassification!
+  description: String!
+  enabledOn: Timestamp
+  gallery: Gallery
+  id: ID!
+  integrationType: IntegrationType!
+  invisible: Boolean!
+  linkingLevel: AppLinkingLevel!
+  markdown: String!
+  metadata: Map
+  name: String!
+  serviceModules: [String!]!
+}
+
+enum AppCategory {
+  """ACCOUNTING"""
+  ACCOUNTING
+
+  """ANALYTICS"""
+  ANALYTICS
+
+  """CALENDAR"""
+  CALENDAR
+
+  """CMS"""
+  CMS
+
+  """DEVELOPER"""
+  DEVELOPER
+
+  """MARKETING"""
+  MARKETING
+
+  """PAYMENT"""
+  PAYMENT
+
+  """SCHEDULING"""
+  SCHEDULING
+
+  """SOCIAL"""
+  SOCIAL
+
+  """STAFFPICK"""
+  STAFFPICK
+
+  """UNKNOWN"""
+  UNKNOWN
+}
+
+enum AppClassification {
+  """APPOINTY"""
+  APPOINTY
+
+  """EXTERNAL"""
+  EXTERNAL
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type ApplicableOn {
+  id: ID!
+}
+
+input ApplicableOnInput {
+  id: ID
+}
+
+enum AppLinkingLevel {
+  """COMPANY"""
+  COMPANY
+
+  """LOCATION"""
+  LOCATION
+
+  """USER"""
+  USER
+}
+
+input ApplyDiscountInput {
+  clientMutationId: String
+  code: String
+  orderId: String
+  userId: String
+}
+
+type ApplyDiscountPayload {
+  clientMutationId: String!
+  payload: Order
+}
+
+type Appointment implements Node {
+  booked_by: String!
+  booked_on: Timestamp
+  bookingId: String!
+  cancellationAllowedTill: Timestamp
+  channel: AppointmentChannel
+  customers: [AppointmentCustomer!]!
+  emailOfBookedBy: String!
+  emailOfUpdatedBy: String!
+  employee: AppointmentEmployee
+  id: ID!
+  note: [Note!]!
+  rescheduleAllowedTill: Timestamp
+  resourceTypes: [AppointmentResourceType!]!
+  resources: [AppointmentResource!]!
+  service: AppointmentService
+  source: String!
+  status: AppointmentStatus!
+  timeSlot: Timeslot
+  totalPrice: Price
+  updatedBy: String!
+  updatedOn: Timestamp
+}
+
+type AppointmentBookingApproval {
+  emailVerifiedCustomer: Approval!
+  phoneVerifiedCustomer: Approval!
+  prePayingCustomer: Approval!
+}
+
+input AppointmentBookingApprovalInput {
+  emailVerifiedCustomer: Approval
+  phoneVerifiedCustomer: Approval
+  prePayingCustomer: Approval
+}
+
+type AppointmentBookingRules {
+  allowedCountryCode: [String!]!
+  bookingApproval: AppointmentBookingApproval
+  customerRestriction: [AppointmentCustomerRestriction!]!
+  domainRestrictions: [String!]!
+  leadAndCancellationSetting: AppointmentLeadAndCancellationSetting
+}
+
+input AppointmentBookingRulesInput {
+  allowedCountryCode: [String]
+  bookingApproval: AppointmentBookingApprovalInput
+  customerRestriction: [AppointmentCustomerRestrictionInput]
+  domainRestrictions: [String]
+  leadAndCancellationSetting: AppointmentLeadAndCancellationSettingInput
+}
+
+type AppointmentChannel {
+  name: String!
+  original: Channel
+}
+
+input AppointmentChannelInput {
+  id: ID
+  name: String
+}
+
+type AppointmentCustomer {
+  acceptanceId: String!
+  customStatus: CustomStatusAppointment
+  email: String!
+  firstName: String!
+  isBookedByAdmin: Boolean!
+  language: String!
+  lastName: String!
+  original: Customer
+  policyId: String!
+  price: Price
+  status: CustomerStatus!
+  timezone: String!
+}
+
+input AppointmentCustomerInput {
+  acceptanceId: String
+  customStatus: CustomStatusAppointmentInput
+  email: String
+  firstName: String
+  id: ID
+  isBookedByAdmin: Boolean
+  language: String
+  lastName: String
+  policyId: String
+  price: PriceInput
+  status: CustomerStatus
+  timezone: String
+}
+
+type AppointmentCustomerRestriction {
+  allowedBookingsInDuration: Int!
+  frequency: Frequency!
+  interval: Dateslot
+  type: AppointmentCustomerRestrictionType!
+}
+
+input AppointmentCustomerRestrictionInput {
+  allowedBookingsInDuration: Int
+  frequency: Frequency
+  interval: DateslotInput
+  type: AppointmentCustomerRestrictionType
+}
+
+enum AppointmentCustomerRestrictionType {
+  """ALLOWED"""
+  ALLOWED
+
+  """CUSTOM"""
+  CUSTOM
+
+  """NOT_ALLOWED"""
+  NOT_ALLOWED
+}
+
+type AppointmentEmployee {
+  email: String!
+  firstName: String!
+  lastName: String!
+  original: Employee
+}
+
+input AppointmentEmployeeInput {
+  email: String
+  firstName: String
+  id: ID
+  lastName: String
+}
+
+input AppointmentInput {
+  booked_by: String
+  booked_on: Timestamp
+  bookingId: String
+  cancellationAllowedTill: Timestamp
+  channel: AppointmentChannelInput
+  customers: [AppointmentCustomerInput]
+  employee: AppointmentEmployeeInput
+  id: ID
+  rescheduleAllowedTill: Timestamp
+  resourceTypes: [AppointmentResourceTypeInput]
+  resources: [AppointmentResourceInput]
+  service: AppointmentServiceInput
+  source: String
+  status: AppointmentStatus
+  timeSlot: TimeslotInput
+  totalPrice: PriceInput
+  updatedBy: String
+  updatedOn: Timestamp
+}
+
+type AppointmentLeadAndCancellationSetting {
+  minAdvancePeriodToBookAppointment: Int!
+  minAdvancePeriodToCancelAppointment: Int!
+  minAdvancePeriodToRescheduleAppointment: Int!
+  minTimeIntervalBetweenAppointment: Int!
+  timeAdvanceAppointmentCanBeBooked: Int!
+}
+
+input AppointmentLeadAndCancellationSettingInput {
+  minAdvancePeriodToBookAppointment: Int
+  minAdvancePeriodToCancelAppointment: Int
+  minAdvancePeriodToRescheduleAppointment: Int
+  minTimeIntervalBetweenAppointment: Int
+  timeAdvanceAppointmentCanBeBooked: Int
+}
+
+type AppointmentNode {
+  cursor: String!
+  node: Appointment
+}
+
+type AppointmentNotificationRoleSetting {
+  roleId: String!
+  sendEmail: Boolean!
+  sendEmailBeforeMinutes: Int!
+  sendSms: Boolean!
+  sendSmsBeforeMinutes: Int!
+  sendWebBeforeMinutes: Int!
+  sendWebNotification: Boolean!
+}
+
+input AppointmentNotificationRoleSettingInput {
+  roleId: String
+  sendEmail: Boolean
+  sendEmailBeforeMinutes: Int
+  sendSms: Boolean
+  sendSmsBeforeMinutes: Int
+  sendWebBeforeMinutes: Int
+  sendWebNotification: Boolean
+}
+
+type AppointmentNotificationSetting {
+  mandatory: Boolean!
+  notificationId: String!
+  notificationType: String!
+  roleSettings: [AppointmentNotificationRoleSetting!]!
+}
+
+input AppointmentNotificationSettingInput {
+  mandatory: Boolean
+  notificationId: String
+  notificationType: String
+  roleSettings: [AppointmentNotificationRoleSettingInput]
+}
+
+type AppointmentReportNode {
+  cursor: String!
+  node: Report
+}
+
+type AppointmentReportResponse {
+  data: ReportData
+  edges: [AppointmentReportNode!]!
+  pageInfo: PageInfo
+}
+
+type AppointmentResource {
+  capacity: Int!
+  original: Resource
+  title: String!
+}
+
+input AppointmentResourceInput {
+  capacity: Int
+  id: ID
+  title: String
+}
+
+type AppointmentResourceType {
+  capacity: Int!
+  original: ResourceType
+  title: String!
+}
+
+input AppointmentResourceTypeInput {
+  capacity: Int
+  id: ID
+  title: String
+}
+
+type AppointmentReviewMailSetting {
+  id: ID!
+  sendAutomatic: Boolean!
+  sendMailCustomerWithEventStatus: [String!]!
+}
+
+input AppointmentReviewMailSettingInput {
+  id: ID
+  sendAutomatic: Boolean
+  sendMailCustomerWithEventStatus: [String]
+}
+
+type AppointmentService {
+  capacity: Int!
+  original: Service
+  title: String!
+}
+
+input AppointmentServiceInput {
+  capacity: Int
+  id: ID
+  title: String
+}
+
+type AppointmentSetting {
+  enableQuantityAppointment: Boolean!
+  enableRecurringAppointment: Boolean!
+  id: ID!
+  showAreaCode: Boolean!
+  slotDurationForAdminCalendar: Int!
+  staffPrioritization: StaffPrioritization!
+  uiSettings: String!
+}
+
+input AppointmentSettingInput {
+  enableQuantityAppointment: Boolean
+  enableRecurringAppointment: Boolean
+  id: ID
+  showAreaCode: Boolean
+  slotDurationForAdminCalendar: Int
+  staffPrioritization: StaffPrioritization
+  uiSettings: String
+}
+
+enum AppointmentStatus {
+  """APPOINTMENT_CANCELLED"""
+  APPOINTMENT_CANCELLED
+
+  """APPOINTMENT_CONFIRMED"""
+  APPOINTMENT_CONFIRMED
+
+  """APPOINTMENT_STATUS_UNSPECIFIED"""
+  APPOINTMENT_STATUS_UNSPECIFIED
+
+  """APPOINTMENT_WAITING_FOR_APPROVAL"""
+  APPOINTMENT_WAITING_FOR_APPROVAL
+}
+
+enum Approval {
+  """DO_NOT_REQUIRE"""
+  DO_NOT_REQUIRE
+
+  """REQUIRE"""
+  REQUIRE
+}
+
+enum AppSource {
+  """MOBILE"""
+  MOBILE
+
+  """WEB"""
+  WEB
+}
+
+type AppType {
+  category: AppTypeCategory!
+  classification: AppTypeClassification!
+  description: String!
+  gallery: Gallery
+  id: ID!
+  integrationType: IntegrationType!
+  invisible: Boolean!
+  level: AppTypeLevel!
+  markdown: String!
+  metadata: Map
+  name: String!
+  serviceModules: [String!]!
+}
+
+enum AppTypeCategory {
+  """ACCOUNTING"""
+  ACCOUNTING
+
+  """ANALYTICS"""
+  ANALYTICS
+
+  """CALENDAR"""
+  CALENDAR
+
+  """CMS"""
+  CMS
+
+  """DEVELOPER"""
+  DEVELOPER
+
+  """MARKETING"""
+  MARKETING
+
+  """PAYMENT"""
+  PAYMENT
+
+  """SCHEDULING"""
+  SCHEDULING
+
+  """SOCIAL"""
+  SOCIAL
+
+  """STAFFPICK"""
+  STAFFPICK
+
+  """UNKNOWN"""
+  UNKNOWN
+}
+
+enum AppTypeClassification {
+  """APPOINTY"""
+  APPOINTY
+
+  """EXTERNAL"""
+  EXTERNAL
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+input AppTypeInput {
+  category: AppTypeCategory
+  classification: AppTypeClassification
+  description: String
+  gallery: GalleryInput
+  id: ID
+  integrationType: IntegrationType
+  invisible: Boolean
+  level: AppTypeLevel
+  markdown: String
+  metadata: Map
+  name: String
+  serviceModules: [String]
+}
+
+enum AppTypeLevel {
+  """COMPANY"""
+  COMPANY
+
+  """LOCATION"""
+  LOCATION
+
+  """USER"""
+  USER
+}
+
+enum AppTypeLevelFilter {
+  """ALL"""
+  ALL
+
+  """COMPANY_FILTER"""
+  COMPANY_FILTER
+
+  """LOCATION_FILTER"""
+  LOCATION_FILTER
+
+  """USER_FILTER"""
+  USER_FILTER
+}
+
+type AreaCode implements Node {
+  description: String!
+  enabled: Boolean!
+  groupId: String!
+  id: ID!
+  metadata: Map
+  priority: Int!
+  shortName: String!
+  title: String!
+}
+
+input AreaCodeInput {
+  description: String
+  enabled: Boolean
+  groupId: String
+  id: ID
+  metadata: Map
+  priority: Int
+  shortName: String
+  title: String
+}
+
+input AssignRoleInput {
+  clientMutationId: String
+  roles: [UserRoleRoleInput]
+  userId: String
+}
+
+type AssignRolePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input AttachDetachPolicyInput {
+  clientMutationId: String
+  link: [PolicySourceLinkInput]
+  policyId: attachDetachPolicyRequestPolicyId
+  sourceId: attachDetachPolicyRequestSourceId
+}
+
+type AttachDetachPolicyPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input attachDetachPolicyRequestPolicyId {
+  policyId: String
+}
+
+input attachDetachPolicyRequestSourceId {
+  sourceId: String
+}
+
+enum AttachOn {
+  """ORDER"""
+  ORDER
+
+  """SERVICE"""
+  SERVICE
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+input AvailabilityFilterInput {
+  channels: [String]
+  employees: [String]
+  parent: String
+  resourceTypes: [String]
+  resources: [String]
+  services: [String]
+  skipValidations: Boolean
+  timeSlot: TimeslotInput
+}
+
+type AvailabilitySlot {
+  capacity: Int!
+  channel: String!
+  employee: String!
+  metadata: Map
+  parent: String!
+  resourceTypes: [String!]!
+  resources: [String!]!
+  service: String!
+  timeSlot: Timeslot
+}
+
+type AverageRating {
+  averageRating: Float!
+  id: ID!
+  ratings: [DistributedRating!]!
+  totalCount: Int!
+}
+
+input BatchCreateDepartmentInput {
+  clientMutationId: String
+  department: [DepartmentInput]
+  parent: String
+}
+
+type BatchCreateDepartmentPayload {
+  clientMutationId: String!
+  payload: BatchCreateDepartmentResponse
+}
+
+type BatchCreateDepartmentResponse {
+  department: [Department!]!
+}
+
+input BatchCreateDesignationInput {
+  clientMutationId: String
+  designation: [DesignationInput]
+  parent: String
+}
+
+type BatchCreateDesignationPayload {
+  clientMutationId: String!
+  payload: BatchCreateDesignationResponse
+}
+
+type BatchCreateDesignationResponse {
+  designation: [Designation!]!
+}
+
+input BatchCreateResourceInput {
+  clientMutationId: String
+  resources: [CreateResourceRequestInput]
+}
+
+type BatchCreateResourcePayload {
+  clientMutationId: String!
+  payload: BatchCreateResourceResponse
+}
+
+type BatchCreateResourceResponse {
+  resources: [Resource!]!
+}
+
+input BatchCreateResourceTypeInput {
+  clientMutationId: String
+  parent: String
+  resourceType: [ResourceTypeInput]
+}
+
+type BatchCreateResourceTypePayload {
+  clientMutationId: String!
+  payload: BatchCreateResourceTypeResponse
+}
+
+type BatchCreateResourceTypeResponse {
+  resourceType: [ResourceType!]!
+}
+
+input BatchCreateServiceInput {
+  clientMutationId: String
+  parent: String
+  services: [ServiceInput]
+}
+
+type BatchCreateServicePayload {
+  clientMutationId: String!
+  payload: BatchCreateServiceResponse
+}
+
+type BatchCreateServiceResponse {
+  services: [Service!]!
+}
+
+type BatchGetModuleRoleResponse {
+  moduleRole: [ModuleRole!]!
+}
+
+input BatchUpsertServicePriceInput {
+  clientMutationId: String
+  requests: [UpsertServicePriceRequestInput]
+}
+
+type BatchUpsertServicePricePayload {
+  clientMutationId: String!
+  payload: BatchUpsertServicePriceResponse
+}
+
+type BatchUpsertServicePriceResponse {
+  response: [ServicePriceWrapper!]!
+}
+
+type Benefit {
+  data: ItemUnion
+  id: ID!
+}
+
+type BenefitBag {
+  benefit: Benefit
+  id: ID!
+  overrideMask: FieldMask
+  restriction: BenefitBagRestriction
+}
+
+input BenefitBagInput {
+  benefit: BenefitInput
+  id: ID
+  overrideMask: FieldMaskInput
+  restriction: BenefitBagRestrictionInput
+}
+
+type BenefitBagRestriction {
+  allowedDays: [AllowedDay!]!
+  renewalFrequency: [RenewalFrequency!]!
+}
+
+input BenefitBagRestrictionInput {
+  allowedDays: [AllowedDayInput]
+  renewalFrequency: [RenewalFrequencyInput]
+}
+
+input BenefitInput {
+  id: ID
+}
+
+type BillingAccount {
+  address: Address
+  companyId: String!
+  defaultPaymentMethodId: String!
+  description: String!
+  email: String!
+  id: ID!
+  locationId: String!
+  metadata: Map
+  name: String!
+  paymentMethodIds: [String!]!
+  paymentMethods: [BillingPaymentMethod!]!
+}
+
+input BillingAccountInput {
+  address: AddressInput
+  companyId: String
+  defaultPaymentMethodId: String
+  description: String
+  email: String
+  id: ID
+  locationId: String
+  metadata: Map
+  name: String
+  paymentMethodIds: [String]
+}
+
+type BillingAddon {
+  defaultValue: Int!
+  description: String!
+  displayPrice: Price
+  id: ID!
+  metadata: Map
+  moduleLicenseName: String!
+  moduleLicenseSlug: String!
+  name: String!
+  price: Price
+  purchasedValue: Int!
+}
+
+type BillingAddonCopy {
+  defaultValue: Int!
+  description: String!
+  displayPrice: Price
+  id: ID!
+  metadata: Map
+  moduleLicenseName: String!
+  moduleLicenseSlug: String!
+  name: String!
+  price: Price
+  purchasedValue: Int!
+}
+
+input BillingAddonInput {
+  defaultValue: Int
+  description: String
+  displayPrice: PriceInput
+  id: ID
+  metadata: Map
+  moduleLicenseName: String
+  moduleLicenseSlug: String
+  name: String
+  price: PriceInput
+  purchasedValue: Int
+}
+
+type BillingMembership {
+  description: String!
+  gallery: Gallery
+  id: ID!
+  license: License
+  licenseId: String!
+  metadata: Map
+  name: String!
+  plans: [BillingPlan!]!
+  showToUI: Boolean!
+}
+
+type BillingMembershipCopy {
+  description: String!
+  gallery: Gallery
+  id: ID!
+  licenseId: String!
+  metadata: Map
+  name: String!
+  showToUI: Boolean!
+}
+
+enum BillingPaymentGateway {
+  """BRAINTREE_GATEWAY"""
+  BRAINTREE_GATEWAY
+
+  """STRIPE_GATEWAY"""
+  STRIPE_GATEWAY
+
+  """UNSPECIFIED_BILLING_PAYMENT_GATEWAY"""
+  UNSPECIFIED_BILLING_PAYMENT_GATEWAY
+}
+
+type BillingPaymentMethod {
+  cardType: String!
+  expiry: String!
+  externalCardId: String!
+  externalCustomerId: String!
+  gateway: BillingPaymentGateway!
+  id: ID!
+  lastFour: String!
+  metadata: Map
+  name: String!
+  paypalEmail: String!
+}
+
+type BillingPlan {
+  addons: [BillingAddon!]!
+  description: String!
+  displayPrice: Price
+  id: ID!
+  metadata: Map
+  name: String!
+  planType: PlanType!
+  price: Price
+  showToUI: Boolean!
+  validityInDays: Int!
+}
+
+type BillingPlanCopy {
+  addons: [BillingAddon!]!
+  description: String!
+  displayPrice: Price
+  id: ID!
+  metadata: Map
+  name: String!
+  planType: PlanType!
+  price: Price
+  showToUI: Boolean!
+  validityInDays: Int!
+}
+
+type BillingPlanWallet {
+  addonPrice: Price
+  addonsCopy: [BillingAddonCopy!]!
+  billingAccountId: String!
+  company: Company
+  companyId: String!
+  coupon: Coupon
+  currentBillingCycle: Timeslot
+  externalCustomerId: String!
+  externalSubscriptionId: String!
+  gateway: BillingPaymentGateway!
+  id: ID!
+  lastFour: String!
+  licenseCopy: License
+  licenseId: String!
+  membershipCopy: BillingMembershipCopy
+  paymentMethodId: String!
+  planCopy: BillingPlanCopy
+  planId: String!
+  planPrice: Price
+  purchasedOn: Timestamp
+  startedOn: Timestamp
+  status: BillingPlanWalletStatus!
+  subscriptionEnabled: Boolean!
+  totalPrice: Price
+  validityInDays: Int!
+}
+
+enum BillingPlanWalletStatus {
+  """ACTIVE"""
+  ACTIVE
+
+  """CANCELLED"""
+  CANCELLED
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type BlockHourRule implements Node {
+  id: ID!
+  locale: String!
+  metadata: Map
+  reason: String!
+  resource: ResourceUnion
+  resourceId: String!
+  slots: [BlockHourSlot!]!
+  source: String!
+  title: String!
+}
+
+input BlockHourRuleInput {
+  id: ID
+  locale: String
+  metadata: Map
+  reason: String
+  resourceId: String
+  slots: [BlockHourSlotInput]
+  source: String
+  title: String
+}
+
+type BlockHourRuleNode {
+  cursor: String!
+  node: BlockHourRule
+}
+
+type BlockHourSlot {
+  id: ID!
+  slot: Timeslot
+}
+
+input BlockHourSlotInput {
+  id: ID
+  slot: TimeslotInput
+}
+
+type BookingPortalSetting implements Node {
+  customerInformation: [CustomerInformation!]!
+  enableAppointment: Boolean!
+  enableBookingPortal: Boolean!
+  enableGuestLogin: Boolean!
+  enabledLogins: [String!]!
+  id: ID!
+  removeBranding: Boolean!
+  uISettings: String!
+}
+
+input BookingPortalSettingInput {
+  customerInformation: [CustomerInformation]
+  enableAppointment: Boolean
+  enableBookingPortal: Boolean
+  enableGuestLogin: Boolean
+  enabledLogins: [String]
+  id: ID
+  removeBranding: Boolean
+  uISettings: String
+}
+
+type Business {
+  address: Address
+  businessId: String!
+  isClaimed: Boolean!
+  isClosed: Boolean!
+  metadata: Map
+  name: String!
+  rating: Float!
+  reviewCount: Float!
+  type: BusinessType!
+}
+
+type BusinessInfo {
+  businessId: String!
+  businessName: String!
+}
+
+input BusinessInfoInput {
+  businessId: String
+  businessName: String
+}
+
+enum BusinessType {
+  """ALL"""
+  ALL
+
+  """GOOGLE_BUSINESS"""
+  GOOGLE_BUSINESS
+
+  """UNDEFINED"""
+  UNDEFINED
+
+  """YELP_BUSINESS"""
+  YELP_BUSINESS
+}
+
+scalar Bytes
+
+type Calendar {
+  id: ID!
+  isDefault: Boolean!
+  name: String!
+}
+
+type CalendarsList {
+  calendars: [Calendar!]!
+}
+
+input CancelAllSessionsInput {
+  clientMutationId: String
+  id: ID
+  parent: String
+  reason: String
+  timing: TimeslotInput
+}
+
+type CancelAllSessionsPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input CancelAppointmentByDataCodeInput {
+  clientMutationId: String
+  dataCodeId: String
+}
+
+type CancelAppointmentByDataCodePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input CancelAppointmentInput {
+  clientMutationId: String
+  id: ID
+}
+
+type CancelAppointmentPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input CancelClassInput {
+  clientMutationId: String
+  id: ID
+  reason: String
+}
+
+type CancelClassPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input CancelSessionInput {
+  classId: String
+  clientMutationId: String
+  id: ID
+  reason: String
+}
+
+type CancelSessionPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input CancelSubscriptionInput {
+  clientMutationId: String
+  companyId: String
+  planWalletId: String
+}
+
+type CancelSubscriptionPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type Card {
+  address: Address
+  cardId: String!
+  cardType: String!
+  email: String!
+  expireOn: String!
+  lastFour: String!
+  metadata: Map
+  name: String!
+  sourceType: SourceType!
+}
+
+type CardsList {
+  userCards: [GatewayCard!]!
+}
+
+type Cart {
+  buyerId: String!
+  cartType: CartType!
+  id: ID!
+  items: [CartItem!]!
+  price: Price
+  tax: Price
+}
+
+input CartCustomerInput {
+  address: AddressInput
+  birthDate: Timestamp
+  email: String
+  firstName: String
+  gender: Gender
+  lastName: String
+  metadata: Map
+  preferredLanguage: String
+  profileImage: GalleryItemInput
+  tag: [String]
+  telephones: [String]
+  timezone: String
+}
+
+input CartInput {
+  buyerId: String
+  cartType: CartType
+  id: ID
+  items: [CartItemInput]
+  price: PriceInput
+  tax: PriceInput
+}
+
+type CartItem {
+  actions: Map
+  description: String!
+  id: ID!
+  image: String!
+  item: Protobuf
+  itemType: ItemType!
+  metadata: Map
+  minAmount: Price
+  originalPrice: Price
+  price: Price
+  subTitle: String!
+  tax: [TaxInfo!]!
+  templateData: Map
+  title: String!
+  valid: Boolean!
+}
+
+input CartItemInOrderInput {
+  cartItemId: String
+  item: ProtobufInput
+}
+
+input CartItemInput {
+  actions: Map
+  description: String
+  id: ID
+  image: String
+  item: ProtobufInput
+  itemType: ItemType
+  metadata: Map
+  minAmount: PriceInput
+  originalPrice: PriceInput
+  price: PriceInput
+  subTitle: String
+  tax: [TaxInfoInput]
+  templateData: Map
+  title: String
+  valid: Boolean
+}
+
+enum CartType {
+  """ADMIN_SIDE"""
+  ADMIN_SIDE
+
+  """CLIENT_SIDE"""
+  CLIENT_SIDE
+}
+
+type Category implements Node {
+  description(locale: String): String!
+  displayOrder: Int!
+  id: ID!
+  image: GalleryItem
+  metadata: Map
+  name(locale: String): String!
+  parentCategory: String!
+  parentCategoryDetails: Category
+}
+
+input CategoryInput {
+  description: String
+  displayOrder: Int
+  id: ID
+  image: GalleryItemInput
+  metadata: Map
+  name: String
+  parentCategory: String
+}
+
+type Certificate {
+  authority: String!
+  certificateType: String!
+  id: ID!
+  licenseNumber: String!
+  metadata: Map
+  name: String!
+  url: String!
+  validFrom: Timestamp
+  validTill: Timestamp
+}
+
+input CertificateInput {
+  authority: String
+  certificateType: String
+  id: ID
+  licenseNumber: String
+  metadata: Map
+  name: String
+  url: String
+  validFrom: Timestamp
+  validTill: Timestamp
+}
+
+type CertificateNode {
+  cursor: String!
+  node: Certificate
+}
+
+input ChangeAppointmentStatusInput {
+  clientMutationId: String
+  id: ID
+  newStatus: AppointmentStatus
+}
+
+type ChangeAppointmentStatusPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input ChangeCustomerStatusInput {
+  appId: String
+  clientMutationId: String
+  cusId: String
+  newCustomStatus: changeCustomerStatusRequestNewCustomStatus
+  newCustomerStatus: changeCustomerStatusRequestNewCustomerStatus
+}
+
+type ChangeCustomerStatusPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input changeCustomerStatusRequestNewCustomerStatus {
+  newCustomerStatus: CustomerStatus
+}
+
+input changeCustomerStatusRequestNewCustomStatus {
+  newCustomStatus: CustomStatusAppointmentInput
+}
+
+input ChangePolicyStatusInput {
+  clientMutationId: String
+  policyId: String
+  status: Boolean
+}
+
+type ChangePolicyStatusPayload {
+  clientMutationId: String!
+  payload: Policy
+}
+
+type Channel implements Node {
+  description: String!
+  id: ID!
+  metadata: Map
+  name: String!
+}
+
+input ChannelInput {
+  description: String
+  id: ID
+  metadata: Map
+  name: String
+}
+
+type ChannelRestriction {
+  channel: Channel
+  channelId: String!
+  durations: [Duration!]!
+}
+
+input ChannelRestrictionInput {
+  channelId: String
+  durations: [Duration]
+}
+
+enum ChargeType {
+  """FIXED_AMOUNT"""
+  FIXED_AMOUNT
+
+  """FULL_AMOUNT"""
+  FULL_AMOUNT
+
+  """PERCENTAGE"""
+  PERCENTAGE
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type CheckCompanySlugResponse {
+  valid: Boolean!
+}
+
+type CheckEmployeeSlugResponse {
+  valid: Boolean!
+}
+
+type CheckLocationSlugResponse {
+  valid: Boolean!
+}
+
+input CheckOpenHourAvailabilityInput {
+  clientMutationId: String
+  ids: [String]
+}
+
+type CheckOpenHourAvailabilityPayload {
+  clientMutationId: String!
+  payload: CheckOpenHourAvailabilityResponse
+}
+
+type CheckOpenHourAvailabilityResponse {
+  availability: Map
+}
+
+type CheckResourceSlugResponse {
+  isValid: Boolean!
+}
+
+type CheckServiceSlugResponse {
+  valid: Boolean!
+}
+
+input CheckShortUrlInput {
+  clientMutationId: String
+  parent: String
+  shortUrlValue: String
+}
+
+type CheckShortUrlPayload {
+  clientMutationId: String!
+  payload: CheckShortUrlResponse
+}
+
+type CheckShortUrlResponse {
+  available: Boolean!
+}
+
+type Class implements Node {
+  active: Boolean!
+  cancelReason: String!
+  cancelledAt: Timestamp
+  cancelledBy: String!
+  category: Category
+  categoryId: String!
+  certificatesRequiredIds: [String!]!
+  classTemplateId: String!
+  clearWaitingIfAvailable: Boolean!
+  confirmedCapacity: Int!
+  description: String!
+  dropInAllowed: Boolean!
+  gallery: Gallery
+  id: ID!
+  intervalInDays: Int!
+  locale: String!
+  metadata: Map
+  onlyFirstSessionSignup: Boolean!
+  room: ClassRoom
+  sessions: [Session!]!
+  status: ClassStatus!
+  termsConditions: String!
+  title: String!
+  until: Timestamp
+  waitingCapacity: Int!
+}
+
+enum ClassApproval {
+  """DO_NOT_REQUIRE"""
+  DO_NOT_REQUIRE
+
+  """REQUIRE"""
+  REQUIRE
+}
+
+type ClassBookingApproval {
+  emailVerifiedCustomer: ClassApproval!
+  phoneVerifiedCustomer: ClassApproval!
+  prePayingCustomer: ClassApproval!
+}
+
+input ClassBookingApprovalInput {
+  emailVerifiedCustomer: ClassApproval
+  phoneVerifiedCustomer: ClassApproval
+  prePayingCustomer: ClassApproval
+}
+
+type ClassBookingRules {
+  allowedCountryCode: [String!]!
+  bookingApproval: ClassBookingApproval
+  domainRestrictions: [String!]!
+  leadAndCancellationSetting: ClassLeadAndCancellationSetting
+}
+
+input ClassBookingRulesInput {
+  allowedCountryCode: [String]
+  bookingApproval: ClassBookingApprovalInput
+  domainRestrictions: [String]
+  leadAndCancellationSetting: ClassLeadAndCancellationSettingInput
+}
+
+enum ClassChargeType {
+  """FIXED_AMOUNT"""
+  FIXED_AMOUNT
+
+  """FULL_AMOUNT"""
+  FULL_AMOUNT
+
+  """PERCENTAGE"""
+  PERCENTAGE
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type ClassCustomer {
+  dropReason: String!
+  droppedBy: String!
+  droppedOn: Timestamp
+  email: String!
+  firstName: String!
+  id: ID!
+  isDropIn: Boolean!
+  isDropInByPayments: Boolean!
+  lastName: String!
+  paymentStatus: CustomerPaymentStatus!
+  status: ClassCustomerStatus!
+}
+
+input ClassCustomerInput {
+  dropReason: String
+  droppedBy: String
+  droppedOn: Timestamp
+  email: String
+  firstName: String
+  id: ID
+  isDropIn: Boolean
+  isDropInByPayments: Boolean
+  lastName: String
+  paymentStatus: CustomerPaymentStatus
+  status: ClassCustomerStatus
+}
+
+enum ClassCustomerStatus {
+  """CANCELLED"""
+  CANCELLED
+
+  """CONFIRMED"""
+  CONFIRMED
+
+  """WAITING"""
+  WAITING
+}
+
+input ClassInput {
+  active: Boolean
+  cancelReason: String
+  cancelledAt: Timestamp
+  cancelledBy: String
+  categoryId: String
+  certificatesRequiredIds: [String]
+  classTemplateId: String
+  clearWaitingIfAvailable: Boolean
+  confirmedCapacity: Int
+  description: String
+  dropInAllowed: Boolean
+  gallery: GalleryInput
+  id: ID
+  intervalInDays: Int
+  locale: String
+  metadata: Map
+  onlyFirstSessionSignup: Boolean
+  room: ClassRoomInput
+  sessions: [SessionInput]
+  status: ClassStatus
+  termsConditions: String
+  title: String
+  until: Timestamp
+  waitingCapacity: Int
+}
+
+type ClassLeadAndCancellationSetting {
+  minAdvancePeriodToBookClass: Int!
+  minAdvancePeriodToCancelClass: Int!
+  minAdvancePeriodToRescheduleClass: Int!
+  minTimeIntervalBetweenClass: Int!
+  timeAdvanceClassCanBeBooked: Int!
+}
+
+input ClassLeadAndCancellationSettingInput {
+  minAdvancePeriodToBookClass: Int
+  minAdvancePeriodToCancelClass: Int
+  minAdvancePeriodToRescheduleClass: Int
+  minTimeIntervalBetweenClass: Int
+  timeAdvanceClassCanBeBooked: Int
+}
+
+type ClassNode {
+  cursor: String!
+  node: Class
+}
+
+type ClassNotificationRoleSetting {
+  roleId: String!
+  sendEmail: Boolean!
+  sendEmailBeforeMinutes: Int!
+  sendSms: Boolean!
+  sendSmsBeforeMinutes: Int!
+  sendWebBeforeMinutes: Int!
+  sendWebNotification: Boolean!
+}
+
+input ClassNotificationRoleSettingInput {
+  roleId: String
+  sendEmail: Boolean
+  sendEmailBeforeMinutes: Int
+  sendSms: Boolean
+  sendSmsBeforeMinutes: Int
+  sendWebBeforeMinutes: Int
+  sendWebNotification: Boolean
+}
+
+type ClassNotificationSetting {
+  mandatory: Boolean!
+  notificationId: String!
+  notificationType: String!
+  roleSettings: [ClassNotificationRoleSetting!]!
+}
+
+input ClassNotificationSettingInput {
+  mandatory: Boolean
+  notificationId: String
+  notificationType: String
+  roleSettings: [ClassNotificationRoleSettingInput]
+}
+
+enum ClassPaymentOption {
+  """CARD_VERIFY"""
+  CARD_VERIFY
+
+  """MEMBERSHIP"""
+  MEMBERSHIP
+
+  """PRE_PAYMENT"""
+  PRE_PAYMENT
+}
+
+type ClassPaymentSetting {
+  chargeType: ClassChargeType!
+  chargeValue: Float!
+  paymentOption: ClassPaymentOption!
+}
+
+input ClassPaymentSettingInput {
+  chargeType: ClassChargeType
+  chargeValue: Float
+  paymentOption: ClassPaymentOption
+}
+
+type ClassPrice {
+  id: ID!
+  price: ClassPriceValue
+  pricingType: ClassPricingType!
+}
+
+enum ClassPriceFilter {
+  """BOTH_PRICING"""
+  BOTH_PRICING
+
+  """MEMBERSHIP"""
+  MEMBERSHIP
+
+  """PRICING"""
+  PRICING
+}
+
+type ClassPriceValue {
+  dropInPrice: Price
+  fullPrice: Price
+}
+
+input ClassPriceValueInput {
+  dropInPrice: PriceInput
+  fullPrice: PriceInput
+}
+
+enum ClassPricingType {
+  """MEMBERSHIP"""
+  MEMBERSHIP
+
+  """ONE_TIME_PRICING"""
+  ONE_TIME_PRICING
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type ClassReviewMailSetting {
+  id: ID!
+  sendAutomatic: Boolean!
+  sendMailCustomerWithEventStatus: [String!]!
+}
+
+input ClassReviewMailSettingInput {
+  id: ID
+  sendAutomatic: Boolean
+  sendMailCustomerWithEventStatus: [String]
+}
+
+type ClassRoom {
+  address: String!
+  city: String!
+  country: String!
+  description: String!
+  district: String!
+  gallery: Gallery
+  id: ID!
+  latitude: Float!
+  longitude: Float!
+  metadata: Map
+  name: String!
+}
+
+input ClassRoomInput {
+  address: String
+  city: String
+  country: String
+  description: String
+  district: String
+  gallery: GalleryInput
+  id: ID
+  latitude: Float
+  longitude: Float
+  metadata: Map
+  name: String
+}
+
+type ClassServiceProvider {
+  email: String!
+  firstName: String!
+  gender: Gender!
+  id: ID!
+  lastName: String!
+  link: String!
+  metadata: Map
+  phoneNumber: String!
+  profileImage: GalleryItem
+}
+
+input ClassServiceProviderInput {
+  email: String
+  firstName: String
+  gender: Gender
+  id: ID
+  lastName: String
+  link: String
+  metadata: Map
+  phoneNumber: String
+  profileImage: GalleryItemInput
+}
+
+type ClassSetting {
+  changeMask: FieldMask
+  classBookingRules: ClassBookingRules
+  classNotificationSettings: [ClassNotificationSetting!]!
+  classPaymentSetting: ClassPaymentSetting
+  classTaxSettings: [ClassTaxSetting!]!
+  id: ID!
+}
+
+input ClassSettingInput {
+  changeMask: FieldMaskInput
+  classBookingRules: ClassBookingRulesInput
+  classNotificationSettings: [ClassNotificationSettingInput]
+  classPaymentSetting: ClassPaymentSettingInput
+  classTaxSettings: [ClassTaxSettingInput]
+  id: ID
+}
+
+enum ClassStatus {
+  """CLASS_BOOKED"""
+  CLASS_BOOKED
+
+  """CLASS_CANCELLED"""
+  CLASS_CANCELLED
+}
+
+type ClassTaxSetting {
+  id: ID!
+  percentage: Float!
+  title: String!
+}
+
+input ClassTaxSettingInput {
+  id: ID
+  percentage: Float
+  title: String
+}
+
+type ClassTemplate implements Node {
+  active: Boolean!
+  categoryId: String!
+  certificatesRequiredIds: [String!]!
+  confirmedCapacity: Int!
+  description: String!
+  dropInAllowed: Boolean!
+  gallery: Gallery
+  id: ID!
+  intervalInDays: Int!
+  metadata: Map
+  room: ClassRoom
+  sessions: [Session!]!
+  status: ClassStatus!
+  termsConditions: String!
+  title: String!
+  until: Timestamp
+  waitingCapacity: Int!
+}
+
+input ClassTemplateInput {
+  active: Boolean
+  categoryId: String
+  certificatesRequiredIds: [String]
+  confirmedCapacity: Int
+  description: String
+  dropInAllowed: Boolean
+  gallery: GalleryInput
+  id: ID
+  intervalInDays: Int
+  metadata: Map
+  room: ClassRoomInput
+  sessions: [SessionInput]
+  status: ClassStatus
+  termsConditions: String
+  title: String
+  until: Timestamp
+  waitingCapacity: Int
+}
+
+type ClassTemplateNode {
+  cursor: String!
+  node: ClassTemplate
+}
+
+enum ClassTypeFilter {
+  """BOTH_TYPE"""
+  BOTH_TYPE
+
+  """REGULAR"""
+  REGULAR
+
+  """SERIES"""
+  SERIES
+}
+
+type Company implements Node {
+  address: Address
+  appointments(after: String, before: String, first: Int, last: Int): ListAppointmentResponse
+  apps: [App!]!
+  companySettings: CompanySetting
+  departments: [Department!]!
+  description: String!
+  designations: [Designation!]!
+  displayName: String!
+  emails: [String!]!
+  employees(after: String, before: String, first: Int, last: Int): ListEmployeeResponse
+  gallery: Gallery
+  id: ID!
+  licenseWallet: LicenseWallet
+  locations(after: String, before: String, first: Int, last: Int): ListLocationResponse
+  preference: CompanyPreference
+  profession: String!
+  professionObject: Profession
+  roles: [Role!]!
+  services(after: String, before: String, first: Int, last: Int): ListServiceResponse
+  slug: String!
+  telephones: [String!]!
+  title: String!
+  website: String!
+}
+
+input CompanyInput {
+  address: AddressInput
+  description: String
+  displayName: String
+  emails: [String]
+  gallery: GalleryInput
+  id: ID
+  preference: CompanyPreferenceInput
+  profession: String
+  slug: String
+  telephones: [String]
+  title: String
+  website: String
+}
+
+type CompanyNode {
+  cursor: String!
+  node: Company
+}
+
+type CompanyPreference {
+  currency: String!
+  dateFormat: String!
+  id: ID!
+  language: String!
+  timeFormat: String!
+  timezone: String!
+  uIInfo: String!
+}
+
+input CompanyPreferenceInput {
+  currency: String
+  dateFormat: String
+  id: ID
+  language: String
+  timeFormat: String
+  timezone: String
+  uIInfo: String
+}
+
+type CompanySetting {
+  activeModules: [String!]!
+  departmentAlias(locale: String): String!
+  designationAlias(locale: String): String!
+  emailSettings: EmailSetting
+  id: ID!
+  navMenus: [String!]!
+  serviceAlias(locale: String): String!
+  serviceProviderAlias(locale: String): String!
+  smsSettings: SmsSetting
+}
+
+input CompanySettingInput {
+  activeModules: [String]
+  departmentAlias: String
+  designationAlias: String
+  emailSettings: EmailSettingInput
+  id: ID
+  navMenus: [String]
+  serviceAlias: String
+  serviceProviderAlias: String
+  smsSettings: SmsSettingInput
+}
+
+type Configuration {
+  configuration: UnionConfigurationConfiguration
+}
+
+type Configuration_EmailConfiguration {
+  emailConfiguration: EmailConfiguration
+}
+
+type Configuration_SmsConfiguration {
+  smsConfiguration: SmsConfiguration
+}
+
+input configurationEmailConfiguration {
+  emailConfiguration: EmailConfigurationInput
+}
+
+input ConfigurationInput {
+  configurationEmailConfiguration: configurationEmailConfiguration
+  configurationSmsConfiguration: configurationSmsConfiguration
+}
+
+input configurationSmsConfiguration {
+  smsConfiguration: SmsConfigurationInput
+}
+
+type ConsumeDiscountResponse {
+  discountables: [Discountables!]!
+}
+
+type ConsumeRule {
+  initialOrderCount: InitialOrderCount
+  usageRestriction: UsageRestriction
+  userRestriction: UserRestriction
+}
+
+input ConsumeRuleInput {
+  initialOrderCount: InitialOrderCountInput
+  usageRestriction: UsageRestrictionInput
+  userRestriction: UserRestrictionInput
+}
+
+type Coupon {
+  code: String!
+  couponType: CouponType!
+  description: String!
+  exipreOn: Timestamp
+  id: ID!
+  metdata: Map
+  name: String!
+  planId: String!
+  value: Float!
+  valueType: ValueType!
+}
+
+input CouponInput {
+  code: String
+  couponType: CouponType
+  description: String
+  exipreOn: Timestamp
+  id: ID
+  metdata: Map
+  name: String
+  planId: String
+  value: Float
+  valueType: ValueType
+}
+
+enum CouponType {
+  """ONE_TIME"""
+  ONE_TIME
+
+  """Recurring"""
+  Recurring
+
+  """UNSPECIFIED_COUPON"""
+  UNSPECIFIED_COUPON
+}
+
+input CreateAcceptanceInput {
+  acceptance: AcceptanceInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateAcceptancePayload {
+  clientMutationId: String!
+  payload: Acceptance
+}
+
+input CreateAddonInput {
+  addon: AddonInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateAddonPayload {
+  clientMutationId: String!
+  payload: Addon
+}
+
+input CreateAppInput {
+  active: Boolean
+  appTypeId: String
+  clientMutationId: String
+  parent: String
+}
+
+input CreateAppointmentInput {
+  appointment: createAppointmentRequestAppointment
+  clientMutationId: String
+  leaseId: createAppointmentRequestLeaseId
+  parent: String
+  skipValidation: Boolean
+  userId: String
+  validateOnly: Boolean
+}
+
+type CreateAppointmentPayload {
+  clientMutationId: String!
+  payload: Appointment
+}
+
+input createAppointmentRequestAppointment {
+  appointment: AppointmentInput
+}
+
+input createAppointmentRequestLeaseId {
+  leaseId: String
+}
+
+type CreateAppPayload {
+  clientMutationId: String!
+  payload: App
+}
+
+input CreateAppTypeInput {
+  appType: AppTypeInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateAppTypePayload {
+  clientMutationId: String!
+  payload: AppType
+}
+
+input CreateAreaCodeInput {
+  areaCode: AreaCodeInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateAreaCodePayload {
+  clientMutationId: String!
+  payload: AreaCode
+}
+
+input CreateBillingAccountInput {
+  billingAccount: BillingAccountInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateBillingAccountPayload {
+  clientMutationId: String!
+  payload: BillingAccount
+}
+
+input CreateBillingPaymentMethodInput {
+  billingAccountId: String
+  clientMutationId: String
+  gateway: BillingPaymentGateway
+  parent: String
+  paymentMethodToken: String
+}
+
+type CreateBillingPaymentMethodPayload {
+  clientMutationId: String!
+  payload: BillingPaymentMethod
+}
+
+input CreateBlockHourRuleInput {
+  clientMutationId: String
+  locale: String
+  metadata: Map
+  parent: String
+  reason: String
+  recurrenceSet: [String]
+  resourceId: String
+  slotDurationInMinutes: Int
+  slots: [TimeslotInput]
+  title: String
+}
+
+type CreateBlockHourRulePayload {
+  clientMutationId: String!
+  payload: BlockHourRule
+}
+
+input CreateCardInput {
+  action: Action
+  clientMutationId: String
+  gateway: Gateway
+  locationId: String
+  sourceType: SourceType
+  token: String
+  userId: String
+}
+
+type CreateCardPayload {
+  clientMutationId: String!
+  payload: Card
+}
+
+input CreateCardPrerequisiteInput {
+  clientMutationId: String
+  gateway: Gateway
+  userId: String
+}
+
+type CreateCardPrerequisitePayload {
+  clientMutationId: String!
+  payload: CreateCardPrerequisiteResponse
+}
+
+type CreateCardPrerequisiteResponse {
+  intentSecret: String!
+}
+
+input CreateCategoryInput {
+  category: CategoryInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateCategoryPayload {
+  clientMutationId: String!
+  payload: Category
+}
+
+input CreateCertificateInput {
+  certificate: CertificateInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateCertificatePayload {
+  clientMutationId: String!
+  payload: Certificate
+}
+
+input CreateChannelInput {
+  channel: ChannelInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateChannelPayload {
+  clientMutationId: String!
+  payload: Channel
+}
+
+input CreateClassInput {
+  class: createClassRequestClass
+  clientMutationId: String
+  leaseId: createClassRequestLeaseId
+  parent: String
+}
+
+type CreateClassPayload {
+  clientMutationId: String!
+  payload: Class
+}
+
+input createClassRequestClass {
+  class: ClassInput
+}
+
+input createClassRequestLeaseId {
+  leaseId: String
+}
+
+input CreateClassTemplateInput {
+  classTemplate: ClassTemplateInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateClassTemplatePayload {
+  clientMutationId: String!
+  payload: ClassTemplate
+}
+
+input CreateCompanyInput {
+  clientMutationId: String
+  company: CompanyInput
+  parent: String
+}
+
+type CreateCompanyPayload {
+  clientMutationId: String!
+  payload: Company
+}
+
+input CreateCustomerInput {
+  clientMutationId: String
+  customer: CustomerInput
+  parent: String
+}
+
+type CreateCustomerPayload {
+  clientMutationId: String!
+  payload: Customer
+}
+
+input CreateCustomStatusInput {
+  clientMutationId: String
+  customStatus: CustomStatusInput
+  parent: String
+}
+
+type CreateCustomStatusPayload {
+  clientMutationId: String!
+  payload: CustomStatus
+}
+
+input CreateDepartmentInput {
+  clientMutationId: String
+  department: DepartmentInput
+  parent: String
+}
+
+type CreateDepartmentPayload {
+  clientMutationId: String!
+  payload: Department
+}
+
+input CreateDesignationInput {
+  clientMutationId: String
+  designation: DesignationInput
+  parent: String
+}
+
+type CreateDesignationPayload {
+  clientMutationId: String!
+  payload: Designation
+}
+
+input CreateDiscountInput {
+  clientMutationId: String
+  discount: DiscountInput
+  parent: String
+}
+
+type CreateDiscountPayload {
+  clientMutationId: String!
+  payload: Discount
+}
+
+input CreateFeedbackInput {
+  clientMutationId: String
+  feedback: FeedbackInput
+}
+
+type CreateFeedbackPayload {
+  clientMutationId: String!
+  payload: Feedback
+}
+
+input CreateFirstLocationInput {
+  address: AddressInput
+  clientMutationId: String
+  companySlug: String
+  description: String
+  emails: [String]
+  gallery: GalleryInput
+  locationSlug: String
+  metadata: Map
+  name: String
+  preferences: WizardLocationPreferenceInput
+  profession: String
+  telephones: [String]
+  website: String
+}
+
+type CreateFirstLocationPayload {
+  clientMutationId: String!
+  payload: CreateFirstLocationResponse
+}
+
+type CreateFirstLocationResponse {
+  companyId: String!
+  groupId: String!
+  locationId: String!
+}
+
+input CreateGiftCertificateInput {
+  clientMutationId: String
+  giftCertificate: GiftCertificateInput
+  parent: String
+}
+
+type CreateGiftCertificatePayload {
+  clientMutationId: String!
+  payload: GiftCertificate
+}
+
+input CreateGiftCertificateVariantInput {
+  clientMutationId: String
+  giftCertificateVariant: VariantInput
+  parent: String
+}
+
+type CreateGiftCertificateVariantPayload {
+  clientMutationId: String!
+  payload: Variant
+}
+
+input CreateIntakeFormInput {
+  clientMutationId: String
+  intakeForm: IntakeFormInput
+  parent: String
+}
+
+type CreateIntakeFormPayload {
+  clientMutationId: String!
+  payload: IntakeForm
+}
+
+input CreateIntakeFormSubmissionInput {
+  clientMutationId: String
+  intakeFormSubmission: IntakeFormSubmissionInput
+  parent: String
+}
+
+type CreateIntakeFormSubmissionPayload {
+  clientMutationId: String!
+  payload: IntakeFormSubmission
+}
+
+input CreateLocationInput {
+  clientMutationId: String
+  location: LocationInput
+  parent: String
+}
+
+type CreateLocationPayload {
+  clientMutationId: String!
+  payload: Location
+}
+
+input CreateMembershipInput {
+  clientMutationId: String
+  membership: MembershipInput
+  parent: String
+}
+
+type CreateMembershipPayload {
+  clientMutationId: String!
+  payload: Membership
+}
+
+input CreateNoteInput {
+  clientMutationId: String
+  note: NoteInput
+  parent: String
+  setPrivate: Boolean
+}
+
+type CreateNotePayload {
+  clientMutationId: String!
+  payload: Note
+}
+
+input CreateNotificationLogInput {
+  clientMutationId: String
+  notificationLog: NotificationLogInput
+}
+
+type CreateNotificationLogPayload {
+  clientMutationId: String!
+  payload: NotificationLog
+}
+
+input CreateOpenHourRuleInput {
+  clientMutationId: String
+  metadata: Map
+  openHours: [OpenHourInput]
+  parent: String
+  resourceIds: [String]
+  serviceRestriction: [ServiceRestrictionInput]
+  timezone: String
+}
+
+type CreateOpenHourRulePayload {
+  clientMutationId: String!
+  payload: CreateOpenHourRuleResponse
+}
+
+type CreateOpenHourRuleResponse {
+  openHourRules: [OpenHourRule!]!
+}
+
+input CreateOrderInput {
+  buyer: OrderBuyerInput
+  cartId: String
+  clientMutationId: String
+  items: [ItemInput]
+  orderType: OrderType
+  parent: String
+}
+
+type CreateOrderPayload {
+  clientMutationId: String!
+  payload: Order
+}
+
+input CreatePackagesInput {
+  clientMutationId: String
+  packages: PackagesInput
+  parent: String
+}
+
+type CreatePackagesPayload {
+  clientMutationId: String!
+  payload: Packages
+}
+
+input CreatePlanInput {
+  clientMutationId: String
+  parent: String
+  plan: PlanInput
+}
+
+type CreatePlanPayload {
+  clientMutationId: String!
+  payload: Plan
+}
+
+input CreatePolicyInput {
+  clientMutationId: String
+  parent: String
+  policy: PolicyInput
+}
+
+type CreatePolicyPayload {
+  clientMutationId: String!
+  payload: Policy
+}
+
+input CreatePolicyVersionInput {
+  clientMutationId: String
+  policyId: String
+  policyVersion: PolicyVersionInput
+}
+
+type CreatePolicyVersionPayload {
+  clientMutationId: String!
+  payload: Policy
+}
+
+input CreateProfessionCategoryInput {
+  clientMutationId: String
+  parent: String
+  professionCategory: ProfessionCategoryInput
+}
+
+type CreateProfessionCategoryPayload {
+  clientMutationId: String!
+  payload: ProfessionCategory
+}
+
+input CreateProfessionInput {
+  clientMutationId: String
+  profession: ProfessionInput
+}
+
+type CreateProfessionPayload {
+  clientMutationId: String!
+  payload: Profession
+}
+
+input CreateReplyInput {
+  clientMutationId: String
+  parent: String
+  reply: ReplyInput
+}
+
+type CreateReplyPayload {
+  clientMutationId: String!
+  payload: Reply
+}
+
+input CreateResourceInput {
+  clientMutationId: String
+  parent: String
+  resource: ResourceInput
+}
+
+type CreateResourcePayload {
+  clientMutationId: String!
+  payload: Resource
+}
+
+input CreateResourceRequestInput {
+  parent: String
+  resource: ResourceInput
+}
+
+input CreateResourceTypeInput {
+  clientMutationId: String
+  parent: String
+  resourceType: ResourceTypeInput
+}
+
+type CreateResourceTypePayload {
+  clientMutationId: String!
+  payload: ResourceType
+}
+
+input CreateReviewInput {
+  clientMutationId: String
+  review: ReviewInput
+}
+
+type CreateReviewPayload {
+  clientMutationId: String!
+  payload: Review
+}
+
+input CreateRightInput {
+  clientMutationId: String
+  userId: String
+}
+
+type CreateRightPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input CreateRoleInput {
+  clientMutationId: String
+  parent: String
+  role: RoleInput
+}
+
+type CreateRolePayload {
+  clientMutationId: String!
+  payload: Role
+}
+
+input CreateServiceInput {
+  clientMutationId: String
+  parent: String
+  service: ServiceInput
+}
+
+type CreateServicePayload {
+  clientMutationId: String!
+  payload: Service
+}
+
+input CreateServiceTemplateInput {
+  clientMutationId: String
+  parent: String
+  serviceTemplate: ServiceTemplateInput
+}
+
+type CreateServiceTemplatePayload {
+  clientMutationId: String!
+  payload: ServiceTemplate
+}
+
+input CreateShortenUrlInput {
+  clientMutationId: String
+  parent: String
+  shortenUrl: ShortenUrlInput
+}
+
+type CreateShortenUrlPayload {
+  clientMutationId: String!
+  payload: ShortenUrl
+}
+
+input CreateShortUrlInput {
+  clientMutationId: String
+  parent: String
+  shortUrl: ShortUrlInput
+}
+
+type CreateShortUrlPayload {
+  clientMutationId: String!
+  payload: ShortUrl
+}
+
+input CreateStaffProfileInput {
+  clientMutationId: String
+  parent: String
+  staffProfile: StaffProfileInput
+}
+
+type CreateStaffProfilePayload {
+  clientMutationId: String!
+  payload: StaffProfile
+}
+
+input CreateSubscriptionInput {
+  addons: [BillingAddonInput]
+  billingAccountId: String
+  clientMutationId: String
+  companyId: String
+  coupon: CouponInput
+  couponCode: String
+  gateway: BillingPaymentGateway
+  paymentMethodId: createSubscriptionRequestPaymentMethodId
+  planId: String
+  useDefaultPaymentMethod: createSubscriptionRequestUseDefaultPaymentMethod
+  validateOnly: Boolean
+}
+
+type CreateSubscriptionPayload {
+  clientMutationId: String!
+  payload: CreateSubscriptionResponse
+}
+
+input createSubscriptionRequestPaymentMethodId {
+  paymentMethodId: String
+}
+
+input createSubscriptionRequestUseDefaultPaymentMethod {
+  useDefaultPaymentMethod: Boolean
+}
+
+type CreateSubscriptionResponse {
+  amountDeducted: Price
+  balanceUsed: Price
+  planWalletId: String!
+}
+
+type Customer implements Node {
+  address: Address
+  birthDate: Timestamp
+  createdBy: String!
+  createdOn: Timestamp
+  email: String!
+  firstName: String!
+  gender: Gender!
+  id: ID!
+  invitedBy: String!
+  isInvitedByAdmin: Boolean!
+  lastName: String!
+  metadata: Map
+  parent: CustomerUnion
+  preferredLanguage: String!
+  profileImage: GalleryItem
+  tag: [String!]!
+  telephones: [String!]!
+  timezone: String!
+  updatedBy: String!
+  updatedOn: Timestamp
+  userId: String!
+}
+
+type CustomerFilters {
+  filters: [Filter!]!
+  id: ID!
+  userId: String!
+}
+
+type CustomerInfo {
+  customerId: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  userId: String!
+}
+
+input CustomerInfoInput {
+  customerId: String
+  email: String
+  firstName: String
+  lastName: String
+  userId: String
+}
+
+enum CustomerInformation {
+  """ADDRESS"""
+  ADDRESS
+
+  """CITY_STATE"""
+  CITY_STATE
+
+  """EMAIL"""
+  EMAIL
+
+  """FIRST_NAME"""
+  FIRST_NAME
+
+  """LAST_NAME"""
+  LAST_NAME
+
+  """MOBILE_NUMBER"""
+  MOBILE_NUMBER
+
+  """UNSPECIFIED_INFO"""
+  UNSPECIFIED_INFO
+
+  """ZIP"""
+  ZIP
+}
+
+input CustomerInput {
+  address: AddressInput
+  birthDate: Timestamp
+  createdBy: String
+  createdOn: Timestamp
+  email: String
+  firstName: String
+  gender: Gender
+  id: ID
+  invitedBy: String
+  isInvitedByAdmin: Boolean
+  lastName: String
+  metadata: Map
+  preferredLanguage: String
+  profileImage: GalleryItemInput
+  tag: [String]
+  telephones: [String]
+  timezone: String
+  updatedBy: String
+  updatedOn: Timestamp
+  userId: String
+}
+
+type CustomerNode {
+  cursor: String!
+  node: Customer
+}
+
+enum CustomerPaymentStatus {
+  """AUTHORIZED"""
+  AUTHORIZED
+
+  """PAID"""
+  PAID
+
+  """PARTIAL"""
+  PARTIAL
+
+  """PARTIAL_GC"""
+  PARTIAL_GC
+
+  """REFUNDED"""
+  REFUNDED
+
+  """UNPAID"""
+  UNPAID
+}
+
+type CustomerReport {
+  addedOn: Timestamp
+  arpa: Float!
+  customer: Customer
+  customerId: String!
+  id: ID!
+  lastActivityOn: Timestamp
+  lastAppointmentBookedOn: Timestamp
+  lastBookedOn: Timestamp
+  lastClassBookedOn: Timestamp
+  lastPurchasedOn: Timestamp
+  lastReviewedOn: Timestamp
+  ltv: Float!
+  totalAppointmentAmount: Price
+  totalAppointments: Int!
+  totalClassAmount: Price
+  totalClasses: Int!
+  totalGiftCertificateAmount: Price
+  totalGiftCertificates: Int!
+  totalMembershipAmount: Price
+  totalMemberships: Int!
+  totalPackageAmount: Price
+  totalPackages: Int!
+}
+
+type CustomerReportNode {
+  cursor: String!
+  node: CustomerReport
+}
+
+enum CustomerStatus {
+  """CANCELLED"""
+  CANCELLED
+
+  """CONFIRMED"""
+  CONFIRMED
+
+  """CUSTOMER_STATUS_UNSPECIFIED"""
+  CUSTOMER_STATUS_UNSPECIFIED
+}
+
+union CustomerUnion = Company | Location
+
+type CustomStatus {
+  customStatusType: CustomStatusType!
+  displayOrder: Int!
+  id: ID!
+  isDefault: Boolean!
+  name: String!
+}
+
+type CustomStatusAppointment {
+  customStatusId: String!
+  customStatusName: String!
+}
+
+input CustomStatusAppointmentInput {
+  customStatusId: String
+  customStatusName: String
+}
+
+input CustomStatusInput {
+  customStatusType: CustomStatusType
+  displayOrder: Int
+  id: ID
+  isDefault: Boolean
+  name: String
+}
+
+enum CustomStatusType {
+  """ALL"""
+  ALL
+
+  """APPOINTMENT"""
+  APPOINTMENT
+
+  """CLASS"""
+  CLASS
+
+  """UNDEFINED"""
+  UNDEFINED
+}
+
+enum DataCodeType {
+  """CUSTOMER_APPOINTMENT"""
+  CUSTOMER_APPOINTMENT
+
+  """EMAIL_VERIFICATION"""
+  EMAIL_VERIFICATION
+
+  """FORGOT_PASSWORD"""
+  FORGOT_PASSWORD
+
+  """REVIEW"""
+  REVIEW
+}
+
+type DataFill {
+  resourceTypes: [String!]!
+  services: [ServiceSuggestion!]!
+}
+
+input DataFillInput {
+  resourceTypes: [String]
+  services: [ServiceSuggestionInput]
+}
+
+type DataSuggestion {
+  resourceTypes: [String!]!
+  services: [ServiceSuggestion!]!
+}
+
+input DataSuggestionInput {
+  resourceTypes: [String]
+  services: [ServiceSuggestionInput]
+}
+
+type Dateslot {
+  endTime: Timestamp
+  startTime: Timestamp
+}
+
+input DateslotInput {
+  endTime: Timestamp
+  startTime: Timestamp
+}
+
+enum DayOfWeek {
+  """FRIDAY"""
+  FRIDAY
+
+  """MONDAY"""
+  MONDAY
+
+  """SATURDAY"""
+  SATURDAY
+
+  """SUNDAY"""
+  SUNDAY
+
+  """THURSDAY"""
+  THURSDAY
+
+  """TUESDAY"""
+  TUESDAY
+
+  """WEDNESDAY"""
+  WEDNESDAY
+}
+
+type DefaultAlias {
+  department: String!
+  designation: String!
+  service: String!
+  serviceProvider: String!
+}
+
+input DefaultAliasInput {
+  department: String
+  designation: String
+  service: String
+  serviceProvider: String
+}
+
+type DefaultCard {
+  card: Card
+  levelId: String!
+  type: DefaultCardAgainstType!
+}
+
+enum DefaultCardAgainstType {
+  """APPOINTMENT"""
+  APPOINTMENT
+
+  """BUSINESS"""
+  BUSINESS
+
+  """CLASS"""
+  CLASS
+
+  """LOCATION"""
+  LOCATION
+
+  """MEMBERSHIP_PURCHASE"""
+  MEMBERSHIP_PURCHASE
+
+  """ORDER"""
+  ORDER
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type DefaultLocalesResponse {
+  records: [Record!]!
+}
+
+input DeleteAddonInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteAddonPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteAppInput {
+  clientMutationId: String
+  id: ID
+}
+
+input DeleteAppointmentInput {
+  clientMutationId: String
+  id: ID
+  parent: String
+}
+
+type DeleteAppointmentPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type DeleteAppPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteAreaCodeInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteAreaCodePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteBenefitFromMembershipInput {
+  benefitBagId: String
+  clientMutationId: String
+  membershipId: String
+}
+
+type DeleteBenefitFromMembershipPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteBillingAccountInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteBillingAccountPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteBillingPaymentMethodInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteBillingPaymentMethodPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteBlockHourRuleInput {
+  blockHourRuleId: String
+  clientMutationId: String
+  slotIds: [String]
+}
+
+type DeleteBlockHourRulePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteCardInput {
+  action: Action
+  cardId: String
+  clientMutationId: String
+  gateway: Gateway
+  locationId: String
+  userId: String
+}
+
+type DeleteCardPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteCartInput {
+  clientMutationId: String
+  id: ID
+}
+
+input DeleteCartItemInput {
+  cartId: String
+  clientMutationId: String
+  itemId: String
+}
+
+type DeleteCartItemPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type DeleteCartPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteCategoryInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteCategoryPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteCertificateInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteCertificatePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteChannelInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteChannelPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteClassTemplateInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteClassTemplatePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteCompanyInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteCompanyPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteCustomerInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteCustomerPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteCustomStatusInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteCustomStatusPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteDepartmentInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteDepartmentPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteDesignationInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteDesignationPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteDiscountInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteDiscountPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteEmployeeInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteEmployeePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteGiftCertificateInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteGiftCertificatePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteGiftCertificateVariantInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteGiftCertificateVariantPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteGroupInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteGroupPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteIntakeFormGroupInput {
+  clientMutationId: String
+  groupId: String
+  parent: String
+}
+
+type DeleteIntakeFormGroupPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteIntakeFormInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteIntakeFormPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteLocationInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteLocationPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteMembershipInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteMembershipPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteNoteInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteNotePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteOpenHourRuleInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteOpenHourRulePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteOpenHourSlotsBetweenDurationInput {
+  clientMutationId: String
+  recurrenceId: String
+  ruleId: String
+  start: Timestamp
+  until: Timestamp
+}
+
+type DeleteOpenHourSlotsBetweenDurationPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeletePackagesInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeletePackagesPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeletePlanInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeletePlanPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteResourceInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteResourcePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteResourceTypeInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteResourceTypePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteRoleInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteRolePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteServiceInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteServicePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteServiceRestrictionsInput {
+  clientMutationId: String
+  ruleId: String
+  serviceId: [String]
+}
+
+type DeleteServiceRestrictionsPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteServiceTemplateInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteServiceTemplatePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteShortenUrlInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteShortenUrlPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteShortUrlInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteShortUrlPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteSingleSlotInput {
+  clientMutationId: String
+  openHourRuleId: String
+  slotId: String
+}
+
+type DeleteSingleSlotPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteStaffProfileInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteStaffProfilePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type Department implements Node {
+  description: String!
+  id: ID!
+  metadata: Map
+  name: String!
+}
+
+input DepartmentInput {
+  description: String
+  id: ID
+  metadata: Map
+  name: String
+}
+
+type Designation implements Node {
+  description: String!
+  id: ID!
+  metadata: Map
+  name: String!
+}
+
+input DesignationInput {
+  description: String
+  id: ID
+  metadata: Map
+  name: String
+}
+
+type Discount {
+  code: String!
+  description: String!
+  discountType: DiscountType!
+  discountValue: Float!
+  discountableItemIds: [String!]!
+  enabled: Boolean!
+  id: ID!
+  items: [ItemUnion!]!
+  restriction: Restriction
+  title: String!
+}
+
+type Discountables {
+  discount: Price
+  itemId: String!
+  transactionId: String!
+}
+
+input DiscountInput {
+  code: String
+  description: String
+  discountType: DiscountType
+  discountValue: Float
+  discountableItemIds: [String]
+  enabled: Boolean
+  id: ID
+  restriction: RestrictionInput
+  title: String
+}
+
+type DiscountNode {
+  cursor: String!
+  node: Discount
+}
+
+type DiscountOffer {
+  discountOffer: UnionDiscountOfferDiscountOffer
+}
+
+type DiscountOffer_AmountOff {
+  amountOff: Price
+}
+
+type DiscountOffer_PercentageOff {
+  percentageOff: Float!
+}
+
+type DiscountRestrictionRecurrenceRule {
+  recurrence: [String!]!
+  slots: Timeslot
+}
+
+input DiscountRestrictionRecurrenceRuleInput {
+  recurrence: [String]
+  slots: TimeslotInput
+}
+
+enum DiscountType {
+  """FIXED"""
+  FIXED
+
+  """PERCENTAGE"""
+  PERCENTAGE
+}
+
+enum DiscountUsingType {
+  """USE_ITEMS_DISCOUNT"""
+  USE_ITEMS_DISCOUNT
+
+  """USE_OVERALL_DISCOUNT"""
+  USE_OVERALL_DISCOUNT
+}
+
+type DistributedRating {
+  averageRating: Float!
+  ratingName: String!
+  totalUsers: Int!
+}
+
+input DropOutClassInput {
+  clientMutationId: String
+  customerId: String
+  id: ID
+  reason: String
+}
+
+type DropOutClassPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DropOutSessionInput {
+  classId: String
+  clientMutationId: String
+  customerId: String
+  id: ID
+  reason: String
+}
+
+type DropOutSessionPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+scalar Duration
+
+enum EmailClient {
+  """AWS_SES"""
+  AWS_SES
+
+  """UNSPECIFIED_EMAIL_CLIENT"""
+  UNSPECIFIED_EMAIL_CLIENT
+}
+
+type EmailConfiguration {
+  accessKeyId: String!
+  emailClient: EmailClient!
+  id: ID!
+  region: String!
+  secretAccessKey: String!
+  senderEmail: String!
+}
+
+input EmailConfigurationInput {
+  accessKeyId: String
+  emailClient: EmailClient
+  id: ID
+  region: String
+  secretAccessKey: String
+  senderEmail: String
+}
+
+enum EmailProvider {
+  """AZURE"""
+  AZURE
+
+  """DEFAULT"""
+  DEFAULT
+
+  """MAILCHIMP"""
+  MAILCHIMP
+
+  """SES"""
+  SES
+}
+
+type EmailSetting {
+  active: Boolean!
+  blockedTypes: [Int!]!
+  emailService: EmailProvider!
+  id: ID!
+  mandatoryTypes: [Int!]!
+}
+
+input EmailSettingInput {
+  active: Boolean
+  blockedTypes: [Int]
+  emailService: EmailProvider
+  id: ID
+  mandatoryTypes: [Int]
+}
+
+type Employee implements Node {
+  active: Boolean!
+  createdBy: String!
+  createdOn: Timestamp
+  department: Department
+  departmentId: String!
+  designation: Designation
+  designationId: String!
+  displayOrder: Int!
+  email: String!
+  employeeNumber: String!
+  firstName: String!
+  gender: Gender!
+  hireDate: Timestamp
+  id: ID!
+  internal: Boolean!
+  isInvitationAccepted: Boolean!
+  lastName: String!
+  metadata: Map
+  phoneNumber: String!
+  profileIds: [String!]!
+  profileImage: GalleryItem
+  provideServices: Boolean!
+  slug: String!
+  staffProfiles: [StaffProfile!]!
+  timeZone: String!
+  updatedBy: String!
+  updatedOn: Timestamp
+  userId: String!
+}
+
+input EmployeeFilterInput {
+  department: String
+  designation: String
+}
+
+input EmployeeInput {
+  active: Boolean
+  createdBy: String
+  createdOn: Timestamp
+  departmentId: String
+  designationId: String
+  displayOrder: Int
+  email: String
+  employeeNumber: String
+  firstName: String
+  gender: Gender
+  hireDate: Timestamp
+  id: ID
+  internal: Boolean
+  isInvitationAccepted: Boolean
+  lastName: String
+  metadata: Map
+  phoneNumber: String
+  profileIds: [String]
+  profileImage: GalleryItemInput
+  provideServices: Boolean
+  slug: String
+  timeZone: String
+  updatedBy: String
+  updatedOn: Timestamp
+  userId: String
+}
+
+type EmployeeNode {
+  cursor: String!
+  node: Employee
+}
+
+type EmployeeReportData {
+  createdBy: String!
+  createdOn: Timestamp
+  departmentDescription: String!
+  departmentId: String!
+  departmentName: String!
+  designationDescription: String!
+  designationId: String!
+  designationName: String!
+  email: String!
+  employeeNumber: String!
+  firstName: String!
+  gender: Gender!
+  hireDate: Timestamp
+  id: ID!
+  isInvitationAccepted: Boolean!
+  lastName: String!
+  metadata: Map
+  phoneNumber: String!
+  profileImage: GalleryItem
+  updatedBy: String!
+  updatedOn: Timestamp
+  userId: String!
+}
+
+type EmployeeReportNode {
+  cursor: String!
+  node: EmployeeReportData
+}
+
+type EmployeeSetting {
+  changeMask: FieldMask
+  enableDraft: Boolean!
+  id: ID!
+}
+
+input EmployeeSettingInput {
+  changeMask: FieldMaskInput
+  enableDraft: Boolean
+  id: ID
+}
+
+type EmployeeUserRole {
+  levelId: String!
+  role: Role
+  roleId: String!
+}
+
+input EmployeeUserRoleInput {
+  levelId: String
+  roleId: String
+}
+
+scalar Empty
+
+type Feature {
+  enabled: Boolean!
+  id: ID!
+  name: String!
+}
+
+input FeatureInput {
+  enabled: Boolean
+  id: ID
+  name: String
+}
+
+type FeatureNotification {
+  addedOn: Timestamp
+  appTypeId: String!
+  featureName: String!
+  id: ID!
+  moduleName: String!
+  professionId: String!
+  professionName: String!
+  read: Boolean!
+  readOn: Timestamp
+  userId: String!
+}
+
+type FeatureNotificationNode {
+  node: FeatureNotification
+  position: String!
+}
+
+type Feedback {
+  feedbackType: FeedbackType!
+  id: ID!
+  image: String!
+  message: String!
+  moduleName: String!
+  source: AppSource!
+  submittedBy: String!
+  submittedOn: Timestamp
+}
+
+input FeedbackInput {
+  feedbackType: FeedbackType
+  id: ID
+  image: String
+  message: String
+  moduleName: String
+  source: AppSource
+  submittedBy: String
+  submittedOn: Timestamp
+}
+
+enum FeedbackType {
+  """BUG"""
+  BUG
+
+  """GENERAL"""
+  GENERAL
+
+  """IDEA"""
+  IDEA
+}
+
+type FieldMask {
+  paths: [String!]!
+}
+
+input FieldMaskInput {
+  paths: [String]
+}
+
+type Filter {
+  filter: String!
+  name: String!
+}
+
+input FilterInput {
+  filter: String
+  name: String
+}
+
+enum Frequency {
+  """DAILY"""
+  DAILY
+
+  """MONTHLY"""
+  MONTHLY
+
+  """ONCE"""
+  ONCE
+
+  """WEEKLY"""
+  WEEKLY
+
+  """YEARLY"""
+  YEARLY
+}
+
+type Gallery {
+  default: GalleryItem
+  images: [GalleryItem!]!
+}
+
+input GalleryInput {
+  default: GalleryItemInput
+  images: [GalleryItemInput]
+}
+
+type GalleryItem {
+  largeImage: String!
+  thumbImage: String!
+}
+
+input GalleryItemInput {
+  largeImage: String
+  thumbImage: String
+}
+
+enum Gateway {
+  """NO_GATEWAY"""
+  NO_GATEWAY
+
+  """SQUARE_GATEWAY"""
+  SQUARE_GATEWAY
+
+  """STRIPE_GATEWAY"""
+  STRIPE_GATEWAY
+}
+
+type GatewayCard {
+  customerId: String!
+  defaultCards: [DefaultCard!]!
+  gateway: Gateway!
+}
+
+enum Gender {
+  """FEMALE"""
+  FEMALE
+
+  """MALE"""
+  MALE
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+input GenerateCodeInput {
+  clientMutationId: String
+  data: String
+  dataCodeType: DataCodeType
+  userId: String
+  validTill: Timestamp
+}
+
+type GenerateCodePayload {
+  clientMutationId: String!
+  payload: GenerateCodeResponse
+}
+
+type GenerateCodeResponse {
+  code: String!
+}
+
+type GeneratePayLinkResponse {
+  link: String!
+}
+
+type GetAssignedUsersByRoleResponse {
+  edges: [UserRoleNode!]!
+  pageInfo: PageInfo
+}
+
+type GetClassAvailabilityOfDateRangeResponse {
+  availabilities: Map
+}
+
+type GetClassAvailabilityOfDateResponse {
+  classes: [Class!]!
+}
+
+input GetCouponByCodeInput {
+  clientMutationId: String
+  code: String
+  planId: String
+  viewMask: FieldMaskInput
+}
+
+type GetCouponByCodePayload {
+  clientMutationId: String!
+  payload: Coupon
+}
+
+type GetDataFromCodeResponse {
+  data: String!
+  used: Boolean!
+  userId: String!
+}
+
+type GetEmployeeReportResponse {
+  edges: [EmployeeReportNode!]!
+  pageInfo: PageInfo
+}
+
+type GetFilteredCustomersResponse {
+  edges: [CustomerReportNode!]!
+  pageInfo: PageInfo
+}
+
+type GetInvitedUsersResponse {
+  invitedUsers: [InvitedUser!]!
+}
+
+type GetNoteByTypeResponse {
+  notes: [Note!]!
+}
+
+type GetPaymentGatewayPublicKeyResponse {
+  publicKey: String!
+}
+
+type GetPaymentMethodIntentResponse {
+  intent: String!
+}
+
+type GetPolicyResponse {
+  policy: Policy
+  sourceId: [String!]!
+}
+
+type GetServicePriceValueResponse {
+  price: Price
+  serviceId: String!
+}
+
+type GetUrlInfoResponse {
+  baseUrl: String!
+  companyId: String!
+  employeeId: String!
+  locationId: String!
+  resourceId: String!
+}
+
+type GetUsersByLevelIdResponse {
+  edges: [UserRoleNode!]!
+  pageInfo: PageInfo
+  users: [UserProfile!]!
+}
+
+input GetUsersByLevelInput {
+  clientMutationId: String
+  levelId: String
+}
+
+type GetUsersByLevelPayload {
+  clientMutationId: String!
+  payload: GetUsersByLevelResponse
+}
+
+type GetUsersByLevelResponse {
+  roles: [UserRole!]!
+}
+
+type GetUsersHavingAccessByParentResponse {
+  userIds: [String!]!
+}
+
+type GetWizardPositionResponse {
+  wizardPosition: Int!
+}
+
+type GiftCertificate {
+  gallery: Gallery
+  id: ID!
+  metadata: Map
+  name: String!
+  variants: [Variant!]!
+}
+
+type GiftCertificateBuyer {
+  email: String!
+  id: ID!
+  name: String!
+}
+
+input GiftCertificateBuyerInput {
+  email: String
+  id: ID
+  name: String
+}
+
+type GiftCertificateConsumer {
+  email: String!
+  id: ID!
+  name: String!
+}
+
+input GiftCertificateConsumerInput {
+  email: String
+  id: ID
+  name: String
+}
+
+input GiftCertificateInput {
+  gallery: GalleryInput
+  id: ID
+  metadata: Map
+  name: String
+  variants: [VariantInput]
+}
+
+type GiftCertificateNode {
+  cursor: String!
+  node: GiftCertificate
+}
+
+type GiftCertificateRestriction {
+  expireDuration: Duration
+}
+
+input GiftCertificateRestrictionInput {
+  expireDuration: Duration
+}
+
+type GiftCertificateWalletItem {
+  balance: Price
+  buyer: GiftCertificateBuyer
+  consumer: GiftCertificateConsumer
+  giftcertificate: GiftCertificate
+  id: ID!
+  transactions: [GiftCertificateWalletTransaction!]!
+  variantId: String!
+  walletCreatedOn: Timestamp
+}
+
+input GiftCertificateWalletItemInput {
+  balance: PriceInput
+  buyer: GiftCertificateBuyerInput
+  consumer: GiftCertificateConsumerInput
+  giftcertificate: GiftCertificateInput
+  id: ID
+  transactions: [GiftCertificateWalletTransactionInput]
+  variantId: String
+  walletCreatedOn: Timestamp
+}
+
+type GiftCertificateWalletTransaction {
+  amount: Price
+  externalTransactionId: String!
+  id: ID!
+  transactionCreatedBy: String!
+  transactionCreatedOn: Timestamp
+  transactionType: TransactionType!
+  walletItemId: String!
+}
+
+input GiftCertificateWalletTransactionInput {
+  amount: PriceInput
+  externalTransactionId: String
+  id: ID
+  transactionCreatedBy: String
+  transactionCreatedOn: Timestamp
+  transactionType: TransactionType
+  walletItemId: String
+}
+
+type GiftCertitificateListTransactionResponse {
+  transactions: [GiftCertificateWalletTransaction!]!
+}
+
+type GiftCertitificateListWalletItemResponse {
+  edges: [GiftCertitificateWalletItemNode!]!
+  pageInfo: PageInfo
+}
+
+type GiftCertitificateWalletItemNode {
+  cursor: String!
+  node: GiftCertificateWalletItem
+}
+
+type Group implements Node {
+  appointments(after: String, before: String, first: Int, last: Int): ListAppointmentResponse
+  companies: [Company!]!
+  description: String!
+  id: ID!
+  locations(after: String, before: String, first: Int, last: Int): ListLocationResponse
+  metadata: Map
+  name: String!
+  services(after: String, before: String, first: Int, last: Int): ListServiceResponse
+}
+
+input GroupInput {
+  description: String
+  id: ID
+  metadata: Map
+  name: String
+}
+
+type InitialOrderCount {
+  quantity: Int!
+}
+
+input InitialOrderCountInput {
+  quantity: Int
+}
+
+type IntakeForm {
+  data: Map
+  description: String!
+  groupId: String!
+  id: ID!
+  metadata: Map
+  name: String!
+  version: Int!
+}
+
+input IntakeFormInput {
+  data: Map
+  description: String
+  groupId: String
+  id: ID
+  metadata: Map
+  name: String
+  version: Int
+}
+
+type IntakeFormSubmission {
+  data: Map
+  groupId: String!
+  id: ID!
+  locationId: String!
+  locations: Location
+  submissionDate: Timestamp
+  userId: String!
+  userProfile: UserProfile
+  version: Int!
+}
+
+input IntakeFormSubmissionInput {
+  data: Map
+  groupId: String
+  id: ID
+  locationId: String
+  submissionDate: Timestamp
+  userId: String
+  version: Int
+}
+
+type IntegrationToken {
+  active: Boolean!
+  appTypeId: String!
+  deviceId: String!
+  id: ID!
+  integrationType: IntegrationType!
+  metadata: Map
+  targetId: String!
+}
+
+enum IntegrationType {
+  """FIREBASE"""
+  FIREBASE
+
+  """GOOGLECALENDAR"""
+  GOOGLECALENDAR
+
+  """GOOGLE_BUSINESS_REVIEW"""
+  GOOGLE_BUSINESS_REVIEW
+
+  """OTHERS"""
+  OTHERS
+
+  """OUTLOOK"""
+  OUTLOOK
+
+  """QUICKBOOKS"""
+  QUICKBOOKS
+
+  """STRIPE"""
+  STRIPE
+
+  """UNKNOWN_TYPE"""
+  UNKNOWN_TYPE
+
+  """YELP"""
+  YELP
+}
+
+type InvitedUser {
+  levelId: String!
+  userEmail: String!
+  userId: String!
+  userRole: UserRole
+}
+
+input InviteEmployeeInput {
+  clientMutationId: String
+  employee: EmployeeInput
+  groupId: String
+  language: String
+  locationIds: [String]
+  parent: String
+  timeZone: String
+  userRoles: [EmployeeUserRoleInput]
+}
+
+type InviteEmployeePayload {
+  clientMutationId: String!
+  payload: InviteEmployeeResponse
+}
+
+type InviteEmployeeResponse {
+  employee: Employee
+  userRoles: [EmployeeUserRole!]!
+}
+
+input InviteUserToRoleInput {
+  clientMutationId: String
+  email: String
+  language: String
+  roles: [UserRoleRoleInput]
+  timezone: String
+}
+
+type InviteUserToRolePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type Invoice {
+  company: InvoiceCompany
+  createdBy: String!
+  createdOn: Timestamp
+  deletedBy: String!
+  deletedOn: Timestamp
+  discountOffer: DiscountOffer
+  discountUsingType: DiscountUsingType!
+  discountValue: Price
+  dueAmount: Price
+  dueDate: Timestamp
+  id: ID!
+  invoiceDate: Timestamp
+  invoiceNumber: String!
+  invoiceType: InvoiceType!
+  isDeleted: Boolean!
+  items: [InvoiceItem!]!
+  notes: String!
+  paidDate: Timestamp
+  paymentMethod: InvoicePaymentMethod
+  referenceNumber: String!
+  sent: Boolean!
+  status: InvoiceStatus!
+  subTotal: Price
+  taxes: [Tax!]!
+  total: Price
+  updatedBy: String!
+  updatedOn: Timestamp
+  user: InvoiceUser
+}
+
+type InvoiceCompany {
+  address: Address
+  email: String!
+  id: ID!
+  logo: String!
+  name: String!
+  phone: String!
+}
+
+type InvoiceItem {
+  description: String!
+  discountAmount: Price
+  discountOffer: DiscountOffer
+  finalPrice: Price
+  invoiceId: String!
+  itemId: String!
+  itemPrice: Price
+  name: String!
+  paidFor: Int!
+  quantity: Int!
+  quantityFactor: Int!
+  validityInDays: Int!
+}
+
+type InvoiceNode {
+  cursor: String!
+  node: Invoice
+}
+
+type InvoicePaymentMethod {
+  cardType: String!
+  expiry: String!
+  externalCardId: String!
+  externalCustomerId: String!
+  gateway: BillingPaymentGateway!
+  id: ID!
+  lastFour: String!
+  metadata: Map
+  name: String!
+  paypalEmail: String!
+}
+
+enum InvoiceStatus {
+  """COMPLETED"""
+  COMPLETED
+
+  """DRAFT"""
+  DRAFT
+
+  """OVERDUE"""
+  OVERDUE
+
+  """PAID"""
+  PAID
+
+  """PARTIALLY_PAID"""
+  PARTIALLY_PAID
+
+  """SENT"""
+  SENT
+
+  """UNKNOWN"""
+  UNKNOWN
+
+  """UNPAID"""
+  UNPAID
+
+  """VIEWED"""
+  VIEWED
+}
+
+enum InvoiceType {
+  """BUSINESS"""
+  BUSINESS
+
+  """CUSTOMER"""
+  CUSTOMER
+
+  """UNDEFINED"""
+  UNDEFINED
+}
+
+type InvoiceUser {
+  address: Address
+  email: String!
+  firstName: String!
+  id: ID!
+  lastName: String!
+}
+
+type IpInformation {
+  city: String!
+  continent: String!
+  country: String!
+  countryIsoCode: String!
+  latitude: Float!
+  longitude: Float!
+  postalCode: String!
+  state: String!
+  stateIsoCode: String!
+  timezone: String!
+}
+
+input itemAppointmentId {
+  appointmentId: String
+}
+
+type ItemBag {
+  id: ID!
+  item: PackageItem
+  overrideMask: FieldMask
+  restriction: PackageRestriction
+}
+
+input ItemBagInput {
+  id: ID
+  item: PackageItemInput
+  overrideMask: FieldMaskInput
+  restriction: PackageRestrictionInput
+}
+
+input itemCartItem {
+  cartItem: CartItemInOrderInput
+}
+
+type ItemContent {
+  data: UnionItemContentData
+}
+
+type ItemContent_AppointmentId {
+  appointmentId: String!
+}
+
+type ItemContent_Item {
+  item: Protobuf
+}
+
+input itemCustomersCustomer {
+  customer: OrderItemCustomerInput
+}
+
+input itemCustomersCustomerId {
+  customerId: String
+}
+
+input ItemCustomersInput {
+  itemCustomersCustomer: itemCustomersCustomer
+  itemCustomersCustomerId: itemCustomersCustomerId
+}
+
+input ItemInput {
+  actions: Map
+  customers: [ItemCustomersInput]
+  description: String
+  image: String
+  itemAppointmentId: itemAppointmentId
+  itemCartItem: itemCartItem
+  itemType: ItemType
+  metadata: Map
+  subTitle: String
+  templateData: Map
+  title: String
+}
+
+enum ItemType {
+  """APPOINTMENT"""
+  APPOINTMENT
+
+  """CLASS"""
+  CLASS
+
+  """UNKNOWN"""
+  UNKNOWN
+}
+
+union ItemUnion = Service
+
+type License {
+  description: String!
+  id: ID!
+  licenseName: String!
+  moduleLicenses: [ModuleLicenses!]!
+}
+
+type LicenseWallet {
+  billingPlanWallet: BillingPlanWallet
+  billingPlanWalletId: String!
+  companyId: String!
+  consumptionCycle: Timeslot
+  id: ID!
+  license: License
+}
+
+type Link {
+  firstResourceId: String!
+  linkType: String!
+  secondResourceId: String!
+}
+
+input LinkInput {
+  firstResourceId: String
+  linkType: String
+  secondResourceId: String
+}
+
+type LinkLists {
+  firstResources: [Node!]!
+  links: [Link!]!
+  secondResources: [Node!]!
+}
+
+type ListAcceptanceResponse {
+  edges: [AcceptanceNode!]!
+  pageInfo: PageInfo
+}
+
+type ListAddonResponse {
+  addon: [Addon!]!
+}
+
+input listAllLinksOfParentRequestFirstResourceParent {
+  firstResourceParent: String
+}
+
+input listAllLinksOfParentRequestSecondResourceParent {
+  secondResourceParent: String
+}
+
+input listAppointmentRequestCustomerId {
+  customerId: String
+}
+
+input listAppointmentRequestEmployeeId {
+  employeeId: String
+}
+
+input listAppointmentRequestQuery {
+  query: String
+}
+
+type ListAppointmentResponse {
+  edges: [AppointmentNode!]!
+  pageInfo: PageInfo
+}
+
+type ListAppointmentsForCalendarResponse {
+  appointments: [Appointment!]!
+}
+
+type ListAppResponse {
+  app: [App!]!
+}
+
+type ListAppTypeResponse {
+  appType: [AppType!]!
+}
+
+type ListAreaCodeResponse {
+  areaCode: [AreaCode!]!
+}
+
+input listBillingAccountRequestCompanyId {
+  companyId: String
+}
+
+input listBillingAccountRequestLocationId {
+  locationId: String
+}
+
+type ListBillingAccountResponse {
+  billingAccount: [BillingAccount!]!
+}
+
+type ListBillingMembershipResponse {
+  billingMembership: [BillingMembership!]!
+}
+
+type ListBillingPaymentMethodResponse {
+  billingPaymentMethod: [BillingPaymentMethod!]!
+}
+
+type ListBillingPlanResponse {
+  billingPlan: [BillingPlan!]!
+}
+
+type ListBillingPlanWalletResponse {
+  billingPlanWallet: [BillingPlanWallet!]!
+}
+
+input listBlockHourRuleBetweenDurationRequestParent {
+  parent: String
+}
+
+input listBlockHourRuleBetweenDurationRequestResourceId {
+  resourceId: String
+}
+
+type ListBlockHourRuleBetweenDurationResponse {
+  blockHours: [BlockHourRule!]!
+}
+
+input listBlockHourRuleRequestParent {
+  parent: String
+}
+
+input listBlockHourRuleRequestResourceId {
+  resourceId: String
+}
+
+type ListBlockHourRuleResponse {
+  edges: [BlockHourRuleNode!]!
+  pageInfo: PageInfo
+}
+
+type ListBlockHourRulesForCalendarResponse {
+  blockHours: [BlockHourRule!]!
+}
+
+type ListCategoryResponse {
+  category: [Category!]!
+}
+
+type ListCertificateResponse {
+  edges: [CertificateNode!]!
+  pageInfo: PageInfo
+}
+
+type ListChannelResponse {
+  channel: [Channel!]!
+}
+
+input listClassesRequestCustomerId {
+  customerId: String
+}
+
+input listClassesRequestParent {
+  parent: String
+}
+
+input listClassesRequestServiceProviderId {
+  serviceProviderId: String
+}
+
+type ListClassesResponse {
+  edges: [ClassNode!]!
+  pageInfo: PageInfo
+}
+
+type ListClassTemplateResponse {
+  edges: [ClassTemplateNode!]!
+  pageInfo: PageInfo
+}
+
+type ListCompanyResponse {
+  edges: [CompanyNode!]!
+  pageInfo: PageInfo
+}
+
+type ListCustomerResponse {
+  edges: [CustomerNode!]!
+  pageInfo: PageInfo
+}
+
+type ListCustomStatusResponse {
+  customStatus: [CustomStatus!]!
+}
+
+type ListDatesResponse {
+  available: Map
+}
+
+type ListDefaultRoleResponse {
+  role: [Role!]!
+}
+
+type ListDepartmentResponse {
+  department: [Department!]!
+}
+
+type ListDesignationResponse {
+  designation: [Designation!]!
+}
+
+type ListDiscountResponse {
+  edges: [DiscountNode!]!
+  pageInfo: PageInfo
+}
+
+type ListEmployeeByLocationResponse {
+  employees: [Employee!]!
+}
+
+type ListEmployeeResponse {
+  edges: [EmployeeNode!]!
+  pageInfo: PageInfo
+}
+
+type ListEmployeesByUserIdResponse {
+  employees: [Employee!]!
+}
+
+type ListFeatureNotificationResponse {
+  nodes: [FeatureNotificationNode!]!
+  pageInfo: PageInfo
+}
+
+type ListGiftCertificateResponse {
+  edges: [GiftCertificateNode!]!
+  pageInfo: PageInfo
+}
+
+type ListIntakeFormResponse {
+  intakeForm: [IntakeForm!]!
+}
+
+input listIntakeFormSubmissionRequestGroupId {
+  groupId: String
+}
+
+input listIntakeFormSubmissionRequestIntakeFormId {
+  intakeFormId: String
+}
+
+type ListIntakeFormSubmissionResponse {
+  intakeFormSubmission: [IntakeFormSubmission!]!
+}
+
+type ListIntegrationsResponse {
+  integrations: [IntegrationToken!]!
+  targetId: String!
+}
+
+type ListInvitedUserResponse {
+  edges: [UserRoleIdNode!]!
+  pageInfo: PageInfo
+}
+
+type ListInvoiceResponse {
+  edges: [InvoiceNode!]!
+  pageInfo: PageInfo
+}
+
+type ListLicenseResponse {
+  license: [License!]!
+}
+
+input listLinksRequestFirstResourceId {
+  firstResourceId: String
+}
+
+input listLinksRequestSecondResourceId {
+  secondResourceId: String
+}
+
+type ListLinkTypesResponse {
+  linkTypes: [String!]!
+}
+
+type ListLocationResponse {
+  edges: [LocationNode!]!
+  pageInfo: PageInfo
+}
+
+type ListMembershipResponse {
+  edges: [MembershipNode!]!
+  pageInfo: PageInfo
+}
+
+type ListModuleLicenseResponse {
+  moduleLicense: [ModuleLicense!]!
+  moduleLicenseMap: Map
+}
+
+type ListModuleRoleResponse {
+  moduleRole: [ModuleRole!]!
+  moduleRoleMap: Map
+}
+
+type ListNoteResponse {
+  edges: [NoteNode!]!
+  pageInfo: PageInfo
+}
+
+type ListNotificationLogResponse {
+  hasNext: Boolean!
+  lastPageId: String!
+  notificationLogs: [NotificationLog!]!
+}
+
+type ListNotificationPreferenceResponse {
+  notificationPreference: [NotificationPreference!]!
+}
+
+type ListNotificationReceiverResponse {
+  notificationReceiver: [NotificationReceiver!]!
+}
+
+type ListNotificationTemplateResponse {
+  template: [NotificationTemplate!]!
+}
+
+type ListOpenHourRuleResponse {
+  edges: [OpenHourRuleNode!]!
+  pageInfo: PageInfo
+}
+
+type ListOpenHourRulesForCalendarResponse {
+  openHours: [OpenHourRule!]!
+}
+
+type ListOrderResponse {
+  edges: [OrderNode!]!
+  pageInfo: PageInfo
+}
+
+input ListOrdersByUserInput {
+  after: String
+  before: String
+  clientMutationId: String
+  first: Int
+  last: Int
+  location: String
+  orderStatus: OrderStatus
+  userId: String
+  viewMask: FieldMaskInput
+}
+
+type ListOrdersByUserPayload {
+  clientMutationId: String!
+  payload: ListOrderResponse
+}
+
+type ListPackagesResponse {
+  edges: [PackagesNode!]!
+  pageInfo: PageInfo
+}
+
+type ListPlanResponse {
+  edges: [PlanNode!]!
+  pageInfo: PageInfo
+}
+
+type ListPoliciesResponse {
+  list: [PolicyWrapper!]!
+}
+
+type ListProfessionCategoryResponse {
+  professionCategory: [ProfessionCategory!]!
+}
+
+type ListProfessionResponse {
+  profession: [Profession!]!
+}
+
+type ListReplyResponse {
+  reply: [Reply!]!
+}
+
+type ListResourceResponse {
+  edges: [ResourceNode!]!
+  pageInfo: PageInfo
+}
+
+type ListResourceTypeResponse {
+  resourceType: [ResourceType!]!
+}
+
+type ListResponse {
+  records: [Record!]!
+}
+
+type ListReviewHelpfulResponse {
+  edges: [ReviewHelpfulNode!]!
+  pageInfo: PageInfo
+}
+
+type ListReviewResponse {
+  edges: [ReviewNode!]!
+  pageInfo: PageInfo
+}
+
+type ListRoleResponse {
+  role: [Role!]!
+}
+
+type ListServiceResponse {
+  edges: [ServiceNode!]!
+  pageInfo: PageInfo
+}
+
+type ListServiceTemplateResponse {
+  serviceTemplate: [ServiceTemplate!]!
+}
+
+type ListShortenUrlResponse {
+  shortenUrl: [ShortenUrl!]!
+}
+
+type ListShortUrlResponse {
+  shortUrl: [ShortUrl!]!
+}
+
+type ListSlotsResponse {
+  slotRules: [SlotRule!]!
+  slots: [AvailabilitySlot!]!
+}
+
+type ListStaffProfileResponse {
+  staffProfile: [StaffProfile!]!
+}
+
+type ListUnacceptedPoliciesResponse {
+  policies: [AcceptancePolicy!]!
+}
+
+type ListWalletItemResponse {
+  edges: [WalletItemNode!]!
+  pageInfo: PageInfo
+}
+
+type ListWebNotificationResponse {
+  edges: [WebNotificationNode!]!
+  pageInfo: PageInfo
+}
+
+type LocalisedTemplateContent {
+  body: String!
+  id: ID!
+  locale: String!
+  subject: String!
+}
+
+input LocalisedTemplateContentInput {
+  body: String
+  id: ID
+  locale: String
+  subject: String
+}
+
+type Location implements Node {
+  active: Boolean!
+  address: Address
+  appointments(after: String, before: String, first: Int, last: Int): ListAppointmentResponse
+  channels: [Channel!]!
+  customers(after: String, before: String, first: Int, last: Int): ListCustomerResponse
+  description: String!
+  employees: [Employee!]!
+  gallery: Gallery
+  id: ID!
+  metadata: Map
+  name: String!
+  preference: LocationPreference
+  resourceTypes: ListResourceTypeResponse
+  resources(after: String, before: String, first: Int, last: Int): ListResourceResponse
+  services(after: String, before: String, first: Int, last: Int): ListServiceResponse
+  slug: String!
+  telephones: [String!]!
+}
+
+input LocationInput {
+  active: Boolean
+  address: AddressInput
+  description: String
+  gallery: GalleryInput
+  id: ID
+  metadata: Map
+  name: String
+  preference: LocationPreferenceInput
+  slug: String
+  telephones: [String]
+}
+
+type LocationNode {
+  cursor: String!
+  node: Location
+}
+
+type LocationPreference {
+  currency: String!
+  dateFormat: String!
+  id: ID!
+  language: String!
+  timeFormat: String!
+  timezone: String!
+  uIInfo: String!
+}
+
+input LocationPreferenceInput {
+  currency: String
+  dateFormat: String
+  id: ID
+  language: String
+  timeFormat: String
+  timezone: String
+  uIInfo: String
+}
+
+scalar Map
+
+input MarkNotificationInput {
+  clientMutationId: String
+  id: ID
+  status: Boolean
+  userId: String
+}
+
+type MarkNotificationPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type Membership {
+  benefitBag: [BenefitBag!]!
+  description: String!
+  gallery: Gallery
+  id: ID!
+  name: String!
+  privilegeBag: [PrivilegeBag!]!
+  restriction: BenefitBagRestriction
+}
+
+input MembershipInput {
+  benefitBag: [BenefitBagInput]
+  description: String
+  gallery: GalleryInput
+  id: ID
+  name: String
+  privilegeBag: [PrivilegeBagInput]
+  restriction: BenefitBagRestrictionInput
+}
+
+type MembershipListPlanWalletResponse {
+  planWallet: [MembershipPlanWallet!]!
+}
+
+type MembershipListWalletItemResponse {
+  walletItem: [MembershipWalletItem!]!
+}
+
+type MembershipNode {
+  cursor: String!
+  node: Membership
+}
+
+type MembershipPlanWallet {
+  consumptionPeriod: Timeslot
+  id: ID!
+  plan: Plan
+  status: PlanWalletStatus!
+  walletId: String!
+}
+
+input MembershipPlanWalletInput {
+  consumptionPeriod: TimeslotInput
+  id: ID
+  plan: PlanInput
+  status: PlanWalletStatus
+  walletId: String
+}
+
+type MembershipTransaction {
+  externalTransactionId: String!
+  id: ID!
+  itemId: String!
+  order: Order
+  transactionType: TransactionType!
+  txCreatedBy: String!
+  txCreatedOn: Timestamp
+  walletItemId: String!
+}
+
+type MembershipWalletItem {
+  consumptionPeriod: Timeslot
+  id: ID!
+  itemCreatedBy: String!
+  itemCreatedOn: Timestamp
+  membership: Membership
+  transactions: [MembershipTransaction!]!
+  walletId: String!
+}
+
+type ModuleLicense {
+  defaultLimit: Int!
+  displayName: String!
+  moduleName: String!
+  restrictionType: RestrictionTypes!
+  rpcs: [String!]!
+  slug: String!
+}
+
+type ModuleLicenses {
+  description: String!
+  displayName: String!
+  enabled: Boolean!
+  freeLimit: Int!
+  licenseLimit: Int!
+  maxAddonLimit: Int!
+  maxLimit: Int!
+  moduleName: String!
+  paidAddonLimit: Int!
+  restrictionType: RestrictionTypes!
+  rpcs: [String!]!
+  slug: String!
+  totalLimit: Int!
+}
+
+type ModuleRole {
+  displayName: String!
+  isDefault: Boolean!
+  name: String!
+  pattern: [String!]!
+  priority: Int!
+  serviceName: String!
+  uniqueForModule: Boolean!
+}
+
+type Mutation {
+  addBenefitToMembership(input: AddBenefitToMembershipInput): AddBenefitToMembershipPayload!
+  addCartItem(input: AddCartItemInput): AddCartItemPayload!
+  addCustomersToAppointment(input: AddCustomersInput): AddCustomersPayload!
+  applyDiscount(input: ApplyDiscountInput): ApplyDiscountPayload!
+  assignRole(input: AssignRoleInput): AssignRolePayload!
+  attachDetachPolicy(input: AttachDetachPolicyInput): AttachDetachPolicyPayload!
+  batchCreateDepartment(input: BatchCreateDepartmentInput): BatchCreateDepartmentPayload!
+  batchCreateDesignation(input: BatchCreateDesignationInput): BatchCreateDesignationPayload!
+  batchCreateResource(input: BatchCreateResourceInput): BatchCreateResourcePayload!
+  batchCreateResourceType(input: BatchCreateResourceTypeInput): BatchCreateResourceTypePayload!
+  cancelAllSessions(input: CancelAllSessionsInput): CancelAllSessionsPayload!
+  cancelAppointment(input: CancelAppointmentInput): CancelAppointmentPayload!
+  cancelAppointmentByDataCode(input: CancelAppointmentByDataCodeInput): CancelAppointmentByDataCodePayload!
+  cancelClass(input: CancelClassInput): CancelClassPayload!
+  cancelSession(input: CancelSessionInput): CancelSessionPayload!
+  cancelSubscription(input: CancelSubscriptionInput): CancelSubscriptionPayload!
+  changeAppointmentStatus(input: ChangeAppointmentStatusInput): ChangeAppointmentStatusPayload!
+  changeCustomerStatus(input: ChangeCustomerStatusInput): ChangeCustomerStatusPayload!
+  changePolicyStatus(input: ChangePolicyStatusInput): ChangePolicyStatusPayload!
+  checkOpenHourAvailability(input: CheckOpenHourAvailabilityInput): CheckOpenHourAvailabilityPayload!
+  checkShortUrl(input: CheckShortUrlInput): CheckShortUrlPayload!
+  coupon(input: GetCouponByCodeInput): GetCouponByCodePayload!
+  createAcceptance(input: CreateAcceptanceInput): CreateAcceptancePayload!
+  createAddon(input: CreateAddonInput): CreateAddonPayload!
+  createApp(input: CreateAppInput): CreateAppPayload!
+  createAppType(input: CreateAppTypeInput): CreateAppTypePayload!
+  createAppointment(input: CreateAppointmentInput): CreateAppointmentPayload!
+  createAreaCode(input: CreateAreaCodeInput): CreateAreaCodePayload!
+  createBillingAccount(input: CreateBillingAccountInput): CreateBillingAccountPayload!
+  createBlockHourRule(input: CreateBlockHourRuleInput): CreateBlockHourRulePayload!
+  createCard(input: CreateCardInput): CreateCardPayload!
+  createCardPrerequisite(input: CreateCardPrerequisiteInput): CreateCardPrerequisitePayload!
+  createCategory(input: CreateCategoryInput): CreateCategoryPayload!
+  createCertificate(input: CreateCertificateInput): CreateCertificatePayload!
+  createChannel(input: CreateChannelInput): CreateChannelPayload!
+  createClass(input: CreateClassInput): CreateClassPayload!
+  createClassTemplate(input: CreateClassTemplateInput): CreateClassTemplatePayload!
+  createCompany(input: CreateCompanyInput): CreateCompanyPayload!
+  createCustomStatus(input: CreateCustomStatusInput): CreateCustomStatusPayload!
+  createCustomer(input: CreateCustomerInput): CreateCustomerPayload!
+  createDepartment(input: CreateDepartmentInput): CreateDepartmentPayload!
+  createDesignation(input: CreateDesignationInput): CreateDesignationPayload!
+  createDiscount(input: CreateDiscountInput): CreateDiscountPayload!
+  createFeedback(input: CreateFeedbackInput): CreateFeedbackPayload!
+  createFirstLocation(input: CreateFirstLocationInput): CreateFirstLocationPayload!
+  createGiftCertificate(input: CreateGiftCertificateInput): CreateGiftCertificatePayload!
+  createGiftCertificateVariant(input: CreateGiftCertificateVariantInput): CreateGiftCertificateVariantPayload!
+  createIntakeForm(input: CreateIntakeFormInput): CreateIntakeFormPayload!
+  createIntakeFormSubmission(input: CreateIntakeFormSubmissionInput): CreateIntakeFormSubmissionPayload!
+  createLocation(input: CreateLocationInput): CreateLocationPayload!
+  createMembership(input: CreateMembershipInput): CreateMembershipPayload!
+  createNote(input: CreateNoteInput): CreateNotePayload!
+  createNotificationLogs(input: CreateNotificationLogInput): CreateNotificationLogPayload!
+  createOpenHourRule(input: CreateOpenHourRuleInput): CreateOpenHourRulePayload!
+  createOrder(input: CreateOrderInput): CreateOrderPayload!
+  createPackage(input: CreatePackagesInput): CreatePackagesPayload!
+  createPaymentMethod(input: CreateBillingPaymentMethodInput): CreateBillingPaymentMethodPayload!
+  createPlan(input: CreatePlanInput): CreatePlanPayload!
+  createPolicy(input: CreatePolicyInput): CreatePolicyPayload!
+  createPolicyVersion(input: CreatePolicyVersionInput): CreatePolicyVersionPayload!
+  createProfession(input: CreateProfessionInput): CreateProfessionPayload!
+  createProfessionCategory(input: CreateProfessionCategoryInput): CreateProfessionCategoryPayload!
+  createReply(input: CreateReplyInput): CreateReplyPayload!
+  createResource(input: CreateResourceInput): CreateResourcePayload!
+  createResourceType(input: CreateResourceTypeInput): CreateResourceTypePayload!
+  createReview(input: CreateReviewInput): CreateReviewPayload!
+  createRight(input: CreateRightInput): CreateRightPayload!
+  createRole(input: CreateRoleInput): CreateRolePayload!
+  createService(input: CreateServiceInput): CreateServicePayload!
+  createServiceTemplate(input: CreateServiceTemplateInput): CreateServiceTemplatePayload!
+  createServices(input: BatchCreateServiceInput): BatchCreateServicePayload!
+  createShortUrl(input: CreateShortUrlInput): CreateShortUrlPayload!
+  createShortenUrl(input: CreateShortenUrlInput): CreateShortenUrlPayload!
+  createStaffProfile(input: CreateStaffProfileInput): CreateStaffProfilePayload!
+  createSubscription(input: CreateSubscriptionInput): CreateSubscriptionPayload!
+  deleteAddon(input: DeleteAddonInput): DeleteAddonPayload!
+  deleteApp(input: DeleteAppInput): DeleteAppPayload!
+  deleteAppointment(input: DeleteAppointmentInput): DeleteAppointmentPayload!
+  deleteAreaCode(input: DeleteAreaCodeInput): DeleteAreaCodePayload!
+  deleteBenefitFromMembership(input: DeleteBenefitFromMembershipInput): DeleteBenefitFromMembershipPayload!
+  deleteBillingAccount(input: DeleteBillingAccountInput): DeleteBillingAccountPayload!
+  deleteBlockHourRule(input: DeleteBlockHourRuleInput): DeleteBlockHourRulePayload!
+  deleteCard(input: DeleteCardInput): DeleteCardPayload!
+  deleteCart(input: DeleteCartInput): DeleteCartPayload!
+  deleteCategory(input: DeleteCategoryInput): DeleteCategoryPayload!
+  deleteCertificate(input: DeleteCertificateInput): DeleteCertificatePayload!
+  deleteChannel(input: DeleteChannelInput): DeleteChannelPayload!
+  deleteClassTemplate(input: DeleteClassTemplateInput): DeleteClassTemplatePayload!
+  deleteCompany(input: DeleteCompanyInput): DeleteCompanyPayload!
+  deleteCustomStatus(input: DeleteCustomStatusInput): DeleteCustomStatusPayload!
+  deleteCustomer(input: DeleteCustomerInput): DeleteCustomerPayload!
+  deleteDepartment(input: DeleteDepartmentInput): DeleteDepartmentPayload!
+  deleteDesignation(input: DeleteDesignationInput): DeleteDesignationPayload!
+  deleteDiscount(input: DeleteDiscountInput): DeleteDiscountPayload!
+  deleteEmployee(input: DeleteEmployeeInput): DeleteEmployeePayload!
+  deleteGiftCertificate(input: DeleteGiftCertificateInput): DeleteGiftCertificatePayload!
+  deleteGiftCertificateVariant(input: DeleteGiftCertificateVariantInput): DeleteGiftCertificateVariantPayload!
+  deleteGroup(input: DeleteGroupInput): DeleteGroupPayload!
+  deleteIntakeForm(input: DeleteIntakeFormInput): DeleteIntakeFormPayload!
+  deleteIntakeFormGroup(input: DeleteIntakeFormGroupInput): DeleteIntakeFormGroupPayload!
+  deleteItemToCart(input: DeleteCartItemInput): DeleteCartItemPayload!
+  deleteLocation(input: DeleteLocationInput): DeleteLocationPayload!
+  deleteMembership(input: DeleteMembershipInput): DeleteMembershipPayload!
+  deleteNote(input: DeleteNoteInput): DeleteNotePayload!
+  deleteOpenHourRule(input: DeleteOpenHourRuleInput): DeleteOpenHourRulePayload!
+  deleteOpenHourSlotsBetweenDuration(input: DeleteOpenHourSlotsBetweenDurationInput): DeleteOpenHourSlotsBetweenDurationPayload!
+  deletePackage(input: DeletePackagesInput): DeletePackagesPayload!
+  deletePaymentMethod(input: DeleteBillingPaymentMethodInput): DeleteBillingPaymentMethodPayload!
+  deletePlan(input: DeletePlanInput): DeletePlanPayload!
+  deleteResource(input: DeleteResourceInput): DeleteResourcePayload!
+  deleteResourceType(input: DeleteResourceTypeInput): DeleteResourceTypePayload!
+  deleteRole(input: DeleteRoleInput): DeleteRolePayload!
+  deleteService(input: DeleteServiceInput): DeleteServicePayload!
+  deleteServiceRestrictions(input: DeleteServiceRestrictionsInput): DeleteServiceRestrictionsPayload!
+  deleteServiceTemplate(input: DeleteServiceTemplateInput): DeleteServiceTemplatePayload!
+  deleteShortUrl(input: DeleteShortUrlInput): DeleteShortUrlPayload!
+  deleteShortenUrl(input: DeleteShortenUrlInput): DeleteShortenUrlPayload!
+  deleteSingleSlot(input: DeleteSingleSlotInput): DeleteSingleSlotPayload!
+  deleteStaffProfile(input: DeleteStaffProfileInput): DeleteStaffProfilePayload!
+  dropoutClass(input: DropOutClassInput): DropOutClassPayload!
+  dropoutSession(input: DropOutSessionInput): DropOutSessionPayload!
+  generateCode(input: GenerateCodeInput): GenerateCodePayload!
+  getUsersByLevel(input: GetUsersByLevelInput): GetUsersByLevelPayload!
+  inviteEmployee(input: InviteEmployeeInput): InviteEmployeePayload!
+  inviteUserToRole(input: InviteUserToRoleInput): InviteUserToRolePayload!
+  markNotification(input: MarkNotificationInput): MarkNotificationPayload!
+  optForNotificationPreference(input: OptForNotificationPreferenceInput): OptForNotificationPreferencePayload!
+  ordersByUser(input: ListOrdersByUserInput): ListOrdersByUserPayload!
+  payOrder(input: PayOrderInput): PayOrderPayload!
+  publishPolicyDraft(input: PublishDraftInput): PublishDraftPayload!
+  refundOrder(input: RefundOrderInput): RefundOrderPayload!
+  removeRole(input: RemoveRoleInput): RemoveRolePayload!
+  renewToken(input: RenewTokenInput): RenewTokenPayload!
+  rescheduleClassRule(input: RescheduleRuleInput): RescheduleRulePayload!
+  revokeToken(input: RevokeTokenInput): RevokeTokenPayload!
+  sendPhoneOTP(input: SendPhoneOTPInput): SendPhoneOTPPayload!
+  sendReviewMail(input: SendReviewMailInput): SendReviewMailPayload!
+  setDefaultCalendars(input: SetDefaultCalendarsInput): SetDefaultCalendarsPayload!
+  setDefaultCard(input: SetDefaultCardInput): SetDefaultCardPayload!
+  setReviewHelpfulStatus(input: SetReviewHelpfulStatusInput): SetReviewHelpfulStatusPayload!
+  signupClass(input: SignupClassInput): SignupClassPayload!
+  signupSession(input: SignupSessionInput): SignupSessionPayload!
+  toggleApp(input: ToggleAppInput): ToggleAppPayload!
+  toggleInvitationStatus(input: ToggleInvitationStatusInput): ToggleInvitationStatusPayload!
+  updateAddon(input: UpdateAddonInput): UpdateAddonPayload!
+  updateAppType(input: UpdateAppTypeInput): UpdateAppTypePayload!
+  updateAppointment(input: UpdateAppointmentInput): UpdateAppointmentPayload!
+  updateAppointmentByDataCode(input: UpdateAppointmentByDataCodeInput): UpdateAppointmentByDataCodePayload!
+  updateAreaCode(input: UpdateAreaCodeInput): UpdateAreaCodePayload!
+  updateBenefitOfMembership(input: UpdateBenefitOfMembershipInput): UpdateBenefitOfMembershipPayload!
+  updateBillingAccount(input: UpdateBillingAccountInput): UpdateBillingAccountPayload!
+  updateBlockHourRule(input: UpdateBlockHourRuleInput): UpdateBlockHourRulePayload!
+  updateCard(input: UpdateCardInput): UpdateCardPayload!
+  updateCategory(input: UpdateCategoryInput): UpdateCategoryPayload!
+  updateCategoryDisplayOrder(input: UpdateCategoryDisplayOrderInput): UpdateCategoryDisplayOrderPayload!
+  updateCertificate(input: UpdateCertificateInput): UpdateCertificatePayload!
+  updateChannel(input: UpdateChannelInput): UpdateChannelPayload!
+  updateClass(input: UpdateClassInput): UpdateClassPayload!
+  updateClassTemplate(input: UpdateClassTemplateInput): UpdateClassTemplatePayload!
+  updateCompany(input: UpdateCompanyInput): UpdateCompanyPayload!
+  updateCompanySlug(input: UpdateCompanySlugInput): UpdateCompanySlugPayload!
+  updateCustomStatus(input: UpdateCustomStatusInput): UpdateCustomStatusPayload!
+  updateCustomer(input: UpdateCustomerInput): UpdateCustomerPayload!
+  updateDepartment(input: UpdateDepartmentInput): UpdateDepartmentPayload!
+  updateDesignation(input: UpdateDesignationInput): UpdateDesignationPayload!
+  updateDiscount(input: UpdateDiscountInput): UpdateDiscountPayload!
+  updateEmployee(input: UpdateEmployeeInput): UpdateEmployeePayload!
+  updateEmployeeDisplayOrder(input: UpdateEmployeeDisplayOrderInput): UpdateEmployeeDisplayOrderPayload!
+  updateEmployeeSlug(input: UpdateEmployeeSlugInput): UpdateEmployeeSlugPayload!
+  updateGiftCertificate(input: UpdateGiftCertificateInput): UpdateGiftCertificatePayload!
+  updateGiftCertificateVariant(input: UpdateGiftCertificateVariantInput): UpdateGiftCertificateVariantPayload!
+  updateGroup(input: UpdateGroupInput): UpdateGroupPayload!
+  updateIntakeForm(input: UpdateIntakeFormInput): UpdateIntakeFormPayload!
+  updateIntakeFormSubmission(input: UpdateIntakeFormSubmissionInput): UpdateIntakeFormSubmissionPayload!
+  updateLocation(input: UpdateLocationInput): UpdateLocationPayload!
+  updateLocationSlug(input: UpdateLocationSlugInput): UpdateLocationSlugPayload!
+  updateMembership(input: UpdateMembershipInput): UpdateMembershipPayload!
+  updateNote(input: UpdateNoteInput): UpdateNotePayload!
+  updateNotificationLogs(input: UpdateNotificationLogInput): UpdateNotificationLogPayload!
+  updateOpenHourRule(input: UpdateOpenHourRuleInput): UpdateOpenHourRulePayload!
+  updatePackage(input: UpdatePackagesInput): UpdatePackagesPayload!
+  updatePaymentMethod(input: UpdateBillingPaymentMethodInput): UpdateBillingPaymentMethodPayload!
+  updatePlan(input: UpdatePlanInput): UpdatePlanPayload!
+  updatePolicyDraft(input: UpdateDraftInput): UpdateDraftPayload!
+  updateProfession(input: UpdateProfessionInput): UpdateProfessionPayload!
+  updateProfessionCategory(input: UpdateProfessionCategoryInput): UpdateProfessionCategoryPayload!
+  updateReply(input: UpdateReplyInput): UpdateReplyPayload!
+  updateResource(input: UpdateResourceInput): UpdateResourcePayload!
+  updateResourceDisplayOrder(input: UpdateResourceDisplayOrderInput): UpdateResourceDisplayOrderPayload!
+  updateResourceSlug(input: UpdateResourceSlugInput): UpdateResourceSlugPayload!
+  updateResourceType(input: UpdateResourceTypeInput): UpdateResourceTypePayload!
+  updateResourceTypeDisplayOrder(input: UpdateResourceTypeDisplayOrderInput): UpdateResourceTypeDisplayOrderPayload!
+  updateRole(input: UpdateRoleInput): UpdateRolePayload!
+  updateService(input: UpdateServiceInput): UpdateServicePayload!
+  updateServiceDisplayOrder(input: UpdateServiceDisplayOrderInput): UpdateServiceDisplayOrderPayload!
+  updateServiceSlug(input: UpdateServiceSlugInput): UpdateServiceSlugPayload!
+  updateServiceTemplate(input: UpdateServiceTemplateInput): UpdateServiceTemplatePayload!
+  updateSession(input: UpdateSessionsInput): UpdateSessionsPayload!
+  updateShortUrl(input: UpdateShortUrlInput): UpdateShortUrlPayload!
+  updateShortenUrl(input: UpdateShortenUrlInput): UpdateShortenUrlPayload!
+  updateSingleSlot(input: UpdateSingleSlotInput): UpdateSingleSlotPayload!
+  updateStaffProfile(input: UpdateStaffProfileInput): UpdateStaffProfilePayload!
+  updateSubscription(input: UpdateSubscriptionInput): UpdateSubscriptionPayload!
+  updateUserPassword(input: UpdateUserPasswordInput): UpdateUserPasswordPayload!
+  updateUserProfile(input: UpdateUserProfileInput): UpdateUserProfilePayload!
+  updateWizardPosition(input: UpdateWizardPositionInput): UpdateWizardPositionPayload!
+  upsertAppointmentReviewMailSetting(input: UpsertAppointmentReviewMailSettingInput): UpsertAppointmentReviewMailSettingPayload!
+  upsertAppointmentSetting(input: UpsertAppointmentSettingInput): UpsertAppointmentSettingPayload!
+  upsertBookingPortalSetting(input: UpsertBookingPortalSettingInput): UpsertBookingPortalSettingPayload!
+  upsertBusinessReviewId(input: UpsertBusinessReviewIdInput): UpsertBusinessReviewIdPayload!
+  upsertCart(input: UpsertCartInput): UpsertCartPayload!
+  upsertClassPrice(input: UpsertClassPriceInput): UpsertClassPricePayload!
+  upsertClassReviewMailSetting(input: UpsertClassReviewMailSettingInput): UpsertClassReviewMailSettingPayload!
+  upsertClassSetting(input: UpsertClassSettingInput): UpsertClassSettingPayload!
+  upsertCompanySetting(input: UpsertCompanySettingInput): UpsertCompanySettingPayload!
+  upsertCustomerFilters(input: UpsertCustomerFiltersInput): UpsertCustomerFiltersPayload!
+  upsertDeviceToken(input: UpsertDeviceTokenOfUserInput): UpsertDeviceTokenOfUserPayload!
+  upsertEmployeeSetting(input: UpsertEmployeeSettingInput): UpsertEmployeeSettingPayload!
+  upsertLink(input: UpsertResourceLinksInput): UpsertResourceLinksPayload!
+  upsertLocaleRecords(input: UpsertInput): UpsertPayload!
+  upsertNotificationConfiguration(input: UpsertNotificationConfigurationInput): UpsertNotificationConfigurationPayload!
+  upsertNotificationReceiver(input: UpsertNotificationReceiverInput): UpsertNotificationReceiverPayload!
+  upsertNotificationTemplate(input: UpsertNotificationTemplateInput): UpsertNotificationTemplatePayload!
+  upsertRecurrenceRule(input: UpsertRecurrenceRuleInput): UpsertRecurrenceRulePayload!
+  upsertResourceTypeSetting(input: UpsertResourceTypeSettingInput): UpsertResourceTypeSettingPayload!
+  upsertReview(input: UpsertReviewInput): UpsertReviewPayload!
+  upsertReviewPageSetting(input: UpsertReviewPageSettingInput): UpsertReviewPageSettingPayload!
+  upsertReviewSetting(input: UpsertReviewSettingInput): UpsertReviewSettingPayload!
+  upsertServicePrice(input: UpsertServicePriceInput): UpsertServicePricePayload!
+  upsertServicePrices(input: BatchUpsertServicePriceInput): BatchUpsertServicePricePayload!
+  upsertServiceRestriction(input: UpsertServiceRestrictionInput): UpsertServiceRestrictionPayload!
+  upsertServiceSetting(input: UpsertServiceSettingInput): UpsertServiceSettingPayload!
+  validateCart(input: ValidateCartInput): ValidateCartPayload!
+  validateDiscount(input: ValidateDiscountInput): ValidateDiscountPayload!
+  verifyPhoneOTP(input: VerifyPhoneOTPInput): VerifyPhoneOTPPayload!
+  viewNotification(input: ViewNotificationInput): ViewNotificationPayload!
+}
+
+interface Node {
+  id: ID!
+}
+
+type Note {
+  createdBy: String!
+  createdByEmail: String!
+  createdByName: String!
+  createdOn: Timestamp
+  deletedBy: String!
+  deletedByEmail: String!
+  deletedByName: String!
+  deletedOn: Timestamp
+  description: String!
+  id: ID!
+  metadata: Map
+  noteType: NoteType!
+  private: Boolean!
+  tags: [String!]!
+  title: String!
+  typeId: String!
+  updatedBy: String!
+  updatedByEmail: String!
+  updatedByName: String!
+  updatedOn: Timestamp
+}
+
+input NoteInput {
+  createdBy: String
+  createdByEmail: String
+  createdByName: String
+  createdOn: Timestamp
+  deletedBy: String
+  deletedByEmail: String
+  deletedByName: String
+  deletedOn: Timestamp
+  description: String
+  id: ID
+  metadata: Map
+  noteType: NoteType
+  private: Boolean
+  tags: [String]
+  title: String
+  typeId: String
+  updatedBy: String
+  updatedByEmail: String
+  updatedByName: String
+  updatedOn: Timestamp
+}
+
+type NoteNode {
+  cursor: String!
+  node: Note
+}
+
+enum NoteStatusType {
+  """ANY"""
+  ANY
+
+  """PRIVATE"""
+  PRIVATE
+
+  """PUBLIC"""
+  PUBLIC
+}
+
+enum NoteType {
+  """ALL"""
+  ALL
+
+  """ALL_EXCEPT_CUSTOMER"""
+  ALL_EXCEPT_CUSTOMER
+
+  """APPOINTMENT"""
+  APPOINTMENT
+
+  """CUSTOMER"""
+  CUSTOMER
+
+  """REVIEW"""
+  REVIEW
+}
+
+type NotificationConfiguration {
+  businessId: String!
+  configuration: Configuration
+  id: ID!
+  notificationType: NotificationType!
+  productDefault: Boolean!
+}
+
+input NotificationConfigurationInput {
+  businessId: String
+  configuration: ConfigurationInput
+  id: ID
+  notificationType: NotificationType
+  productDefault: Boolean
+}
+
+type NotificationLog {
+  business: BusinessInfo
+  createdOn: Timestamp
+  customer: CustomerInfo
+  eventId: String!
+  eventTitle: String!
+  eventType: String!
+  externalTransactionId: String!
+  id: ID!
+  metadata: Map
+  notificationAddress: String!
+  notificationType: NotificationType!
+  read: Boolean!
+  readOn: Timestamp
+  sentOn: Timestamp
+}
+
+input NotificationLogInput {
+  business: BusinessInfoInput
+  createdOn: Timestamp
+  customer: CustomerInfoInput
+  eventId: String
+  eventTitle: String
+  eventType: String
+  externalTransactionId: String
+  id: ID
+  metadata: Map
+  notificationAddress: String
+  notificationType: NotificationType
+  read: Boolean
+  readOn: Timestamp
+  sentOn: Timestamp
+}
+
+type NotificationPreference {
+  companyId: String!
+  eventType: String!
+  id: ID!
+  notificationType: NotificationType!
+  optIn: Boolean!
+  templateId: String!
+  userId: String!
+}
+
+input NotificationPreferenceInput {
+  companyId: String
+  eventType: String
+  id: ID
+  notificationType: NotificationType
+  optIn: Boolean
+  templateId: String
+  userId: String
+}
+
+type NotificationReceiver {
+  businessEnabled: Boolean!
+  businessMandatory: Boolean!
+  companyId: String!
+  emailLists: [String!]!
+  eventType: String!
+  id: ID!
+  involved: Boolean!
+  notificationType: NotificationType!
+  productMandatory: Boolean!
+  roleIds: [String!]!
+  templateId: String!
+}
+
+input NotificationReceiverInput {
+  businessEnabled: Boolean
+  businessMandatory: Boolean
+  companyId: String
+  emailLists: [String]
+  eventType: String
+  id: ID
+  involved: Boolean
+  notificationType: NotificationType
+  productMandatory: Boolean
+  roleIds: [String]
+  templateId: String
+}
+
+enum NotificationStatusType {
+  """ALL"""
+  ALL
+
+  """READ"""
+  READ
+
+  """UNREAD"""
+  UNREAD
+
+  """UNVIEWED"""
+  UNVIEWED
+}
+
+type NotificationTemplate {
+  actions: String!
+  appName: String!
+  appTypeId: String!
+  businessId: String!
+  canOverride: Boolean!
+  channel: String!
+  classification: TemplateClassification!
+  content: [LocalisedTemplateContent!]!
+  description: String!
+  eventType: String!
+  id: ID!
+  level: TemplateLevel!
+  metadata: Map
+  mjml: [LocalisedTemplateContent!]!
+  notificationType: NotificationType!
+  productDefault: Boolean!
+  smartyTags: [String!]!
+  templateId: String!
+  title: String!
+}
+
+input NotificationTemplateInput {
+  actions: String
+  appName: String
+  appTypeId: String
+  businessId: String
+  canOverride: Boolean
+  channel: String
+  classification: TemplateClassification
+  content: [LocalisedTemplateContentInput]
+  description: String
+  eventType: String
+  id: ID
+  level: TemplateLevel
+  metadata: Map
+  mjml: [LocalisedTemplateContentInput]
+  notificationType: NotificationType
+  productDefault: Boolean
+  smartyTags: [String]
+  templateId: String
+  title: String
+}
+
+enum NotificationType {
+  """CALENDAR"""
+  CALENDAR
+
+  """EMAIL"""
+  EMAIL
+
+  """PUSH"""
+  PUSH
+
+  """SMS"""
+  SMS
+
+  """UNKNOWN_NOTIFICATION_TYPE"""
+  UNKNOWN_NOTIFICATION_TYPE
+
+  """WEB"""
+  WEB
+}
+
+type OpenHour {
+  builtSlots: [OpenHourBuiltSlot!]!
+  id: ID!
+  recurrenceSet: [String!]!
+  slot: Timeslot
+  start: Timestamp
+  until: Timestamp
+}
+
+type OpenHourBuiltSlot {
+  bookable: Boolean!
+  id: ID!
+  recurrenceId: String!
+  slot: Timeslot
+}
+
+input OpenHourBuiltSlotInput {
+  bookable: Boolean
+  id: ID
+  recurrenceId: String
+  slot: TimeslotInput
+}
+
+input OpenHourFilterInput {
+  resourceId: String
+  serviceId: String
+}
+
+input OpenHourInput {
+  builtSlots: [OpenHourBuiltSlotInput]
+  id: ID
+  recurrenceSet: [String]
+  slot: TimeslotInput
+  start: Timestamp
+  until: Timestamp
+}
+
+type OpenHourRule implements Node {
+  id: ID!
+  metadata: Map
+  openHours: [OpenHour!]!
+  resource: ResourceUnion
+  resourceId: String!
+  serviceRestriction: [ServiceRestriction!]!
+  timezone: String!
+}
+
+type OpenHourRuleNode {
+  cursor: String!
+  node: OpenHourRule
+}
+
+input OptForNotificationPreferenceInput {
+  clientMutationId: String
+  preference: NotificationPreferenceInput
+}
+
+type OptForNotificationPreferencePayload {
+  clientMutationId: String!
+  payload: NotificationPreference
+}
+
+type Order implements Node {
+  buyer: OrderBuyer
+  discountCode: String!
+  discounted: Boolean!
+  id: ID!
+  items: [OrderItem!]!
+  leasedItems: [OrderItemUnion!]!
+  metadata: Map
+  orderPrice: OrderPrice
+  orderType: OrderType!
+  originalPrice: OrderPrice
+  placedOn: Timestamp
+  status: OrderStatus!
+}
+
+type OrderBuyer {
+  buyerId: String!
+  data: Customer
+}
+
+input OrderBuyerInput {
+  buyerId: String
+}
+
+type OrderItem {
+  actions: Map
+  customerIds: [String!]!
+  data: OrderItemUnion
+  description: String!
+  discounted: Boolean!
+  id: ID!
+  image: String!
+  item: ItemContent
+  itemPrice: OrderItemPrice
+  itemType: ItemType!
+  metadata: Map
+  minAmount: Price
+  originalPrice: OrderItemPrice
+  refundTransactions: [OrderItemRefundTransaction!]!
+  subTitle: String!
+  templateData: Map
+  title: String!
+  transactions: [OrderItemTransaction!]!
+}
+
+input OrderItemCustomerInput {
+  address: AddressInput
+  birthDate: Timestamp
+  email: String
+  firstName: String
+  gender: Gender
+  lastName: String
+  metadata: Map
+  preferredLanguage: String
+  profileImage: GalleryItemInput
+  tag: [String]
+  telephones: [String]
+  timezone: String
+}
+
+type OrderItemPrice {
+  price: Price
+  tax: [TaxInfo!]!
+}
+
+type OrderItemRefundTransaction {
+  amount: Price
+  id: ID!
+  paymentMethod: PaymentMethod!
+}
+
+type OrderItemTransaction {
+  amount: Price
+  id: ID!
+  paymentMethod: PaymentMethod!
+}
+
+union OrderItemUnion = Appointment | WalletItem
+
+type OrderNode {
+  cursor: String!
+  node: Order
+}
+
+type OrderPrice {
+  price: Price
+  tax: [TaxInfo!]!
+}
+
+enum OrderStatus {
+  """CANCELLED"""
+  CANCELLED
+
+  """CONFIRMED"""
+  CONFIRMED
+
+  """DROPPED"""
+  DROPPED
+
+  """PLACED"""
+  PLACED
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+enum OrderType {
+  """ADMIN_SIDE"""
+  ADMIN_SIDE
+
+  """CLIENT_SIDE"""
+  CLIENT_SIDE
+}
+
+type PackageItem {
+  data: ItemUnion
+  id: ID!
+  name: String!
+}
+
+input PackageItemInput {
+  id: ID
+  name: String
+}
+
+type PackageRestriction {
+  maxItems: Int!
+  recurrenceRule: [PackageRestrictionRecurrenceRule!]!
+  timeRule: TimeRule
+}
+
+input PackageRestrictionInput {
+  maxItems: Int
+  recurrenceRule: [PackageRestrictionRecurrenceRuleInput]
+  timeRule: TimeRuleInput
+}
+
+type PackageRestrictionRecurrenceRule {
+  recurrence: [String!]!
+  slots: Timeslot
+}
+
+input PackageRestrictionRecurrenceRuleInput {
+  recurrence: [String]
+  slots: TimeslotInput
+}
+
+type Packages {
+  description: String!
+  gallery: Gallery
+  id: ID!
+  itemBags: [ItemBag!]!
+  name: String!
+  price: Price
+  restriction: PackageRestriction
+}
+
+input PackagesInput {
+  description: String
+  gallery: GalleryInput
+  id: ID
+  itemBags: [ItemBagInput]
+  name: String
+  price: PriceInput
+  restriction: PackageRestrictionInput
+}
+
+type PackagesNode {
+  cursor: String!
+  node: Packages
+}
+
+type PackageTransaction {
+  externalTransactionId: String!
+  id: ID!
+  order: Order
+  transactionType: TransactionType!
+  txCreatedBy: String!
+  txCreatedOn: Timestamp
+  walletItemId: String!
+}
+
+input PackageTransactionInput {
+  externalTransactionId: String
+  id: ID
+  transactionType: TransactionType
+  txCreatedBy: String
+  txCreatedOn: Timestamp
+  walletItemId: String
+}
+
+type PageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+}
+
+enum PaymentMethod {
+  """CASH"""
+  CASH
+
+  """DISCOUNT_CODE"""
+  DISCOUNT_CODE
+
+  """GIFT_CERTIFICATE"""
+  GIFT_CERTIFICATE
+
+  """MEMBERSHIP"""
+  MEMBERSHIP
+
+  """PACKAGE"""
+  PACKAGE
+
+  """SQUARE_CARD"""
+  SQUARE_CARD
+
+  """STRIPE_CARD"""
+  STRIPE_CARD
+
+  """UNSPECIFIED_PAYMENT_METHOD"""
+  UNSPECIFIED_PAYMENT_METHOD
+}
+
+input PaymentSourceInput {
+  itemId: String
+  paymentSourcePrice: paymentSourcePrice
+  paymentSourceSource: paymentSourceSource
+  type: PaymentMethod
+}
+
+input paymentSourcePrice {
+  price: PriceInput
+}
+
+input paymentSourceSource {
+  source: SourceInput
+}
+
+input PayOrderInput {
+  buyerId: String
+  clientMutationId: String
+  orderId: String
+  parent: String
+  paymentSources: [PaymentSourceInput]
+}
+
+type PayOrderPayload {
+  clientMutationId: String!
+  payload: PayOrderResponse
+}
+
+type PayOrderResponse {
+  order: Order
+  orderId: String!
+}
+
+type Plan {
+  applicableOn: ApplicableOn
+  description: String!
+  id: ID!
+  membership: Membership
+  membershipId: String!
+  name: String!
+  price: Price
+  setupCost: Price
+  validity: Duration
+}
+
+input PlanInput {
+  applicableOn: ApplicableOnInput
+  description: String
+  id: ID
+  membershipId: String
+  name: String
+  price: PriceInput
+  setupCost: PriceInput
+  validity: Duration
+}
+
+type PlanNode {
+  cursor: String!
+  node: Plan
+}
+
+enum PlanType {
+  """FREEBIE"""
+  FREEBIE
+
+  """TRIAL"""
+  TRIAL
+
+  """UNSPECIFIED_PLAN"""
+  UNSPECIFIED_PLAN
+}
+
+enum PlanWalletStatus {
+  """ACTIVE"""
+  ACTIVE
+
+  """CANCELLED"""
+  CANCELLED
+
+  """UNSCPECIFIED"""
+  UNSCPECIFIED
+}
+
+type Policy implements Node {
+  active: Boolean!
+  createdOn: Timestamp
+  description: String!
+  id: ID!
+  isDefault: Boolean!
+  name: String!
+  policyNumber: String!
+  versions: [PolicyVersion!]!
+}
+
+input PolicyInput {
+  active: Boolean
+  createdOn: Timestamp
+  description: String
+  id: ID
+  isDefault: Boolean
+  name: String
+  policyNumber: String
+  versions: [PolicyVersionInput]
+}
+
+input PolicySourceLinkInput {
+  id: ID
+  policyId: String
+  sourceId: String
+}
+
+union PolicySourceUnion = Class | Company | Location | Service
+
+type PolicyVersion {
+  content: String!
+  id: ID!
+  metadata: Map
+  published: Boolean!
+  version: Int!
+  versionCreatedOn: Timestamp
+}
+
+input PolicyVersionInput {
+  content: String
+  id: ID
+  metadata: Map
+  published: Boolean
+  version: Int
+  versionCreatedOn: Timestamp
+}
+
+type PolicyWrapper {
+  data: PolicySourceUnion
+  policy: Policy
+  sourceId: String!
+}
+
+type Price {
+  amount: Float!
+  currency: String!
+}
+
+input PriceInput {
+  amount: Float
+  currency: String
+}
+
+type Privilege {
+  data: ItemUnion
+  id: ID!
+}
+
+type PrivilegeBag {
+  id: ID!
+  privilege: Privilege
+}
+
+input PrivilegeBagInput {
+  id: ID
+  privilege: PrivilegeInput
+}
+
+input PrivilegeInput {
+  id: ID
+}
+
+type Profession {
+  dataFill: [DataFill!]!
+  dataSuggestion: [DataSuggestion!]!
+  description: String!
+  distributionRatingNames: [String!]!
+  id: ID!
+  metadata: Map
+  name: String!
+  navMenus: [String!]!
+  professionCategoryId: String!
+  quickStartSteps: [Step!]!
+  setupData: SetupData
+  wizardSteps: [String!]!
+}
+
+type ProfessionApp {
+  enabled: Boolean!
+  id: ID!
+  invisible: Boolean!
+  name: String!
+}
+
+input ProfessionAppInput {
+  enabled: Boolean
+  id: ID
+  invisible: Boolean
+  name: String
+}
+
+type ProfessionCategory {
+  dataFill: [ProfessionCategoryDataFill!]!
+  dataSuggestion: [ProfessionCategoryDataSuggestion!]!
+  description: String!
+  id: ID!
+  metadata: Map
+  name: String!
+  navMenus: [String!]!
+  quickStartSteps: [ProfessionCategoryStep!]!
+  setupData: ProfessionCategorySetupData
+  wizardSteps: [String!]!
+}
+
+type ProfessionCategoryApp {
+  enabled: Boolean!
+  id: ID!
+  invisible: Boolean!
+  name: String!
+}
+
+input ProfessionCategoryAppInput {
+  enabled: Boolean
+  id: ID
+  invisible: Boolean
+  name: String
+}
+
+type ProfessionCategoryDataFill {
+  resourceTypes: [String!]!
+  services: [ProfessionCategoryServiceSuggestion!]!
+}
+
+input ProfessionCategoryDataFillInput {
+  resourceTypes: [String]
+  services: [ProfessionCategoryServiceSuggestionInput]
+}
+
+type ProfessionCategoryDataSuggestion {
+  resourceTypes: [String!]!
+  services: [ProfessionCategoryServiceSuggestion!]!
+}
+
+input ProfessionCategoryDataSuggestionInput {
+  resourceTypes: [String]
+  services: [ProfessionCategoryServiceSuggestionInput]
+}
+
+type ProfessionCategoryDefaultAlias {
+  department: String!
+  designation: String!
+  service: String!
+  serviceProvider: String!
+}
+
+input ProfessionCategoryDefaultAliasInput {
+  department: String
+  designation: String
+  service: String
+  serviceProvider: String
+}
+
+type ProfessionCategoryFeature {
+  enabled: Boolean!
+  id: ID!
+  name: String!
+}
+
+input ProfessionCategoryFeatureInput {
+  enabled: Boolean
+  id: ID
+  name: String
+}
+
+input ProfessionCategoryInput {
+  dataFill: [ProfessionCategoryDataFillInput]
+  dataSuggestion: [ProfessionCategoryDataSuggestionInput]
+  description: String
+  id: ID
+  metadata: Map
+  name: String
+  navMenus: [String]
+  quickStartSteps: [ProfessionCategoryStepInput]
+  setupData: ProfessionCategorySetupDataInput
+  wizardSteps: [String]
+}
+
+type ProfessionCategoryServiceSuggestion {
+  capacity: Int!
+  category: String!
+  duration: Int!
+  title: String!
+}
+
+input ProfessionCategoryServiceSuggestionInput {
+  capacity: Int
+  category: String
+  duration: Int
+  title: String
+}
+
+type ProfessionCategorySetupData {
+  alias: ProfessionCategoryDefaultAlias
+  apps: [ProfessionCategoryApp!]!
+  departments: [String!]!
+  designations: [String!]!
+  features: [ProfessionCategoryFeature!]!
+  resourceTypes: [String!]!
+  roles: [String!]!
+}
+
+input ProfessionCategorySetupDataInput {
+  alias: ProfessionCategoryDefaultAliasInput
+  apps: [ProfessionCategoryAppInput]
+  departments: [String]
+  designations: [String]
+  features: [ProfessionCategoryFeatureInput]
+  resourceTypes: [String]
+  roles: [String]
+}
+
+type ProfessionCategoryStep {
+  category: String!
+  steps: [String!]!
+}
+
+input ProfessionCategoryStepInput {
+  category: String
+  steps: [String]
+}
+
+input ProfessionInput {
+  dataFill: [DataFillInput]
+  dataSuggestion: [DataSuggestionInput]
+  description: String
+  distributionRatingNames: [String]
+  id: ID
+  metadata: Map
+  name: String
+  navMenus: [String]
+  professionCategoryId: String
+  quickStartSteps: [StepInput]
+  setupData: SetupDataInput
+  wizardSteps: [String]
+}
+
+type Protobuf {
+  data: Bytes
+  typeUrl: String!
+}
+
+input ProtobufInput {
+  data: Bytes
+  typeUrl: String
+}
+
+input PublishDraftInput {
+  clientMutationId: String
+  policyId: String
+  policyVersionId: String
+}
+
+type PublishDraftPayload {
+  clientMutationId: String!
+  payload: Policy
+}
+
+type Query {
+  acceptances(after: String, before: String, first: Int, last: Int, parent: String, policyId: String, signerId: String, sourceIds: [String], viewMask: FieldMaskInput): ListAcceptanceResponse!
+  addon(id: ID, viewMask: FieldMaskInput): Addon!
+  addons(parent: String, viewMask: FieldMaskInput): ListAddonResponse!
+  allLinksOfParent(firstResourceParent: listAllLinksOfParentRequestFirstResourceParent, linkType: String, secondResourceParent: listAllLinksOfParentRequestSecondResourceParent): LinkLists!
+  app(id: ID, viewMask: FieldMaskInput): App!
+  appType(id: ID, viewMask: FieldMaskInput): AppType!
+  appTypes(filter: AppTypeLevelFilter, parent: String, viewMask: FieldMaskInput): ListAppTypeResponse!
+  appTypesOfCompany(companyId: String, viewMask: FieldMaskInput): ListAppTypeResponse!
+  appointment(id: ID, viewMask: FieldMaskInput): Appointment!
+  appointmentAvailability(filter: AvailabilityFilterInput): ListSlotsResponse!
+  appointmentAvailabilityDates(filter: AvailabilityFilterInput, timezone: String): ListDatesResponse!
+  appointmentCalendar(employeeIds: [String], endTime: Timestamp, parents: [String], resourceIds: [String], resourceTypeIds: [String], serviceIds: [String], startTime: Timestamp, viewMask: FieldMaskInput): ListAppointmentsForCalendarResponse!
+  appointmentReport(after: String, before: String, dateRange: DateslotInput, dateRangeOn: String, filters: Map, first: Int, last: Int, parents: [String], query: String, sortBy: String, viewMask: FieldMaskInput): AppointmentReportResponse!
+  appointmentReviewMailSetting(locationId: String, viewMask: FieldMaskInput): AppointmentReviewMailSetting!
+  appointmentSetting(parent: String, viewMask: FieldMaskInput): AppointmentSetting!
+  appointments(after: String, before: String, customerId: listAppointmentRequestCustomerId, employeeId: listAppointmentRequestEmployeeId, first: Int, last: Int, parent: String, query: listAppointmentRequestQuery, timeDuration: TimeslotInput, viewMask: FieldMaskInput): ListAppointmentResponse!
+  apps(parent: String, viewMask: FieldMaskInput): ListAppResponse!
+  appsOfUser(parent: String, userId: String, viewMask: FieldMaskInput): ListAppResponse!
+  areaCode(id: ID, viewMask: FieldMaskInput): AreaCode!
+  areaCodes(parent: String, viewMask: FieldMaskInput): ListAreaCodeResponse!
+  assignedUsersByRole(after: String, before: String, first: Int, last: Int, levelId: String, roleId: String): GetAssignedUsersByRoleResponse!
+  averageRating(locationId: String, viewMask: FieldMaskInput): AverageRating!
+  billingAccount(id: ID, viewMask: FieldMaskInput): BillingAccount!
+  billingAccounts(companyId: listBillingAccountRequestCompanyId, locationId: listBillingAccountRequestLocationId, viewMask: FieldMaskInput): ListBillingAccountResponse!
+  billingMembership(id: ID, viewMask: FieldMaskInput): BillingMembership!
+  billingMemberships(viewMask: FieldMaskInput): ListBillingMembershipResponse!
+  billingPlan(id: ID, viewMask: FieldMaskInput): BillingPlan!
+  billingPlanWallet(companyId: String, id: ID, viewMask: FieldMaskInput): BillingPlanWallet!
+  billingPlans(parent: String, viewMask: FieldMaskInput): ListBillingPlanResponse!
+  blockHourRule(id: ID, viewMask: FieldMaskInput): BlockHourRule!
+  blockHourRules(after: String, before: String, first: Int, last: Int, parent: listBlockHourRuleRequestParent, resourceId: listBlockHourRuleRequestResourceId, viewMask: FieldMaskInput): ListBlockHourRuleResponse!
+  blockHourRulesBetweenDuration(endTime: Timestamp, parent: listBlockHourRuleBetweenDurationRequestParent, resourceId: listBlockHourRuleBetweenDurationRequestResourceId, startTime: Timestamp, viewMask: FieldMaskInput): ListBlockHourRuleBetweenDurationResponse!
+  bmr(companyId: String, names: [String], viewMask: FieldMaskInput): BatchGetModuleRoleResponse!
+  bookingPortalSetting(parent: String, viewMask: FieldMaskInput): BookingPortalSetting!
+  bulkLinks(ids: [String], idsAreOfFirst: Boolean, linkType: String): LinkLists!
+  cancelPlanWallet(id: ID, planId: String, walletId: String): Empty!
+  cards(locationId: String, userId: String): CardsList!
+  cart(id: ID, viewMask: FieldMaskInput): Cart!
+  cartOfBuyer(buyerId: String, cartType: CartType, parent: String, viewMask: FieldMaskInput): Cart!
+  categories(parent: String, viewMask: FieldMaskInput): ListCategoryResponse!
+  category(id: ID, viewMask: FieldMaskInput): Category!
+  certificate(id: ID, viewMask: FieldMaskInput): Certificate!
+  certificates(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListCertificateResponse!
+  channel(id: ID, viewMask: FieldMaskInput): Channel!
+  channels(parent: String, viewMask: FieldMaskInput): ListChannelResponse!
+  checkCompanySlug(slug: String): CheckCompanySlugResponse!
+  checkEmployeeSlug(parent: String, slug: String): CheckEmployeeSlugResponse!
+  checkLocationSlug(parent: String, slug: String): CheckLocationSlugResponse!
+  checkResourceSlug(parent: String, slug: String): CheckResourceSlugResponse!
+  checkServiceSlug(parent: String, slug: String): CheckServiceSlugResponse!
+  class(id: ID, viewMask: FieldMaskInput): Class!
+  classAvailabilityOfDate(activeConsidered: Boolean, categoryIds: [String], classId: String, customerId: String, endDate: Timestamp, filterType: ClassTypeFilter, locale: String, name: String, parent: String, priceFilter: ClassPriceFilter, roomIds: [String], serviceProviders: [String], startDate: Timestamp, viewMask: FieldMaskInput, waitingConsidered: Boolean): GetClassAvailabilityOfDateResponse!
+  classAvailabilityOfDateRange(activeConsidered: Boolean, categoryIds: [String], classId: String, customerId: String, endDate: Timestamp, filterType: ClassTypeFilter, locale: String, name: String, parent: String, priceFilter: ClassPriceFilter, roomIds: [String], serviceProviders: [String], startDate: Timestamp, viewMask: FieldMaskInput, waitingConsidered: Boolean): GetClassAvailabilityOfDateRangeResponse!
+  classPrice(id: ID): ClassPrice!
+  classReviewMailSetting(locationId: String, viewMask: FieldMaskInput): ClassReviewMailSetting!
+  classSetting(parent: String, viewMask: FieldMaskInput): ClassSetting!
+  classTemplate(id: ID, viewMask: FieldMaskInput): ClassTemplate!
+  classTemplates(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListClassTemplateResponse!
+  classes(after: String, before: String, customerId: listClassesRequestCustomerId, first: Int, last: Int, parent: listClassesRequestParent, serviceProviderId: listClassesRequestServiceProviderId, timing: TimeslotInput, viewMask: FieldMaskInput): ListClassesResponse!
+  companies(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListCompanyResponse!
+  company(id: ID, viewMask: FieldMaskInput): Company!
+  companySetting(parent: String, viewMask: FieldMaskInput): CompanySetting!
+  currentLicenseWallet(companyId: String): LicenseWallet!
+  customStatus(id: ID, viewMask: FieldMaskInput): CustomStatus!
+  customStatuses(customStatusType: CustomStatusType, parent: String, viewMask: FieldMaskInput): ListCustomStatusResponse!
+  customer(id: ID, viewMask: FieldMaskInput): Customer!
+  customerFilters(userId: String): CustomerFilters!
+  customerReport(after: String, before: String, filters: [ReportFilterInput], first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): GetFilteredCustomersResponse!
+  customers(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListCustomerResponse!
+  dataFromCode(code: String, dataCodeType: DataCodeType): GetDataFromCodeResponse!
+  defaultCard(gateway: Gateway, levelId: String, locationId: String, merchantId: String, type: DefaultCardAgainstType, userId: String): Card!
+  defaultLocales(locale: String, property: String): DefaultLocalesResponse!
+  defaultRoles(viewMask: FieldMaskInput): ListDefaultRoleResponse!
+  department(id: ID, viewMask: FieldMaskInput): Department!
+  departments(parent: String, viewMask: FieldMaskInput): ListDepartmentResponse!
+  designation(id: ID, viewMask: FieldMaskInput): Designation!
+  designations(parent: String, viewMask: FieldMaskInput): ListDesignationResponse!
+  discount(id: ID, viewMask: FieldMaskInput): Discount!
+  discountByCode(code: String, parent: String, viewMask: FieldMaskInput): Discount!
+  discounts(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListDiscountResponse!
+  employee(id: ID, viewMask: FieldMaskInput): Employee!
+  employeeByEmail(companyId: String, email: String, viewMask: FieldMaskInput): Employee!
+  employeeByLocation(parent: String, viewMask: FieldMaskInput): ListEmployeeByLocationResponse!
+  employeeReport(after: String, before: String, departmentId: [String], designationId: [String], first: Int, last: Int, parent: String, query: String): GetEmployeeReportResponse!
+  employeeSetting(parent: String, viewMask: FieldMaskInput): EmployeeSetting!
+  employees(active: Boolean, after: String, before: String, filter: EmployeeFilterInput, first: Int, last: Int, parent: String, provideServices: Boolean, query: String, viewMask: FieldMaskInput): ListEmployeeResponse!
+  employeesByUserId(userId: String, viewMask: FieldMaskInput): ListEmployeesByUserIdResponse!
+  feedback(id: ID): Feedback!
+  getCompanyBySlug(slug: String, viewMask: FieldMaskInput): Company!
+  getEmployeeBySlug(parent: String, slug: String, viewMask: FieldMaskInput): Employee!
+  getLocationBySlug(parent: String, slug: String, viewMask: FieldMaskInput): Location!
+  getResourceBySlug(parent: String, slug: String, viewMask: FieldMaskInput): Resource!
+  getServiceBySlug(companySlug: String, slug: String, viewMask: FieldMaskInput): Service!
+  getUsersHavingAccessByParent(accessPattern: String, levelId: String): GetUsersHavingAccessByParentResponse!
+  giftCertificate(id: ID, viewMask: FieldMaskInput): GiftCertificate!
+  giftCertificateWalletItem(id: ID, viewMask: FieldMaskInput): GiftCertificateWalletItem!
+  giftCertificateWalletItems(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): GiftCertitificateListWalletItemResponse!
+  giftCertificateWalletTransactions(id: ID, viewMask: FieldMaskInput): GiftCertitificateListTransactionResponse!
+  giftCertificates(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListGiftCertificateResponse!
+  group(id: ID, viewMask: FieldMaskInput): Group!
+  intakeForm(id: ID, viewMask: FieldMaskInput): IntakeForm!
+  intakeForms(groupId: String, parent: String, viewMask: FieldMaskInput): ListIntakeFormResponse!
+  integrations(targetId: String): ListIntegrationsResponse!
+  invitedUsers(levelId: String, userId: String): GetInvitedUsersResponse!
+  invitedUsersByLevel(after: String, before: String, first: Int, last: Int, levelId: String, levelOnly: Boolean): ListInvitedUserResponse!
+  invoice(id: ID, viewMask: FieldMaskInput): Invoice!
+  invoices(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListInvoiceResponse!
+  ipInfo(ip: String): IpInformation!
+  license(id: ID, viewMask: FieldMaskInput): License!
+  licenses(viewMask: FieldMaskInput): ListLicenseResponse!
+  linkTypes: ListLinkTypesResponse!
+  links(firstResourceId: listLinksRequestFirstResourceId, linkType: String, secondResourceId: listLinksRequestSecondResourceId): LinkLists!
+  listBlockHourRulesForCalendar(employeeIds: [String], endTime: Timestamp, parents: [String], resourceIds: [String], startTime: Timestamp, viewMask: FieldMaskInput): ListBlockHourRulesForCalendarResponse!
+  listCalendar(type: IntegrationType, userId: String): CalendarsList!
+  listDefaultCalendar(type: IntegrationType, userId: String): CalendarsList!
+  listIntakeFormSubmission(groupId: listIntakeFormSubmissionRequestGroupId, intakeFormId: listIntakeFormSubmissionRequestIntakeFormId, userId: String, viewMask: FieldMaskInput): ListIntakeFormSubmissionResponse!
+  listModuleLicenses(viewMask: FieldMaskInput): ListModuleLicenseResponse!
+  listOpenHourRulesForCalendar(employeeIds: [String], endTime: Timestamp, parents: [String], resourceIds: [String], serviceIds: [String], startTime: Timestamp, viewMask: FieldMaskInput): ListOpenHourRulesForCalendarResponse!
+  listPlanWallet(companyId: String, licenseId: String, planId: String, viewMask: FieldMaskInput): ListBillingPlanWalletResponse!
+  listReviewHelpful(after: String, before: String, filter: ReviewHelpfulFilterInput, first: Int, last: Int, viewMask: FieldMaskInput): ListReviewHelpfulResponse!
+  localeRecords(id: ID): ListResponse!
+  location(id: ID, viewMask: FieldMaskInput): Location!
+  locations(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListLocationResponse!
+  membership(id: ID, viewMask: FieldMaskInput): Membership!
+  membershipPlanWallet(id: ID, viewMask: FieldMaskInput): MembershipPlanWallet!
+  membershipPlanWallets(viewMask: FieldMaskInput, walletId: String): MembershipListPlanWalletResponse!
+  membershipWalletItem(id: ID, viewMask: FieldMaskInput, walletId: String): MembershipWalletItem!
+  membershipWalletItems(viewMask: FieldMaskInput, walletId: String): MembershipListWalletItemResponse!
+  memberships(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListMembershipResponse!
+  moduleLicense(slug: String, viewMask: FieldMaskInput): ModuleLicense!
+  moduleRole(companyId: String, name: String, viewMask: FieldMaskInput): ModuleRole!
+  moduleRoles(companyId: String, viewMask: FieldMaskInput): ListModuleRoleResponse!
+  myCustomerProfiles(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListCustomerResponse!
+  node(id: ID, name: String): Node
+  note(getPrivate: Boolean, id: ID, viewMask: FieldMaskInput): Note!
+  noteByType(getPrivate: Boolean, typeId: String, viewMask: FieldMaskInput): GetNoteByTypeResponse!
+  notes(after: String, before: String, first: Int, getPrivate: Boolean, last: Int, noteType: NoteType, parent: String, statusType: NoteStatusType, viewMask: FieldMaskInput): ListNoteResponse!
+  notificationLogByTransactionId(transactionId: String): NotificationLog!
+  notificationLogs(businessId: String, customerId: String, lastPageId: String, limit: Int): ListNotificationLogResponse!
+  notificationPreferences(companyId: String, eventType: String, notificationType: NotificationType, templateId: String, userId: String, viewMask: FieldMaskInput): ListNotificationPreferenceResponse!
+  notificationReceivers(businessEnabled: Boolean, businessMandatory: Boolean, companyId: String, eventType: String, notificationType: NotificationType, viewMask: FieldMaskInput): ListNotificationReceiverResponse!
+  notificationTemplates(appTypeId: String, businessId: String, eventType: String, locale: String, notificationType: NotificationType, viewMask: FieldMaskInput): ListNotificationTemplateResponse!
+  openHourRule(id: ID, viewMask: FieldMaskInput): OpenHourRule!
+  openHourRules(after: String, before: String, filter: OpenHourFilterInput, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListOpenHourRuleResponse!
+  order(id: ID, viewMask: FieldMaskInput): Order!
+  orders(after: String, before: String, buyerId: String, first: Int, last: Int, orderStatus: OrderStatus, parent: String, viewMask: FieldMaskInput): ListOrderResponse!
+  package(id: ID, viewMask: FieldMaskInput): Packages!
+  packageWalletItem(id: ID, viewMask: FieldMaskInput, walletId: String): WalletItem!
+  packageWalletItems(after: String, before: String, first: Int, last: Int, viewMask: FieldMaskInput, walletId: String): ListWalletItemResponse!
+  packages(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListPackagesResponse!
+  payLink(orderId: String): GeneratePayLinkResponse!
+  paymentGatewayPublicKey(gateway: BillingPaymentGateway): GetPaymentGatewayPublicKeyResponse!
+  paymentIntent(companyId: String, gateway: BillingPaymentGateway): GetPaymentMethodIntentResponse!
+  paymentMethod(id: ID, viewMask: FieldMaskInput): BillingPaymentMethod!
+  paymentMethods(parent: String, viewMask: FieldMaskInput): ListBillingPaymentMethodResponse!
+  plan(id: ID, viewMask: FieldMaskInput): Plan!
+  plans(after: String, before: String, first: Int, last: Int, membershipId: String, parent: String, viewMask: FieldMaskInput): ListPlanResponse!
+  policies(isDefault: Boolean, onlyActive: Boolean, onlyPublished: Boolean, parent: String, policyNumber: String, sourceId: [String], viewMask: FieldMaskInput): ListPoliciesResponse!
+  policy(id: ID, viewMask: FieldMaskInput, withAttachedSources: Boolean): GetPolicyResponse!
+  profession(id: ID): Profession!
+  professionByName(name: String): Profession!
+  professionCategories: ListProfessionCategoryResponse!
+  professionCategory(id: ID): ProfessionCategory!
+  professions: ListProfessionResponse!
+  renderNotificationTemplate(businessId: String, data: Bytes, locale: String, templateId: String): RenderNotificationTemplateResponse!
+  replies(parent: String, reviewId: String, userIds: [String], viewMask: FieldMaskInput): ListReplyResponse!
+  reply(id: ID, viewMask: FieldMaskInput): Reply!
+  resource(id: ID, viewMask: FieldMaskInput): Resource!
+  resourceType(id: ID, viewMask: FieldMaskInput): ResourceType!
+  resourceTypeSetting(id: ID, viewMask: FieldMaskInput): ResourceTypeSetting!
+  resourceTypes(filter: ResourceTypeFilterInputInput, parent: String, viewMask: FieldMaskInput): ListResourceTypeResponse!
+  resources(after: String, before: String, first: Int, last: Int, parent: String, query: String, resourceTypeIds: [String], viewMask: FieldMaskInput): ListResourceResponse!
+  review(id: ID, viewMask: FieldMaskInput): Review!
+  reviewStatus(dataCodeId: String): ReviewStatusResponse!
+  reviews(after: String, appIds: [String], before: String, customerId: String, first: Int, last: Int, maxRating: Int, minRating: Int, parent: String, query: String, userId: String, viewMask: FieldMaskInput): ListReviewResponse!
+  reviewsPageSetting(parent: String, viewMask: FieldMaskInput): ReviewPageSetting!
+  reviewsSettings(companyId: String, viewMask: FieldMaskInput): ReviewSetting!
+  rightPattern: RightPatternResponse!
+  rights(userId: String): UserRight!
+  role(id: ID, viewMask: FieldMaskInput): Role!
+  roles(hide: Boolean, parent: String, viewMask: FieldMaskInput): ListRoleResponse!
+  searchBusiness(address: String, name: String, phone: String, type: BusinessType): SearchBusinessResponse!
+  serializeAppointment(appointment: AppointmentInput, parent: String, userId: String): SerializeAppointmentResponse!
+  serializeGiftCertificateWallet(wallet: GiftCertificateWalletItemInput): SerializeGiftCertificateWalletResponse!
+  serializeMembershipPlan(planWallet: MembershipPlanWalletInput): SerializeMembershipResponse!
+  serializePackageWallet(wallet: WalletItemInput): SerializePackageWalletResponse!
+  service(id: ID, viewMask: FieldMaskInput): Service!
+  servicePrice(id: ID): ServicePrice!
+  servicePriceValue(channelId: String, duration: String, employeeId: String, resourceId: String, serviceId: String): GetServicePriceValueResponse!
+  serviceSetting(parent: String, viewMask: FieldMaskInput): ServiceSetting!
+  serviceTemplate(id: ID, viewMask: FieldMaskInput): ServiceTemplate!
+  serviceTemplates(parent: String, query: String, viewMask: FieldMaskInput): ListServiceTemplateResponse!
+  services(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListServiceResponse!
+  session(classId: String, sessionId: String, viewMask: FieldMaskInput): Session!
+  shortUrl(id: ID): ShortUrl!
+  shortUrls(parent: String): ListShortUrlResponse!
+  shortenUrl(id: ID): ShortenUrl!
+  shortenUrls(parent: String, userId: String): ListShortenUrlResponse!
+  staffProfile(id: ID, viewMask: FieldMaskInput): StaffProfile!
+  staffProfiles(parent: String, viewMask: FieldMaskInput): ListStaffProfileResponse!
+  unacceptedPolicies(parent: String, signerId: String, sourceIds: [String]): ListUnacceptedPoliciesResponse!
+  urlInfo(url: String): GetUrlInfoResponse!
+  userProfile(id: ID, viewMask: FieldMaskInput): UserProfile!
+  userRole(levelId: String, userId: String, viewMask: FieldMaskInput): UserRole!
+  usersByLevelId(after: String, before: String, first: Int, last: Int, parent: String, roleId: String): GetUsersByLevelIdResponse!
+  validateLinks(links: [LinkInput]): ValidateLinksResponse!
+  viewer: UserProfile!
+  webNotifications(after: String, before: String, eventType: String, first: Int, last: Int, locale: String, notificationStatusType: NotificationStatusType, userId: String, viewMask: FieldMaskInput): ListWebNotificationResponse!
+  wizardPosition: GetWizardPositionResponse!
+}
+
+type Record {
+  id: ID!
+  isDefault: Boolean!
+  locale: String!
+  property: String!
+  value: String!
+}
+
+input RecordInput {
+  id: ID
+  isDefault: Boolean
+  locale: String
+  property: String
+  value: String
+}
+
+input RefundOrderInput {
+  clientMutationId: String
+  locationId: String
+  orderId: String
+  paymentSources: [PaymentSourceInput]
+  reason: String
+  validateOnly: Boolean
+}
+
+type RefundOrderPayload {
+  clientMutationId: String!
+  payload: RefundOrderResponse
+}
+
+type RefundOrderResponse {
+  order: Order
+  orderId: String!
+}
+
+input RemoveRoleInput {
+  clientMutationId: String
+  roles: [UserRoleRoleInput]
+  userId: String
+}
+
+type RemoveRolePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type RenderNotificationTemplateResponse {
+  body: String!
+  subject: String!
+}
+
+type RenewalFrequency {
+  days: Int!
+  quantity: Int!
+}
+
+input RenewalFrequencyInput {
+  days: Int
+  quantity: Int
+}
+
+input RenewTokenInput {
+  clientMutationId: String
+  integrationType: IntegrationType
+  targetId: String
+}
+
+type RenewTokenPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type Reply {
+  createdOn: Timestamp
+  description: String!
+  id: ID!
+  replierEmail: String!
+  replierGender: Gender!
+  replierImage: GalleryItem
+  replierName: String!
+  replierUserId: String!
+  reviewId: String!
+  updatedOn: Timestamp
+}
+
+input ReplyInput {
+  createdOn: Timestamp
+  description: String
+  id: ID
+  replierEmail: String
+  replierGender: Gender
+  replierImage: GalleryItemInput
+  replierName: String
+  replierUserId: String
+  reviewId: String
+  updatedOn: Timestamp
+}
+
+type Report {
+  appointment: Appointment
+  cancelledOn: Timestamp
+  rescheduleOn: Timestamp
+}
+
+type ReportData {
+  metadata: Map
+  totalCount: Int!
+  totalPrice: Price
+}
+
+enum ReportFields {
+  """ARPA"""
+  ARPA
+
+  """CREATED_ON"""
+  CREATED_ON
+
+  """LAST_ACTIVITY_ON"""
+  LAST_ACTIVITY_ON
+
+  """LAST_APPOINTMENT_BOOKED_ON"""
+  LAST_APPOINTMENT_BOOKED_ON
+
+  """LAST_BOOKED_ON"""
+  LAST_BOOKED_ON
+
+  """LAST_CLASS_BOOKED_ON"""
+  LAST_CLASS_BOOKED_ON
+
+  """LAST_PURCHASED_ON"""
+  LAST_PURCHASED_ON
+
+  """LAST_REVIEWED_ON"""
+  LAST_REVIEWED_ON
+
+  """LTV"""
+  LTV
+
+  """TOTAL_APPOINTMENTS"""
+  TOTAL_APPOINTMENTS
+
+  """TOTAL_APPOINTMENT_AMOUNT"""
+  TOTAL_APPOINTMENT_AMOUNT
+
+  """TOTAL_CLASSES"""
+  TOTAL_CLASSES
+
+  """TOTAL_CLASS_AMOUNT"""
+  TOTAL_CLASS_AMOUNT
+
+  """TOTAL_GIFT_CERTIFICATES"""
+  TOTAL_GIFT_CERTIFICATES
+
+  """TOTAL_GIFT_CERTIFICATE_AMOUNT"""
+  TOTAL_GIFT_CERTIFICATE_AMOUNT
+
+  """TOTAL_MEMBERSHIPS"""
+  TOTAL_MEMBERSHIPS
+
+  """TOTAL_MEMBERSHIP_AMOUNT"""
+  TOTAL_MEMBERSHIP_AMOUNT
+
+  """TOTAL_PACKAGES"""
+  TOTAL_PACKAGES
+
+  """TOTAL_PACKAGE_AMOUNT"""
+  TOTAL_PACKAGE_AMOUNT
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+input ReportFilterInput {
+  endDate: Timestamp
+  fieldName: ReportFields
+  operator: ReportOperator
+  startDate: Timestamp
+  value: Float
+}
+
+enum ReportOperator {
+  """EQUAL"""
+  EQUAL
+
+  """GREATER_THAN"""
+  GREATER_THAN
+
+  """IN_DATE"""
+  IN_DATE
+
+  """LESS_THAN"""
+  LESS_THAN
+
+  """NOT_IN_DATE"""
+  NOT_IN_DATE
+}
+
+input RescheduleRuleInput {
+  classId: String
+  clientMutationId: String
+  recurrenceId: String
+  timing: TimeslotInput
+}
+
+type RescheduleRulePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type Resource implements Node {
+  active: Boolean!
+  capacity: Int!
+  createdBy: String!
+  createdOn: Timestamp
+  description: String!
+  displayOrder: Int!
+  gallery: Gallery
+  id: ID!
+  internal: Boolean!
+  metadata: Map
+  quantity: Int!
+  resourceType: ResourceType
+  resourceTypeId: String!
+  slug: String!
+  title: String!
+  updatedBy: String!
+  updatedOn: Timestamp
+}
+
+input ResourceInput {
+  active: Boolean
+  capacity: Int
+  createdBy: String
+  createdOn: Timestamp
+  description: String
+  displayOrder: Int
+  gallery: GalleryInput
+  id: ID
+  internal: Boolean
+  metadata: Map
+  quantity: Int
+  resourceTypeId: String
+  slug: String
+  title: String
+  updatedBy: String
+  updatedOn: Timestamp
+}
+
+type ResourceNode {
+  cursor: String!
+  node: Resource
+}
+
+enum ResourcePrioritization {
+  """DISPLAY_ORDER"""
+  DISPLAY_ORDER
+
+  """LEAST_OCCUPIED_APPOINTMENT"""
+  LEAST_OCCUPIED_APPOINTMENT
+
+  """LEAST_OCCUPIED_TIME"""
+  LEAST_OCCUPIED_TIME
+
+  """MAX_OCCUPIED_APPOINTMENT"""
+  MAX_OCCUPIED_APPOINTMENT
+
+  """MAX_OCCUPIED_TIME"""
+  MAX_OCCUPIED_TIME
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type ResourceType implements Node {
+  active: Boolean!
+  capacity: Int!
+  description: String!
+  displayOrder: Int!
+  hasOpenHours: Boolean!
+  id: ID!
+  image: GalleryItem
+  internal: Boolean!
+  metadata: Map
+  name: String!
+  resourceTypesType: ResourceTypesType!
+  resources: [Resource!]!
+}
+
+input ResourceTypeFilterInputInput {
+  resourceTypesType: ResourceTypesType
+}
+
+input ResourceTypeInput {
+  active: Boolean
+  capacity: Int
+  description: String
+  displayOrder: Int
+  hasOpenHours: Boolean
+  id: ID
+  image: GalleryItemInput
+  internal: Boolean
+  metadata: Map
+  name: String
+  resourceTypesType: ResourceTypesType
+}
+
+type ResourceTypeSetting {
+  allowResourceSelection: Boolean!
+  changeMask: FieldMask
+  id: ID!
+  resourcePriority: ResourcePrioritization!
+}
+
+input ResourceTypeSettingInput {
+  allowResourceSelection: Boolean
+  changeMask: FieldMaskInput
+  id: ID
+  resourcePriority: ResourcePrioritization
+}
+
+enum ResourceTypesType {
+  """IDENTIFIABLE"""
+  IDENTIFIABLE
+
+  """NON_IDENTIFIABLE"""
+  NON_IDENTIFIABLE
+}
+
+union ResourceUnion = Employee | Resource
+
+type Restriction {
+  applicable: Boolean!
+  consumeRules: ConsumeRule
+  maxDiscount: Price
+  maxDiscountableItems: Int!
+  order: SelectionOrder!
+  recurrenceRule: [DiscountRestrictionRecurrenceRule!]!
+}
+
+input RestrictionInput {
+  applicable: Boolean
+  consumeRules: ConsumeRuleInput
+  maxDiscount: PriceInput
+  maxDiscountableItems: Int
+  order: SelectionOrder
+  recurrenceRule: [DiscountRestrictionRecurrenceRuleInput]
+}
+
+enum RestrictionTypes {
+  """ATTRIBUTE"""
+  ATTRIBUTE
+
+  """CYCLIC_NUMBER_LIMIT"""
+  CYCLIC_NUMBER_LIMIT
+
+  """FEATURE_RPC"""
+  FEATURE_RPC
+
+  """MODULE"""
+  MODULE
+
+  """NUMBER_LIMIT"""
+  NUMBER_LIMIT
+
+  """UNSPECIFIED_RESTRICTION"""
+  UNSPECIFIED_RESTRICTION
+}
+
+type Review {
+  anonymous: Boolean!
+  appEventId: String!
+  appId: String!
+  appName: String!
+  createdOn: Timestamp
+  customer: Customer
+  data: RevieweeUnion
+  dataCodeId: String!
+  description: String!
+  dislikes: Int!
+  distributionRating: Map
+  id: ID!
+  likes: Int!
+  overallRating: Float!
+  reply: [Reply!]!
+  reviewerCustomerId: String!
+  reviewerEmail: String!
+  reviewerGender: Gender!
+  reviewerImage: GalleryItem
+  reviewerName: String!
+  reviewerUserId: String!
+  scale: Int!
+  source: Source!
+  sourceUrl: String!
+  title: String!
+  updatedOn: Timestamp
+}
+
+union RevieweeUnion = Appointment | Employee
+
+type ReviewHelpful {
+  id: ID!
+  reviewId: String!
+  userId: String!
+  wasHelpful: Boolean!
+}
+
+input ReviewHelpfulFilterInput {
+  reviewIds: [String]
+  userIds: [String]
+}
+
+type ReviewHelpfulNode {
+  cursor: String!
+  node: ReviewHelpful
+}
+
+input ReviewInput {
+  anonymous: Boolean
+  appEventId: String
+  appId: String
+  appName: String
+  createdOn: Timestamp
+  dataCodeId: String
+  description: String
+  dislikes: Int
+  distributionRating: Map
+  id: ID
+  likes: Int
+  overallRating: Float
+  reviewerCustomerId: String
+  reviewerEmail: String
+  reviewerGender: Gender
+  reviewerImage: GalleryItemInput
+  reviewerName: String
+  reviewerUserId: String
+  scale: Int
+  source: Source
+  sourceUrl: String
+  title: String
+  updatedOn: Timestamp
+}
+
+enum ReviewManageAlgo {
+  """FACEBOOK_ONLY"""
+  FACEBOOK_ONLY
+
+  """GOOGLE_ONLY"""
+  GOOGLE_ONLY
+
+  """ROUND_ROBIN_ALGO"""
+  ROUND_ROBIN_ALGO
+
+  """SAASTACK_ONLY"""
+  SAASTACK_ONLY
+
+  """UNDEFINED"""
+  UNDEFINED
+
+  """YELP_ONLY"""
+  YELP_ONLY
+}
+
+type ReviewNode {
+  cursor: String!
+  node: Review
+}
+
+type ReviewPageSetting {
+  algo: ReviewManageAlgo!
+  enable: Boolean!
+  id: ID!
+  saastackUrl: String!
+  settings: [ReviewPageUrl!]!
+}
+
+input ReviewPageSettingInput {
+  algo: ReviewManageAlgo
+  enable: Boolean
+  id: ID
+  saastackUrl: String
+  settings: [ReviewPageUrlInput]
+}
+
+type ReviewPageUrl {
+  source: Source!
+  url: String!
+}
+
+input ReviewPageUrlInput {
+  source: Source
+  url: String
+}
+
+type ReviewSetting {
+  anonymous: Boolean!
+  distributionRatingNames: [String!]!
+  distributionScale: Int!
+  id: ID!
+}
+
+input ReviewSettingInput {
+  anonymous: Boolean
+  distributionRatingNames: [String]
+  distributionScale: Int
+  id: ID
+}
+
+type ReviewStatusResponse {
+  review: Review
+  source: ReviewPageUrl
+}
+
+input RevokeTokenInput {
+  clientMutationId: String
+  integrationType: IntegrationType
+  targetId: String
+}
+
+type RevokeTokenPayload {
+  clientMutationId: String!
+  payload: IntegrationToken
+}
+
+type RightPatternResponse {
+  patternJson: String!
+}
+
+type RightResource {
+  allowed: [String!]!
+  moduleName: String!
+  notAllowed: [String!]!
+}
+
+type Role implements Node {
+  description: String!
+  id: ID!
+  isDefault: Boolean!
+  level: String!
+  moduleRoleNames: [String!]!
+  moduleRoles: [ModuleRole!]!
+  priority: Int!
+  roleName: String!
+}
+
+input RoleInput {
+  description: String
+  id: ID
+  isDefault: Boolean
+  level: String
+  moduleRoleNames: [String]
+  priority: Int
+  roleName: String
+}
+
+type SearchBusinessResponse {
+  businesses: [Business!]!
+}
+
+enum SelectionOrder {
+  """ASC"""
+  ASC
+
+  """DESC"""
+  DESC
+}
+
+input SendPhoneOTPInput {
+  clientMutationId: String
+  phone: String
+  userId: String
+}
+
+type SendPhoneOTPPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input SendReviewMailInput {
+  appEventId: String
+  appId: String
+  clientMutationId: String
+  parent: String
+  userIds: [String]
+}
+
+type SendReviewMailPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type SerializeAppointmentResponse {
+  value: Protobuf
+}
+
+type SerializeGiftCertificateWalletResponse {
+  value: Protobuf
+}
+
+type SerializeMembershipResponse {
+  value: Protobuf
+}
+
+type SerializePackageWalletResponse {
+  value: Protobuf
+}
+
+type Service implements Node {
+  active: Boolean!
+  capacity: Int!
+  category: Category
+  categoryId: String!
+  description(locale: String): String!
+  displayOrder: Int!
+  durations: [Duration!]!
+  gallery: Gallery
+  id: ID!
+  internal: Boolean!
+  metadata: Map
+  policyId: String!
+  price: ServicePrice
+  settings: ServiceSetting
+  slug: String!
+  status: Status!
+  templateId: String!
+  title(locale: String): String!
+}
+
+type ServiceAvailabilityInterval {
+  interval: Int!
+  type: ServiceAvailabilityIntervalType!
+}
+
+input ServiceAvailabilityIntervalInput {
+  interval: Int
+  type: ServiceAvailabilityIntervalType
+}
+
+enum ServiceAvailabilityIntervalType {
+  """CUSTOM_INTERVAL"""
+  CUSTOM_INTERVAL
+
+  """PARENT_INTERVAL"""
+  PARENT_INTERVAL
+
+  """UNSPECIFIED_INTERVAL"""
+  UNSPECIFIED_INTERVAL
+}
+
+input ServiceInput {
+  active: Boolean
+  capacity: Int
+  categoryId: String
+  description: String
+  displayOrder: Int
+  durations: [Duration]
+  gallery: GalleryInput
+  id: ID
+  internal: Boolean
+  metadata: Map
+  policyId: String
+  slug: String
+  status: Status
+  templateId: String
+  title: String
+}
+
+type ServiceNode {
+  cursor: String!
+  node: Service
+}
+
+type ServicePaymentSetting {
+  chargeType: ChargeType!
+  chargeValue: Float!
+  price: Price
+}
+
+input ServicePaymentSettingInput {
+  chargeType: ChargeType
+  chargeValue: Float
+  price: PriceInput
+}
+
+type ServicePrice {
+  rules: [ServicePriceRule!]!
+  servicePriceId: String!
+}
+
+type ServicePriceRule {
+  pattern: String!
+  price: Price
+}
+
+input ServicePriceRuleInput {
+  pattern: String
+  price: PriceInput
+}
+
+type ServicePriceWrapper {
+  errorMessage: String!
+  price: ServicePrice
+}
+
+type ServiceRestriction {
+  channels: [ChannelRestriction!]!
+  id: ID!
+  service: Service
+  serviceId: String!
+}
+
+input ServiceRestrictionInput {
+  channels: [ChannelRestrictionInput]
+  id: ID
+  serviceId: String
+}
+
+type ServiceSetting implements Node {
+  availabilityInterval: ServiceAvailabilityInterval
+  bookingRules: AppointmentBookingRules
+  changeMask: FieldMask
+  id: ID!
+  notificationSettings: [AppointmentNotificationSetting!]!
+  paymentSetting: ServicePaymentSetting
+  taxSettings: [TaxSetting!]!
+}
+
+input ServiceSettingInput {
+  availabilityInterval: ServiceAvailabilityIntervalInput
+  bookingRules: AppointmentBookingRulesInput
+  changeMask: FieldMaskInput
+  id: ID
+  notificationSettings: [AppointmentNotificationSettingInput]
+  paymentSetting: ServicePaymentSettingInput
+  taxSettings: [TaxSettingInput]
+}
+
+type ServiceSuggestion {
+  capacity: Int!
+  category: String!
+  duration: Int!
+  title: String!
+}
+
+input ServiceSuggestionInput {
+  capacity: Int
+  category: String
+  duration: Int
+  title: String
+}
+
+type ServiceTemplate {
+  active: Boolean!
+  capacity: Int!
+  category: Category
+  categoryId: String!
+  description: String!
+  displayOrder: Int!
+  durations: [Duration!]!
+  gallery: Gallery
+  id: ID!
+  internal: Boolean!
+  metadata: Map
+  policyId: String!
+  slug: String!
+  status: ServiceTemplateStatus!
+  templateId: String!
+  title: String!
+}
+
+input ServiceTemplateInput {
+  active: Boolean
+  capacity: Int
+  categoryId: String
+  description: String
+  displayOrder: Int
+  durations: [Duration]
+  gallery: GalleryInput
+  id: ID
+  internal: Boolean
+  metadata: Map
+  policyId: String
+  slug: String
+  status: ServiceTemplateStatus
+  templateId: String
+  title: String
+}
+
+enum ServiceTemplateStatus {
+  """EXTERNAL"""
+  EXTERNAL
+
+  """INTERNAL"""
+  INTERNAL
+
+  """LINK_ONLY"""
+  LINK_ONLY
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type Session {
+  cancelReason: String!
+  cancelledBy: String!
+  cancelledOn: Timestamp
+  createdTiming: Timeslot
+  customers: [ClassCustomer!]!
+  id: ID!
+  isRule: Boolean!
+  metadata: Map
+  oldTiming: Timeslot
+  recurrenceId: String!
+  serviceProviders: [ClassServiceProvider!]!
+  status: SessionStatus!
+  timing: Timeslot
+  title: String!
+  until: Timestamp
+}
+
+input SessionInput {
+  cancelReason: String
+  cancelledBy: String
+  cancelledOn: Timestamp
+  createdTiming: TimeslotInput
+  customers: [ClassCustomerInput]
+  id: ID
+  isRule: Boolean
+  metadata: Map
+  oldTiming: TimeslotInput
+  recurrenceId: String
+  serviceProviders: [ClassServiceProviderInput]
+  status: SessionStatus
+  timing: TimeslotInput
+  title: String
+  until: Timestamp
+}
+
+enum SessionStatus {
+  """SESSION_BOOKED"""
+  SESSION_BOOKED
+
+  """SESSION_CANCELLED"""
+  SESSION_CANCELLED
+}
+
+input SetDefaultCalendarsInput {
+  calendarIds: [String]
+  clientMutationId: String
+  type: IntegrationType
+  userId: String
+}
+
+type SetDefaultCalendarsPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input SetDefaultCardInput {
+  cardId: String
+  clientMutationId: String
+  gateway: Gateway
+  levelId: String
+  type: DefaultCardAgainstType
+  userId: String
+}
+
+type SetDefaultCardPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input SetReviewHelpfulStatusInput {
+  clientMutationId: String
+  id: ID
+  reviewId: String
+  userId: String
+  wasHelpful: Boolean
+}
+
+type SetReviewHelpfulStatusPayload {
+  clientMutationId: String!
+  payload: ReviewHelpful
+}
+
+type SetupData {
+  alias: DefaultAlias
+  apps: [ProfessionApp!]!
+  departments: [String!]!
+  designations: [String!]!
+  features: [Feature!]!
+  resourceTypes: [String!]!
+  setupRoles: [SetupRoles!]!
+}
+
+input SetupDataInput {
+  alias: DefaultAliasInput
+  apps: [ProfessionAppInput]
+  departments: [String]
+  designations: [String]
+  features: [FeatureInput]
+  resourceTypes: [String]
+  setupRoles: [SetupRolesInput]
+}
+
+type SetupModuleRole {
+  level: String!
+  moduleRoleNames: [String!]!
+}
+
+input SetupModuleRoleInput {
+  level: String
+  moduleRoleNames: [String]
+}
+
+type SetupRoles {
+  moduleRoles: [SetupModuleRole!]!
+  roleName: String!
+}
+
+input SetupRolesInput {
+  moduleRoles: [SetupModuleRoleInput]
+  roleName: String
+}
+
+type ShortenUrl {
+  id: ID!
+  slug: String!
+  url: String!
+  userId: String!
+}
+
+input ShortenUrlInput {
+  id: ID
+  slug: String
+  url: String
+}
+
+type ShortUrl {
+  id: ID!
+  shortUrlValue: String!
+  urlPath: String!
+}
+
+input ShortUrlInput {
+  id: ID
+  shortUrlValue: String
+  urlPath: String
+}
+
+type SignerData {
+  email: String!
+  firstName: String!
+  id: ID!
+  lastName: String!
+}
+
+input SignerDataInput {
+  email: String
+  firstName: String
+  id: ID
+  lastName: String
+}
+
+input SignupClassInput {
+  clientMutationId: String
+  customerId: String
+  id: ID
+  membershipId: String
+  validateOnly: Boolean
+}
+
+type SignupClassPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input SignupSessionInput {
+  classId: String
+  clientMutationId: String
+  customerId: String
+  id: ID
+  membershipId: String
+  validateOnly: Boolean
+}
+
+type SignupSessionPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input SingleLinkRequestInput {
+  linkType: String
+  links: [LinkInput]
+  wrtResource: String
+}
+
+type SlotRule {
+  durations: [Duration!]!
+  endTime: Timestamp
+  slot: AvailabilitySlot
+  startTime: Timestamp
+}
+
+enum SmsClient {
+  """PLIVO"""
+  PLIVO
+
+  """TWILIO"""
+  TWILIO
+
+  """UNSPECIFIED_SMS_CLIENT"""
+  UNSPECIFIED_SMS_CLIENT
+}
+
+type SmsConfiguration {
+  accountId: String!
+  authToken: String!
+  id: ID!
+  sender: String!
+  smsClient: SmsClient!
+}
+
+input SmsConfigurationInput {
+  accountId: String
+  authToken: String
+  id: ID
+  sender: String
+  smsClient: SmsClient
+}
+
+enum SmsProvider {
+  """PLIVO"""
+  PLIVO
+
+  """TWILLIO"""
+  TWILLIO
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type SmsSetting {
+  active: Boolean!
+  blockedTypes: [Int!]!
+  id: ID!
+  mandatoryTypes: [Int!]!
+  smsService: SmsProvider!
+}
+
+input SmsSettingInput {
+  active: Boolean
+  blockedTypes: [Int]
+  id: ID
+  mandatoryTypes: [Int]
+  smsService: SmsProvider
+}
+
+enum Source {
+  """FACEBOOK"""
+  FACEBOOK
+
+  """GOOGLE"""
+  GOOGLE
+
+  """SAASTACK"""
+  SAASTACK
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+
+  """YELP"""
+  YELP
+}
+
+input SourceInput {
+  id: ID
+  price: PriceInput
+}
+
+enum SourceType {
+  """GPAY"""
+  GPAY
+
+  """SQUARE"""
+  SQUARE
+
+  """STRIPE"""
+  STRIPE
+}
+
+enum StaffPrioritization {
+  """DISPLAY_ORDER"""
+  DISPLAY_ORDER
+
+  """LEAST_OCCUPIED_APPOINTMENT"""
+  LEAST_OCCUPIED_APPOINTMENT
+
+  """LEAST_OCCUPIED_TIME"""
+  LEAST_OCCUPIED_TIME
+
+  """MAX_OCCUPIED_APPOINTMENT"""
+  MAX_OCCUPIED_APPOINTMENT
+
+  """MAX_OCCUPIED_TIME"""
+  MAX_OCCUPIED_TIME
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type StaffProfile {
+  active: Boolean!
+  description: String!
+  email: String!
+  firstName: String!
+  id: ID!
+  internal: Boolean!
+  lastName: String!
+  metadata: Map
+  phoneNumber: String!
+  priority: Int!
+  profileImage: GalleryItem
+  profileType: StaffProfileType!
+  qualifications: [String!]!
+  timezone: String!
+  userId: String!
+}
+
+input StaffProfileInput {
+  active: Boolean
+  description: String
+  email: String
+  firstName: String
+  id: ID
+  internal: Boolean
+  lastName: String
+  metadata: Map
+  phoneNumber: String
+  priority: Int
+  profileImage: GalleryItemInput
+  profileType: StaffProfileType
+  qualifications: [String]
+  timezone: String
+  userId: String
+}
+
+enum StaffProfileType {
+  """SERVICE_PROVIDER"""
+  SERVICE_PROVIDER
+}
+
+enum Status {
+  """EXTERNAL"""
+  EXTERNAL
+
+  """INTERNAL"""
+  INTERNAL
+
+  """LINK_ONLY"""
+  LINK_ONLY
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+type Step {
+  category: String!
+  steps: [String!]!
+}
+
+input StepInput {
+  category: String
+  steps: [String]
+}
+
+type Subscription {
+  appointments(employeeIds: [String], endTime: Timestamp, parents: [String], resourceIds: [String], serviceIds: [String], startTime: Timestamp, viewMask: FieldMaskInput): ListAppointmentsForCalendarResponse
+  notifications(after: String, before: String, first: Int, last: Int, notificationStatusType: NotificationStatusType, userId: String): ListWebNotificationResponse
+}
+
+type Tax {
+  description: String!
+  id: ID!
+  name: String!
+  taxPercentage: Float!
+}
+
+type TaxInfo {
+  amount: Price
+  id: ID!
+  name: String!
+  percentage: Float!
+}
+
+input TaxInfoInput {
+  amount: PriceInput
+  id: ID
+  name: String
+  percentage: Float
+}
+
+type TaxSetting {
+  percentage: Float!
+  title: String!
+}
+
+input TaxSettingInput {
+  percentage: Float
+  title: String
+}
+
+enum TemplateClassification {
+  """ADMIN_FACING"""
+  ADMIN_FACING
+
+  """CLIENT_FACING"""
+  CLIENT_FACING
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+enum TemplateLevel {
+  """COMPANY"""
+  COMPANY
+
+  """GROUP"""
+  GROUP
+
+  """LOCATION"""
+  LOCATION
+
+  """UNKNOWN_LEVEL"""
+  UNKNOWN_LEVEL
+}
+
+type TimeRule {
+  duration: Duration
+  start: TimeRuleStart!
+}
+
+input TimeRuleInput {
+  duration: Duration
+  start: TimeRuleStart
+}
+
+enum TimeRuleStart {
+  """FIRST_CONSUME"""
+  FIRST_CONSUME
+
+  """PURCHASE"""
+  PURCHASE
+}
+
+type Timeslot {
+  endTime: Timestamp
+  startTime: Timestamp
+}
+
+input TimeslotInput {
+  endTime: Timestamp
+  startTime: Timestamp
+}
+
+scalar Timestamp
+
+input ToggleAppInput {
+  active: Boolean
+  clientMutationId: String
+  id: ID
+}
+
+type ToggleAppPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input ToggleInvitationStatusInput {
+  clientMutationId: String
+  id: ID
+  isInvitationAccepted: Boolean
+}
+
+type ToggleInvitationStatusPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+enum TransactionType {
+  """CHARGE"""
+  CHARGE
+
+  """REFUND"""
+  REFUND
+}
+
+union UnionConfigurationConfiguration = Configuration_EmailConfiguration | Configuration_SmsConfiguration
+
+union UnionDiscountOfferDiscountOffer = DiscountOffer_AmountOff | DiscountOffer_PercentageOff
+
+union UnionItemContentData = ItemContent_AppointmentId | ItemContent_Item
+
+input UpdateAddonInput {
+  addon: AddonInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateAddonPayload {
+  clientMutationId: String!
+  payload: Addon
+}
+
+input UpdateAppointmentByDataCodeInput {
+  appointment: AppointmentInput
+  clientMutationId: String
+  dataCodeId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateAppointmentByDataCodePayload {
+  clientMutationId: String!
+  payload: Appointment
+}
+
+input UpdateAppointmentInput {
+  appointment: AppointmentInput
+  clientMutationId: String
+  skipValidation: Boolean
+  updateMask: FieldMaskInput
+  userId: String
+}
+
+type UpdateAppointmentPayload {
+  clientMutationId: String!
+  payload: Appointment
+}
+
+input UpdateAppTypeInput {
+  appType: AppTypeInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateAppTypePayload {
+  clientMutationId: String!
+  payload: AppType
+}
+
+input UpdateAreaCodeInput {
+  areaCode: AreaCodeInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateAreaCodePayload {
+  clientMutationId: String!
+  payload: AreaCode
+}
+
+input UpdateBenefitOfMembershipInput {
+  benefitBag: BenefitBagInput
+  clientMutationId: String
+  membershipId: String
+}
+
+type UpdateBenefitOfMembershipPayload {
+  clientMutationId: String!
+  payload: Membership
+}
+
+input UpdateBillingAccountInput {
+  billingAccount: BillingAccountInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateBillingAccountPayload {
+  clientMutationId: String!
+  payload: BillingAccount
+}
+
+input UpdateBillingPaymentMethodInput {
+  billingAccountId: String
+  clientMutationId: String
+  gateway: BillingPaymentGateway
+  id: ID
+  paymentMethodToken: String
+}
+
+type UpdateBillingPaymentMethodPayload {
+  clientMutationId: String!
+  payload: BillingPaymentMethod
+}
+
+input UpdateBlockHourRuleInput {
+  blockHourRule: BlockHourRuleInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateBlockHourRulePayload {
+  clientMutationId: String!
+  payload: BlockHourRule
+}
+
+input UpdateCardInput {
+  action: Action
+  cardId: String
+  clientMutationId: String
+  gateway: Gateway
+  isCard: Boolean
+  locationId: String
+  sourceType: SourceType
+  token: String
+  userId: String
+}
+
+type UpdateCardPayload {
+  clientMutationId: String!
+  payload: Card
+}
+
+input UpdateCategoryDisplayOrderInput {
+  categoryId: String
+  clientMutationId: String
+  displayOrder: Int
+}
+
+type UpdateCategoryDisplayOrderPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateCategoryInput {
+  category: CategoryInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateCategoryPayload {
+  clientMutationId: String!
+  payload: Category
+}
+
+input UpdateCertificateInput {
+  certificate: CertificateInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateCertificatePayload {
+  clientMutationId: String!
+  payload: Certificate
+}
+
+input UpdateChannelInput {
+  channel: ChannelInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateChannelPayload {
+  clientMutationId: String!
+  payload: Channel
+}
+
+input UpdateClassInput {
+  class: ClassInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateClassPayload {
+  clientMutationId: String!
+  payload: Class
+}
+
+input UpdateClassTemplateInput {
+  classTemplate: ClassTemplateInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateClassTemplatePayload {
+  clientMutationId: String!
+  payload: ClassTemplate
+}
+
+input UpdateCompanyInput {
+  clientMutationId: String
+  company: CompanyInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateCompanyPayload {
+  clientMutationId: String!
+  payload: Company
+}
+
+input UpdateCompanySlugInput {
+  clientMutationId: String
+  companyId: String
+  slug: String
+}
+
+type UpdateCompanySlugPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateCustomerInput {
+  clientMutationId: String
+  customer: CustomerInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateCustomerPayload {
+  clientMutationId: String!
+  payload: Customer
+}
+
+input UpdateCustomStatusInput {
+  clientMutationId: String
+  customStatus: CustomStatusInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateCustomStatusPayload {
+  clientMutationId: String!
+  payload: CustomStatus
+}
+
+input UpdateDepartmentInput {
+  clientMutationId: String
+  department: DepartmentInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateDepartmentPayload {
+  clientMutationId: String!
+  payload: Department
+}
+
+input UpdateDesignationInput {
+  clientMutationId: String
+  designation: DesignationInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateDesignationPayload {
+  clientMutationId: String!
+  payload: Designation
+}
+
+input UpdateDiscountInput {
+  clientMutationId: String
+  discount: DiscountInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateDiscountPayload {
+  clientMutationId: String!
+  payload: Discount
+}
+
+input UpdateDraftInput {
+  clientMutationId: String
+  policyId: String
+  policyVersion: PolicyVersionInput
+}
+
+type UpdateDraftPayload {
+  clientMutationId: String!
+  payload: Policy
+}
+
+input UpdateEmployeeDisplayOrderInput {
+  clientMutationId: String
+  displayOrder: Int
+  employeeId: String
+}
+
+type UpdateEmployeeDisplayOrderPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateEmployeeInput {
+  clientMutationId: String
+  employee: EmployeeInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateEmployeePayload {
+  clientMutationId: String!
+  payload: Employee
+}
+
+input UpdateEmployeeSlugInput {
+  clientMutationId: String
+  employeeId: String
+  slug: String
+}
+
+type UpdateEmployeeSlugPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateGiftCertificateInput {
+  clientMutationId: String
+  giftCertificate: GiftCertificateInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateGiftCertificatePayload {
+  clientMutationId: String!
+  payload: GiftCertificate
+}
+
+input UpdateGiftCertificateVariantInput {
+  clientMutationId: String
+  giftCertificateVariant: VariantInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateGiftCertificateVariantPayload {
+  clientMutationId: String!
+  payload: Variant
+}
+
+input UpdateGroupInput {
+  clientMutationId: String
+  group: GroupInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateGroupPayload {
+  clientMutationId: String!
+  payload: Group
+}
+
+input UpdateIntakeFormInput {
+  clientMutationId: String
+  intakeForm: IntakeFormInput
+}
+
+type UpdateIntakeFormPayload {
+  clientMutationId: String!
+  payload: IntakeForm
+}
+
+input UpdateIntakeFormSubmissionInput {
+  clientMutationId: String
+  intakeFormSubmission: IntakeFormSubmissionInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateIntakeFormSubmissionPayload {
+  clientMutationId: String!
+  payload: IntakeFormSubmission
+}
+
+input UpdateLocationInput {
+  clientMutationId: String
+  location: LocationInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateLocationPayload {
+  clientMutationId: String!
+  payload: Location
+}
+
+input UpdateLocationSlugInput {
+  clientMutationId: String
+  locationId: String
+  slug: String
+}
+
+type UpdateLocationSlugPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateMembershipInput {
+  clientMutationId: String
+  membership: MembershipInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateMembershipPayload {
+  clientMutationId: String!
+  payload: Membership
+}
+
+input UpdateNoteInput {
+  clientMutationId: String
+  note: NoteInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateNotePayload {
+  clientMutationId: String!
+  payload: Note
+}
+
+input UpdateNotificationLogInput {
+  clientMutationId: String
+  id: ID
+  read: Boolean
+}
+
+type UpdateNotificationLogPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateOpenHourRuleInput {
+  clientMutationId: String
+  metadata: Map
+  resourceId: String
+  ruleId: String
+  serviceRestriction: [ServiceRestrictionInput]
+  timezone: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateOpenHourRulePayload {
+  clientMutationId: String!
+  payload: OpenHourRule
+}
+
+input UpdatePackagesInput {
+  clientMutationId: String
+  packages: PackagesInput
+  updateMask: FieldMaskInput
+}
+
+type UpdatePackagesPayload {
+  clientMutationId: String!
+  payload: Packages
+}
+
+input UpdatePlanInput {
+  clientMutationId: String
+  plan: PlanInput
+  updateMask: FieldMaskInput
+}
+
+type UpdatePlanPayload {
+  clientMutationId: String!
+  payload: Plan
+}
+
+input UpdateProfessionCategoryInput {
+  clientMutationId: String
+  professionCategory: ProfessionCategoryInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateProfessionCategoryPayload {
+  clientMutationId: String!
+  payload: ProfessionCategory
+}
+
+input UpdateProfessionInput {
+  clientMutationId: String
+  profession: ProfessionInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateProfessionPayload {
+  clientMutationId: String!
+  payload: Profession
+}
+
+input UpdateReplyInput {
+  clientMutationId: String
+  reply: ReplyInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateReplyPayload {
+  clientMutationId: String!
+  payload: Reply
+}
+
+input UpdateResourceDisplayOrderInput {
+  clientMutationId: String
+  displayOrder: Int
+  resourceId: String
+}
+
+type UpdateResourceDisplayOrderPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateResourceInput {
+  clientMutationId: String
+  resource: ResourceInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateResourcePayload {
+  clientMutationId: String!
+  payload: Resource
+}
+
+input UpdateResourceSlugInput {
+  clientMutationId: String
+  resourceId: String
+  slug: String
+}
+
+type UpdateResourceSlugPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateResourceTypeDisplayOrderInput {
+  clientMutationId: String
+  displayOrder: Int
+  resourceTypeId: String
+}
+
+type UpdateResourceTypeDisplayOrderPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateResourceTypeInput {
+  clientMutationId: String
+  resourceType: ResourceTypeInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateResourceTypePayload {
+  clientMutationId: String!
+  payload: ResourceType
+}
+
+input UpdateRoleInput {
+  clientMutationId: String
+  role: RoleInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateRolePayload {
+  clientMutationId: String!
+  payload: Role
+}
+
+input UpdateServiceDisplayOrderInput {
+  categoryId: String
+  clientMutationId: String
+  displayOrder: Int
+  serviceId: String
+}
+
+type UpdateServiceDisplayOrderPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateServiceInput {
+  clientMutationId: String
+  service: ServiceInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateServicePayload {
+  clientMutationId: String!
+  payload: Service
+}
+
+input UpdateServiceSlugInput {
+  clientMutationId: String
+  serviceId: String
+  slug: String
+}
+
+type UpdateServiceSlugPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateServiceTemplateInput {
+  clientMutationId: String
+  serviceTemplate: ServiceTemplateInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateServiceTemplatePayload {
+  clientMutationId: String!
+  payload: ServiceTemplate
+}
+
+input UpdateSessionInput {
+  id: ID
+  metadata: Map
+  serviceProviders: [ClassServiceProviderInput]
+  timing: TimeslotInput
+  title: String
+}
+
+input UpdateSessionsInput {
+  classId: String
+  clientMutationId: String
+  sessions: [UpdateSessionInput]
+  updateMask: FieldMaskInput
+}
+
+type UpdateSessionsPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateShortenUrlInput {
+  clientMutationId: String
+  shortenUrl: ShortenUrlInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateShortenUrlPayload {
+  clientMutationId: String!
+  payload: ShortenUrl
+}
+
+input UpdateShortUrlInput {
+  clientMutationId: String
+  shortUrl: ShortUrlInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateShortUrlPayload {
+  clientMutationId: String!
+  payload: ShortUrl
+}
+
+input UpdateSingleSlotInput {
+  bookable: Boolean
+  clientMutationId: String
+  id: ID
+  openHourRuleId: String
+  slot: TimeslotInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateSingleSlotPayload {
+  clientMutationId: String!
+  payload: OpenHourBuiltSlot
+}
+
+input UpdateStaffProfileInput {
+  clientMutationId: String
+  staffProfile: StaffProfileInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateStaffProfilePayload {
+  clientMutationId: String!
+  payload: StaffProfile
+}
+
+input UpdateSubscriptionInput {
+  addons: [BillingAddonInput]
+  billingAccountId: String
+  clientMutationId: String
+  companyId: String
+  couponCode: String
+  paymentMethodId: updateSubscriptionRequestPaymentMethodId
+  planId: String
+  planWalletId: String
+  updateMask: FieldMaskInput
+  useDefaultPaymentMethod: updateSubscriptionRequestUseDefaultPaymentMethod
+  validateOnly: Boolean
+}
+
+type UpdateSubscriptionPayload {
+  clientMutationId: String!
+  payload: UpdateSubscriptionResponse
+}
+
+input updateSubscriptionRequestPaymentMethodId {
+  paymentMethodId: String
+}
+
+input updateSubscriptionRequestUseDefaultPaymentMethod {
+  useDefaultPaymentMethod: Boolean
+}
+
+type UpdateSubscriptionResponse {
+  amountDeducted: Price
+  balanceUsed: Price
+  planWalletId: String!
+}
+
+input UpdateUserPasswordInput {
+  clientMutationId: String
+  id: ID
+  newPassword: String
+  oldPassword: String
+}
+
+type UpdateUserPasswordPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpdateUserProfileInput {
+  clientMutationId: String
+  updateMask: FieldMaskInput
+  userProfile: UserProfileInput
+}
+
+type UpdateUserProfilePayload {
+  clientMutationId: String!
+  payload: UserProfile
+}
+
+input UpdateWizardPositionInput {
+  clientMutationId: String
+  userId: String
+  wizardPosition: Int
+}
+
+type UpdateWizardPositionPayload {
+  clientMutationId: String!
+  payload: UpdateWizardPositionResponse
+}
+
+type UpdateWizardPositionResponse {
+  wizardPosition: Int!
+}
+
+input UpsertAppointmentReviewMailSettingInput {
+  appointmentReviewMailSetting: AppointmentReviewMailSettingInput
+  clientMutationId: String
+  locationId: String
+  upsertMask: FieldMaskInput
+}
+
+type UpsertAppointmentReviewMailSettingPayload {
+  clientMutationId: String!
+  payload: AppointmentReviewMailSetting
+}
+
+input UpsertAppointmentSettingInput {
+  appointmentSetting: AppointmentSettingInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpsertAppointmentSettingPayload {
+  clientMutationId: String!
+  payload: AppointmentSetting
+}
+
+input UpsertBookingPortalSettingInput {
+  bookingPortalSetting: BookingPortalSettingInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpsertBookingPortalSettingPayload {
+  clientMutationId: String!
+  payload: BookingPortalSetting
+}
+
+input UpsertBusinessReviewIdInput {
+  clientMutationId: String
+  googleBusinessId: String
+  parent: String
+  yelpBusinessId: String
+}
+
+type UpsertBusinessReviewIdPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpsertCartInput {
+  cartType: CartType
+  clientMutationId: String
+  customer: upsertCartRequestCustomer
+  customerId: upsertCartRequestCustomerId
+  items: [CartItemInput]
+  override: Boolean
+  parent: String
+}
+
+type UpsertCartPayload {
+  clientMutationId: String!
+  payload: Cart
+}
+
+input upsertCartRequestCustomer {
+  customer: CartCustomerInput
+}
+
+input upsertCartRequestCustomerId {
+  customerId: String
+}
+
+input UpsertClassPriceInput {
+  clientMutationId: String
+  id: ID
+  price: ClassPriceValueInput
+  pricingType: ClassPricingType
+}
+
+type UpsertClassPricePayload {
+  clientMutationId: String!
+  payload: ClassPrice
+}
+
+input UpsertClassReviewMailSettingInput {
+  classReviewMailSetting: ClassReviewMailSettingInput
+  clientMutationId: String
+  locationId: String
+  upsertMask: FieldMaskInput
+}
+
+type UpsertClassReviewMailSettingPayload {
+  clientMutationId: String!
+  payload: ClassReviewMailSetting
+}
+
+input UpsertClassSettingInput {
+  classSetting: ClassSettingInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpsertClassSettingPayload {
+  clientMutationId: String!
+  payload: ClassSetting
+}
+
+input UpsertCompanySettingInput {
+  clientMutationId: String
+  companySetting: CompanySettingInput
+  updateMask: FieldMaskInput
+}
+
+type UpsertCompanySettingPayload {
+  clientMutationId: String!
+  payload: CompanySetting
+}
+
+input UpsertCustomerFiltersInput {
+  clientMutationId: String
+  filters: [FilterInput]
+  userId: String
+}
+
+type UpsertCustomerFiltersPayload {
+  clientMutationId: String!
+  payload: CustomerFilters
+}
+
+input UpsertDeviceTokenOfUserInput {
+  clientMutationId: String
+  deviceId: String
+  deviceToken: String
+  targetId: String
+}
+
+type UpsertDeviceTokenOfUserPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input UpsertEmployeeSettingInput {
+  clientMutationId: String
+  setting: EmployeeSettingInput
+  updateMask: FieldMaskInput
+}
+
+type UpsertEmployeeSettingPayload {
+  clientMutationId: String!
+  payload: EmployeeSetting
+}
+
+input UpsertInput {
+  clientMutationId: String
+  records: [RecordInput]
+}
+
+input UpsertNotificationConfigurationInput {
+  clientMutationId: String
+  notificationConfiguration: NotificationConfigurationInput
+}
+
+type UpsertNotificationConfigurationPayload {
+  clientMutationId: String!
+  payload: NotificationConfiguration
+}
+
+input UpsertNotificationReceiverInput {
+  clientMutationId: String
+  receiver: NotificationReceiverInput
+  upsertMask: FieldMaskInput
+}
+
+type UpsertNotificationReceiverPayload {
+  clientMutationId: String!
+  payload: NotificationReceiver
+}
+
+input UpsertNotificationTemplateInput {
+  clientMutationId: String
+  template: NotificationTemplateInput
+  updateMask: FieldMaskInput
+}
+
+type UpsertNotificationTemplatePayload {
+  clientMutationId: String!
+  payload: NotificationTemplate
+}
+
+type UpsertPayload {
+  clientMutationId: String!
+  payload: UpsertResponse
+}
+
+input UpsertRecurrenceRuleInput {
+  clientMutationId: String
+  id: ID
+  newRecurrenceSet: [String]
+  recurrenceId: String
+  slot: TimeslotInput
+  start: Timestamp
+  until: Timestamp
+}
+
+type UpsertRecurrenceRulePayload {
+  clientMutationId: String!
+  payload: OpenHour
+}
+
+input UpsertResourceLinksInput {
+  clientMutationId: String
+  request: [SingleLinkRequestInput]
+}
+
+type UpsertResourceLinksPayload {
+  clientMutationId: String!
+  payload: LinkLists
+}
+
+input UpsertResourceTypeSettingInput {
+  clientMutationId: String
+  resourceTypeSetting: ResourceTypeSettingInput
+  updateMask: FieldMaskInput
+}
+
+type UpsertResourceTypeSettingPayload {
+  clientMutationId: String!
+  payload: ResourceTypeSetting
+}
+
+type UpsertResponse {
+  records: [Record!]!
+}
+
+input UpsertReviewInput {
+  clientMutationId: String
+  review: ReviewInput
+  upsertMask: FieldMaskInput
+}
+
+input UpsertReviewPageSettingInput {
+  clientMutationId: String
+  parent: String
+  reviewPageSetting: ReviewPageSettingInput
+  upsertMask: FieldMaskInput
+}
+
+type UpsertReviewPageSettingPayload {
+  clientMutationId: String!
+  payload: ReviewPageSetting
+}
+
+type UpsertReviewPayload {
+  clientMutationId: String!
+  payload: Review
+}
+
+input UpsertReviewSettingInput {
+  clientMutationId: String
+  parent: String
+  reviewSetting: ReviewSettingInput
+  upsertMask: FieldMaskInput
+}
+
+type UpsertReviewSettingPayload {
+  clientMutationId: String!
+  payload: ReviewSetting
+}
+
+input UpsertServicePriceInput {
+  clientMutationId: String
+  parent: String
+  rules: [ServicePriceRuleInput]
+}
+
+type UpsertServicePricePayload {
+  clientMutationId: String!
+  payload: ServicePrice
+}
+
+input UpsertServicePriceRequestInput {
+  parent: String
+  rules: [ServicePriceRuleInput]
+}
+
+input UpsertServiceRestrictionInput {
+  channels: [ChannelRestrictionInput]
+  clientMutationId: String
+  ruleId: String
+  serviceId: String
+}
+
+type UpsertServiceRestrictionPayload {
+  clientMutationId: String!
+  payload: ServiceRestriction
+}
+
+input UpsertServiceSettingInput {
+  clientMutationId: String
+  serviceSetting: ServiceSettingInput
+  updateMask: FieldMaskInput
+}
+
+type UpsertServiceSettingPayload {
+  clientMutationId: String!
+  payload: ServiceSetting
+}
+
+type UsageRestriction {
+  quantity: Int!
+}
+
+input UsageRestrictionInput {
+  quantity: Int
+}
+
+type UserPreference {
+  dateFormat: String!
+  id: ID!
+  language: String!
+  timeFormat: String!
+  timezone: String!
+  uIInfo: String!
+}
+
+input UserPreferenceInput {
+  dateFormat: String
+  id: ID
+  language: String
+  timeFormat: String
+  timezone: String
+  uIInfo: String
+}
+
+type UserProfile implements Node {
+  address: Address
+  birthDate: Timestamp
+  email: String!
+  emailVerifiedOn: Timestamp
+  featureNotifications(after: String, before: String, first: Int, last: Int, retrieveReadNotifications: Boolean): ListFeatureNotificationResponse
+  firstName: String!
+  gender: Gender!
+  groups: [Group!]!
+  id: ID!
+  invitedBy: String!
+  isInvitedByAdmin: Boolean!
+  lastName: String!
+  metadata: Map
+  phoneVerifiedOn: Timestamp
+  preferences: UserPreference
+  profileImage: GalleryItem
+  telephones: [String!]!
+  userRoles: UserRole
+  verifiedMask: FieldMask
+}
+
+input UserProfileInput {
+  address: AddressInput
+  birthDate: Timestamp
+  email: String
+  emailVerifiedOn: Timestamp
+  firstName: String
+  gender: Gender
+  id: ID
+  invitedBy: String
+  isInvitedByAdmin: Boolean
+  lastName: String
+  metadata: Map
+  phoneVerifiedOn: Timestamp
+  preferences: UserPreferenceInput
+  profileImage: GalleryItemInput
+  telephones: [String]
+  verifiedMask: FieldMaskInput
+}
+
+type UserRestriction {
+  quantity: Int!
+}
+
+input UserRestrictionInput {
+  quantity: Int
+}
+
+type UserRight {
+  id: ID!
+  resources: [RightResource!]!
+  userId: String!
+}
+
+type UserRole {
+  id: ID!
+  role: [UserRoleRole!]!
+  userId: String!
+}
+
+type UserRoleId {
+  role: Role
+  roleId: String!
+  userEmail: String!
+  userId: String!
+}
+
+type UserRoleIdNode {
+  cursor: String!
+  node: UserRoleId
+}
+
+union UserRoleLevelUnion = Company | Group | Location
+
+type UserRoleNode {
+  cursor: String!
+  node: UserRole
+}
+
+type UserRoleRole {
+  levelDetails: UserRoleLevelUnion
+  levelId: String!
+  role: Role
+  roleId: String!
+}
+
+input UserRoleRoleInput {
+  levelId: String
+  roleId: String
+}
+
+input ValidateCartInput {
+  cart: CartInput
+  clientMutationId: String
+}
+
+type ValidateCartPayload {
+  clientMutationId: String!
+  payload: Cart
+}
+
+input ValidateDiscountInput {
+  clientMutationId: String
+  code: String
+  externalTransactionId: String
+  itemMap: Map
+  parent: String
+  userId: String
+}
+
+type ValidateDiscountPayload {
+  clientMutationId: String!
+  payload: ConsumeDiscountResponse
+}
+
+type ValidateLink {
+  isValid: Boolean!
+  link: Link
+}
+
+type ValidateLinksResponse {
+  list: [ValidateLink!]!
+}
+
+enum ValueType {
+  """FIXED_VALUE"""
+  FIXED_VALUE
+
+  """PERCENTAGE"""
+  PERCENTAGE
+
+  """UNDEFINED"""
+  UNDEFINED
+}
+
+type Variant {
+  id: ID!
+  price: Price
+  restriction: GiftCertificateRestriction
+}
+
+input VariantInput {
+  id: ID
+  price: PriceInput
+  restriction: GiftCertificateRestrictionInput
+}
+
+input VerifyPhoneOTPInput {
+  clientMutationId: String
+  otpCode: String
+  phone: String
+  userId: String
+}
+
+type VerifyPhoneOTPPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input ViewNotificationInput {
+  clientMutationId: String
+  userId: String
+  viewedOn: Timestamp
+}
+
+type ViewNotificationPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+type WalletItem {
+  customer: Customer
+  id: ID!
+  packageCopy: Packages
+  transactions: [PackageTransaction!]!
+  walletCreatedBy: String!
+  walletCreatedOn: Timestamp
+  walletId: String!
+}
+
+input WalletItemInput {
+  id: ID
+  packageCopy: PackagesInput
+  transactions: [PackageTransactionInput]
+  walletCreatedBy: String
+  walletCreatedOn: Timestamp
+  walletId: String
+}
+
+type WalletItemNode {
+  cursor: String!
+  node: WalletItem
+}
+
+type WebNotification {
+  actions: String!
+  active: String!
+  appName: String!
+  appTypeId: String!
+  businessId: String!
+  content: [WebNotificationLocalisedTemplateContent!]!
+  createdOn: Timestamp
+  description: String!
+  eventType: String!
+  id: ID!
+  metadata: Map
+  notificationType: NotificationType!
+  read: Boolean!
+  readOn: Timestamp
+  smartyTags: [String!]!
+  templateData: Map
+  templateId: String!
+  title: String!
+  userId: String!
+  view: Boolean!
+  viewedOn: Timestamp
+}
+
+type WebNotificationLocalisedTemplateContent {
+  body: String!
+  locale: String!
+  subject: String!
+}
+
+type WebNotificationNode {
+  cursor: String!
+  node: WebNotification
+}
+
+input WizardLocationPreferenceInput {
+  currency: String
+  dateFormat: String
+  language: String
+  timeFormat: String
+  timezone: String
+  uIInfo: String
+}
