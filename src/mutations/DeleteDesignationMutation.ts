@@ -1,7 +1,7 @@
 import {commitMutation, graphql} from 'react-relay';
 import {MutationCallbacks} from '@saastack/relay'
 
-import {Disposable, Environment, RecordSourceSelectorProxy} from 'relay-runtime';
+import { Disposable, Environment, RecordSourceSelectorProxy, Variables } from 'relay-runtime'
 import {DeleteDesignationInput, DeleteDesignationMutation} from '../__generated__/DeleteDesignationMutation.graphql';
 
 const mutation = graphql`
@@ -23,7 +23,7 @@ const sharedUpdater = (store: RecordSourceSelectorProxy, id: string, filters: Va
 
 let tempID = 0;
 
-const commit = (environment: Environment, id: string, callbacks?: MutationCallbacks<string>): Disposable => {
+const commit = (environment: Environment, variables:Variables, id: string, callbacks?: MutationCallbacks<string>): Disposable => {
     const input: DeleteDesignationInput = {
         id,
         clientMutationId: `${tempID++}`,

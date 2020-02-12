@@ -2,6 +2,8 @@ import {DesignationInput} from '../__generated__/CreateDesignationMutation.graph
 
 const DesignationAddInitialValues: DesignationInput = {
     id: '',
+    name: '',
+    description: '',
 };
 
 export default DesignationAddInitialValues;

@@ -26,7 +26,7 @@ const DesignationDelete: React.FC<Props> = ({ variables }) => {
         DeleteDesignationMutation.commit(environment, variables, window.atob(id!), {onSuccess, onError})
     }
 
-    const navigateBack = () => navigate('../')
+    const navigateBack = () => navigate('../../')
     const handleClose = () => setOpen(false)
 
     const onError = (e: string) => {

@@ -32,7 +32,7 @@ const DesignationUpdate: React.FC<Props> = ({designations, ...props}) => {
     const designation = designations.find(i => i.id === window.atob(id!))
 
 
-    const navigateBack = () => navigate('../')
+    const navigateBack = () => navigate('../../')
     const handleClose = () => setOpen(false)
     React.useEffect(() => {
         if (!designation) {
@@ -48,7 +48,7 @@ const DesignationUpdate: React.FC<Props> = ({designations, ...props}) => {
         const designation = {
             ...values,
         };
-        UpdateDesignationMutation.commit(environment, designation, [], {onSuccess, onError});
+        UpdateDesignationMutation.commit(environment, designation, ['name', 'description'], {onSuccess, onError});
     };
 
     const onError = (e: string) => {
@@ -83,7 +83,9 @@ export default createFragmentContainer(
     {
         designations: graphql`
             fragment DesignationUpdate_designations on Designation @relay(plural: true) {
-                id
+                id,
+                name,
+                description
             }
         `
     }
