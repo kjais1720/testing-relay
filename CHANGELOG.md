@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.3](https://gitlab.com/saastack/ui/designations/compare/v0.1.2...v0.1.3) (2020-02-13)
+
+
+### Bug Fixes
+
+* **release:** hooks path change ([78c5f62](https://gitlab.com/saastack/ui/designations/commit/78c5f62f1ff2404084644dacf007d149e3986a07))
+
 ### [0.1.2](https://gitlab.com/saastack/ui/designations/compare/v0.1.1...v0.1.2) (2020-02-13)
 
 
