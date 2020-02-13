@@ -1,7 +1,7 @@
 import hooks from '@saastack/hooks'
 import {t} from '@lingui/macro';
 import loadable from '@loadable/component'
-import {AppsOutlined} from '@material-ui/icons';
+import { AppsOutlined, SupervisorAccountOutlined } from '@material-ui/icons'
 import {PubSub} from '@saastack/pubsub';
 import namespace from './namespace';
 
@@ -16,12 +16,13 @@ const load = () => {
         return
     }
     loaded = true;
-    hooks.app.subApp.registerHook('designation', {
+    hooks.settings.items.registerHook('designations', {
         component: DesignationPage,
-        icon: AppsOutlined,
+        icon: SupervisorAccountOutlined,
         path: '/designations',
         title: t`Designations`,
+        parent: 'masters',
     });
-    }
+}
 
 load();
