@@ -19,7 +19,7 @@ const load = () => {
     hooks.settings.items.registerHook('designations', {
         component: DesignationPage,
         icon: SupervisorAccountOutlined,
-        path: '/designations',
+        path: 'designations',
         title: t`Designations`,
         parent: 'masters',
     });
