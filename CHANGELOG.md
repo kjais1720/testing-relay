@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.7](https://gitlab.com/saastack/ui/designations/compare/v0.1.6...v0.1.7) (2020-02-15)
+
+
+### Bug Fixes
+
+* added loading to with query ([55d0159](https://gitlab.com/saastack/ui/designations/commit/55d0159268e9ed7bc3851f5a3cf14bc2106084d1))
+
 ### [0.1.6](https://gitlab.com/saastack/ui/designations/compare/v0.1.5...v0.1.6) (2020-02-15)
 
 
