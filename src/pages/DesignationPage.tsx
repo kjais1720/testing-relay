@@ -4,6 +4,7 @@ import React from 'react';
 import {graphql} from 'react-relay';
 import {DesignationPageQuery} from '../__generated__/DesignationPageQuery.graphql';
 import DesignationMaster from '../components/DesignationMaster';
+import {Loading} from '@saastack/components';
 
 const query = graphql`
     query DesignationPageQuery($parent: String) {
@@ -24,7 +25,7 @@ interface PageProps {
 const DesignationPage: React.FC<PageProps> = props => {
     const { companyId } = useConfig();
     const parent = props.parent || companyId;
-    const Wrapper = withQuery({query, variables: {parent}})(DesignationMasterWrapper);
+    const Wrapper = withQuery({query, variables: {parent}, Loading})(DesignationMasterWrapper);
     return <Wrapper {...props} parent={parent}/>;
 };
 
