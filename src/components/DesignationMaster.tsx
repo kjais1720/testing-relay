@@ -29,7 +29,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
 
     const navigate = useNavigate()
     const [parent, setParent] = React.useState(_)
-    const breadcrumbs = <Breadcrumb items={[{ title: <Trans>Settings</Trans>, path: '../' }]}/>
+    const breadcrumbs = <Breadcrumb items={[{ title: <Trans>Settings</Trans>, to: '../../' }]}/>
     const variables = { parent }
 
     const header = <Trans>Designations</Trans>
