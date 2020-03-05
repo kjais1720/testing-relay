@@ -1,13 +1,12 @@
-import { ActionItem } from '@saastack/components'
+import { ActionItem, Breadcrumb } from '@saastack/components'
 import { Layout } from '@saastack/layouts'
 import { PubSub } from '@saastack/pubsub'
 import namespace from '../namespace'
 import { Trans } from '@lingui/macro'
 import loadable from '@loadable/component'
 import { AddOutlined } from '@material-ui/icons'
-import { find } from 'lodash-es'
 import React from 'react'
-import { createFragmentContainer, createRefetchContainer, graphql, RelayRefetchProp } from 'react-relay'
+import { createRefetchContainer, graphql, RelayRefetchProp } from 'react-relay'
 import { DesignationMaster_designations } from '../__generated__/DesignationMaster_designations.graphql'
 import DesignationList from './DesignationList'
 import { Route, Routes, useNavigate } from '@saastack/router'
@@ -30,7 +29,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
 
     const navigate = useNavigate()
     const [parent, setParent] = React.useState(_)
-    const [tab, setTab] = React.useState<number>(0)
+    const breadcrumbs = <Breadcrumb items={[{ title: <Trans>Settings</Trans>, path: '../' }]}/>
     const variables = { parent }
 
     const header = <Trans>Designations</Trans>
@@ -51,11 +50,11 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
 
 
     const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> :
-        <DesignationList onItemClick={(id: string) => navigate(window.btoa(id || ''))} designations={designations}/>
+        <DesignationList designations={designations}/>
 
     return (
         <Layout switcher={<Switcher levels={'com'} value={variables.parent} onChange={setParent}/>}
-                type="OneColumnLayout" actions={actions} header={header} col1={col1}>
+                breadcrumbs={breadcrumbs} type="OneColumnLayout" actions={actions} header={header} col1={col1}>
             <Routes>
                 <Route path="add" element={<DesignationAdd variables={variables}/>}/>
                 <Route path=":id/update" element={<DesignationUpdate designations={designations}/>}/>

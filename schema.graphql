@@ -1,5 +1,5 @@
 # source: https://dev-waqt.appointy.com/graphql
-# timestamp: Wed Feb 12 2020 13:47:30 GMT+0530 (India Standard Time)
+# timestamp: Thu Mar 05 2020 15:59:04 GMT+0530 (India Standard Time)
 
 type Acceptance {
   acceptedDate: Timestamp
@@ -41,6 +41,28 @@ enum Action {
 
   """PLATFORM_LEVEL"""
   PLATFORM_LEVEL
+}
+
+type ActivityLog {
+  createdOn: Timestamp
+  eventDisplayName: String!
+  eventName: String!
+  id: ID!
+  ipInfo: String!
+  message: String!
+  module: String!
+  userEmail: String!
+  userId: String!
+}
+
+type ActivityLogEventFilter {
+  eventDisplayName: String!
+  eventName: String!
+}
+
+type ActivityLogNode {
+  cursor: String!
+  node: ActivityLog
 }
 
 input AddBenefitToMembershipInput {
@@ -144,6 +166,30 @@ input AllowedDayInput {
   timeZone: String
 }
 
+type AnalyticsTemplate {
+  description: String!
+  id: ID!
+  metadata: Map
+  productDefault: Boolean!
+  queryId: String!
+  smartyTags: [String!]!
+  title: String!
+  uiInfo: Map
+  userCounts: Int!
+}
+
+input AnalyticsTemplateInput {
+  description: String
+  id: ID
+  metadata: Map
+  productDefault: Boolean
+  queryId: String
+  smartyTags: [String]
+  title: String
+  uiInfo: Map
+  userCounts: Int
+}
+
 type App {
   active: Boolean!
   appType: AppType
@@ -181,6 +227,9 @@ enum AppCategory {
 
   """MARKETING"""
   MARKETING
+
+  """MEETING"""
+  MEETING
 
   """PAYMENT"""
   PAYMENT
@@ -231,8 +280,8 @@ enum AppLinkingLevel {
 input ApplyDiscountInput {
   clientMutationId: String
   code: String
+  customerId: String
   orderId: String
-  userId: String
 }
 
 type ApplyDiscountPayload {
@@ -252,6 +301,7 @@ type Appointment implements Node {
   employee: AppointmentEmployee
   id: ID!
   note: [Note!]!
+  orders: [Order!]!
   rescheduleAllowedTill: Timestamp
   resourceTypes: [AppointmentResourceType!]!
   resources: [AppointmentResource!]!
@@ -447,17 +497,6 @@ input AppointmentNotificationSettingInput {
   roleSettings: [AppointmentNotificationRoleSettingInput]
 }
 
-type AppointmentReportNode {
-  cursor: String!
-  node: Report
-}
-
-type AppointmentReportResponse {
-  data: ReportData
-  edges: [AppointmentReportNode!]!
-  pageInfo: PageInfo
-}
-
 type AppointmentResource {
   capacity: Int!
   original: Resource
@@ -589,6 +628,9 @@ enum AppTypeCategory {
 
   """MARKETING"""
   MARKETING
+
+  """MEETING"""
+  MEETING
 
   """PAYMENT"""
   PAYMENT
@@ -1135,6 +1177,11 @@ input BusinessInfoInput {
   businessName: String
 }
 
+type BusinessInformation {
+  businessId: String!
+  name: String!
+}
+
 enum BusinessType {
   """ALL"""
   ALL
@@ -1444,6 +1491,26 @@ input ChannelRestrictionInput {
   durations: [Duration]
 }
 
+enum ChannelType {
+  """CALENDAR"""
+  CALENDAR
+
+  """EMAIL"""
+  EMAIL
+
+  """PUSH"""
+  PUSH
+
+  """SMS"""
+  SMS
+
+  """UNKNOWN_CHANNEL_TYPE"""
+  UNKNOWN_CHANNEL_TYPE
+
+  """WEB"""
+  WEB
+}
+
 enum ChargeType {
   """FIXED_AMOUNT"""
   FIXED_AMOUNT
@@ -1505,6 +1572,11 @@ type CheckShortUrlPayload {
 
 type CheckShortUrlResponse {
   available: Boolean!
+}
+
+type CheckStatusOfPIIResponse {
+  request: PiiRequests
+  status: PIIRequestStatus!
 }
 
 type Class implements Node {
@@ -2038,6 +2110,17 @@ input configurationSmsConfiguration {
   smsConfiguration: SmsConfigurationInput
 }
 
+input ConfirmDeleteInfoInput {
+  businessIds: [String]
+  clientMutationId: String
+  dataCode: String
+}
+
+type ConfirmDeleteInfoPayload {
+  clientMutationId: String!
+  payload: GetOwnedBusinessInfoResponse
+}
+
 type ConsumeDiscountResponse {
   discountables: [Discountables!]!
 }
@@ -2111,6 +2194,17 @@ input CreateAddonInput {
 type CreateAddonPayload {
   clientMutationId: String!
   payload: Addon
+}
+
+input CreateAnalyticsTemplateInput {
+  analyticsTemplate: AnalyticsTemplateInput
+  clientMutationId: String
+  parent: String
+}
+
+type CreateAnalyticsTemplatePayload {
+  clientMutationId: String!
+  payload: AnalyticsTemplate
 }
 
 input CreateAppInput {
@@ -2475,6 +2569,17 @@ type CreateMembershipPayload {
   payload: Membership
 }
 
+input CreateMessageInput {
+  clientMutationId: String
+  message: MessageInput
+  parent: String
+}
+
+type CreateMessagePayload {
+  clientMutationId: String!
+  payload: Message
+}
+
 input CreateNoteInput {
   clientMutationId: String
   note: NoteInput
@@ -2593,6 +2698,17 @@ input CreateProfessionInput {
 type CreateProfessionPayload {
   clientMutationId: String!
   payload: Profession
+}
+
+input CreateQueryInput {
+  clientMutationId: String
+  parent: String
+  query: MessagingQueryInput
+}
+
+type CreateQueryPayload {
+  clientMutationId: String!
+  payload: MessagingQuery
 }
 
 input CreateReplyInput {
@@ -2965,6 +3081,9 @@ enum DataCodeType {
   """FORGOT_PASSWORD"""
   FORGOT_PASSWORD
 
+  """PII_REQUEST"""
+  PII_REQUEST
+
   """REVIEW"""
   REVIEW
 }
@@ -2987,6 +3106,31 @@ type DataSuggestion {
 input DataSuggestionInput {
   resourceTypes: [String]
   services: [ServiceSuggestionInput]
+}
+
+enum DataType {
+  """DATETIME"""
+  DATETIME
+
+  """FLOAT"""
+  FLOAT
+
+  """NUMBER"""
+  NUMBER
+
+  """STRING"""
+  STRING
+
+  """TIME_INTERVAL"""
+  TIME_INTERVAL
+}
+
+enum DateRangeOn {
+  """BookingTime"""
+  BookingTime
+
+  """StartTime"""
+  StartTime
 }
 
 type Dateslot {
@@ -3075,6 +3219,16 @@ input DeleteAddonInput {
 }
 
 type DeleteAddonPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteAnalyticsTemplateInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteAnalyticsTemplatePayload {
   clientMutationId: String!
   payload: Empty
 }
@@ -3368,6 +3522,16 @@ type DeleteMembershipPayload {
   payload: Empty
 }
 
+input DeleteMessageInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteMessagePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
 input DeleteNoteInput {
   clientMutationId: String
   id: ID
@@ -3417,6 +3581,26 @@ input DeletePlanInput {
 }
 
 type DeletePlanPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteQueryInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteQueryPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteReplyInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteReplyPayload {
   clientMutationId: String!
   payload: Empty
 }
@@ -3523,6 +3707,42 @@ type DeleteStaffProfilePayload {
   payload: Empty
 }
 
+type DeliverySetting {
+  deliveryType: DeliveryType!
+  frequency: Frequency!
+  id: ID!
+  limit: Int!
+  limitType: LimitType!
+  sendingTime: Timestamp
+  startDate: Timestamp
+  stopDate: Timestamp
+  stopType: StopType!
+  timezone: String!
+}
+
+input DeliverySettingInput {
+  deliveryType: DeliveryType
+  frequency: Frequency
+  limit: Int
+  limitType: LimitType
+  sendingTime: Timestamp
+  startDate: Timestamp
+  stopDate: Timestamp
+  stopType: StopType
+  timezone: String
+}
+
+enum DeliveryType {
+  """AS_CRITERIA_MATCH"""
+  AS_CRITERIA_MATCH
+
+  """ONCE"""
+  ONCE
+
+  """RECURRING"""
+  RECURRING
+}
+
 type Department implements Node {
   description: String!
   id: ID!
@@ -3549,6 +3769,47 @@ input DesignationInput {
   id: ID
   metadata: Map
   name: String
+}
+
+input DetailedAppointmentReportFilterInput {
+  appointmentStatus: AppointmentStatus
+  customerCustomStatus: CustomStatusAppointmentInput
+  customerEmail: String
+  customerStatus: CustomerStatus
+  serviceIds: [String]
+  staffIds: [String]
+}
+
+type DetailedAppointmentReportNode {
+  cursor: String!
+  node: DetailedAppointmentReportObject
+}
+
+type DetailedAppointmentReportObject {
+  appointmentBookedOn: Timestamp
+  appointmentStatus: AppointmentStatus!
+  customerBookedOn: Timestamp
+  customerCustomStatus: CustomStatusAppointment
+  customerEmail: String!
+  customerFirstName: String!
+  customerLastName: String!
+  customerPaidPrice: Price
+  customerStatus: CustomerStatus!
+  customerTimezone: String!
+  id: ID!
+  serviceDuration: Duration
+  serviceName: String!
+  slot: Timeslot
+  staffEmail: String!
+  staffFirstName: String!
+  staffLastName: String!
+  totalAppointmentPrice: Price
+}
+
+type DetailedAppointmentReportResponse {
+  data: ReportOverallData
+  edges: [DetailedAppointmentReportNode!]!
+  pageInfo: PaginationInfo
 }
 
 type Discount {
@@ -3582,6 +3843,11 @@ input DiscountInput {
   title: String
 }
 
+type DiscountListTransactionsResponse {
+  edges: [DiscountWalletItemNode!]!
+  pageInfo: PageInfo
+}
+
 type DiscountNode {
   cursor: String!
   node: Discount
@@ -3609,6 +3875,18 @@ input DiscountRestrictionRecurrenceRuleInput {
   slots: TimeslotInput
 }
 
+type DiscountTransaction {
+  customerId: String!
+  discountId: String!
+  discountables: [Discountables!]!
+  externalTransactionId: String!
+  id: ID!
+  order: Order
+  transactionCreatedBy: String!
+  transactionCreatedOn: Timestamp
+  transactionType: TransactionType!
+}
+
 enum DiscountType {
   """FIXED"""
   FIXED
@@ -3623,6 +3901,11 @@ enum DiscountUsingType {
 
   """USE_OVERALL_DISCOUNT"""
   USE_OVERALL_DISCOUNT
+}
+
+type DiscountWalletItemNode {
+  cursor: String!
+  node: DiscountTransaction
 }
 
 type DistributedRating {
@@ -4054,6 +4337,15 @@ type GetNoteByTypeResponse {
   notes: [Note!]!
 }
 
+type GetOrdersByItemIdResponse {
+  orders: [Order!]!
+}
+
+type GetOwnedBusinessInfoResponse {
+  businesses: [BusinessInformation!]!
+  roles: [RoleInformation!]!
+}
+
 type GetPaymentGatewayPublicKeyResponse {
   publicKey: String!
 }
@@ -4065,6 +4357,18 @@ type GetPaymentMethodIntentResponse {
 type GetPolicyResponse {
   policy: Policy
   sourceId: [String!]!
+}
+
+input getQueryUsersCountRequestQueryId {
+  queryId: String
+}
+
+input getQueryUsersCountRequestQueryString {
+  queryString: String
+}
+
+type GetQueryUsersCountResponse {
+  usersCount: Int!
 }
 
 type GetServicePriceValueResponse {
@@ -4320,8 +4624,14 @@ enum IntegrationType {
   """UNKNOWN_TYPE"""
   UNKNOWN_TYPE
 
+  """WEBEX"""
+  WEBEX
+
   """YELP"""
   YELP
+
+  """ZOOM"""
+  ZOOM
 }
 
 type InvitedUser {
@@ -4561,11 +4871,14 @@ input ItemInput {
 }
 
 enum ItemType {
-  """APPOINTMENT"""
-  APPOINTMENT
+  """APPOINTMENT_ITEM"""
+  APPOINTMENT_ITEM
 
-  """CLASS"""
-  CLASS
+  """CLASS_ITEM"""
+  CLASS_ITEM
+
+  """PACKAGE_ITEM"""
+  PACKAGE_ITEM
 
   """UNKNOWN"""
   UNKNOWN
@@ -4587,6 +4900,14 @@ type LicenseWallet {
   consumptionCycle: Timeslot
   id: ID!
   license: License
+}
+
+enum LimitType {
+  """MAX"""
+  MAX
+
+  """NO_LIMIT"""
+  NO_LIMIT
 }
 
 type Link {
@@ -4612,6 +4933,23 @@ type ListAcceptanceResponse {
   pageInfo: PageInfo
 }
 
+type ListActivityLogEventFilterResponse {
+  filters: [ActivityLogEventFilter!]!
+}
+
+input ListActivityLogFilterInput {
+  dateRange: TimeslotInput
+  eventNames: [String]
+  userEmail: String
+  userId: String
+}
+
+type ListActivityLogResponse {
+  edges: [ActivityLogNode!]!
+  pageInfo: PaginationInfo
+  totalCount: Int!
+}
+
 type ListAddonResponse {
   addon: [Addon!]!
 }
@@ -4622,6 +4960,10 @@ input listAllLinksOfParentRequestFirstResourceParent {
 
 input listAllLinksOfParentRequestSecondResourceParent {
   secondResourceParent: String
+}
+
+type ListAnalyticsTemplateResponse {
+  analyticsTemplate: [AnalyticsTemplate!]!
 }
 
 input listAppointmentRequestCustomerId {
@@ -4864,6 +5206,30 @@ type ListMembershipResponse {
   pageInfo: PageInfo
 }
 
+input ListMessageCountInput {
+  clientMutationId: String
+  messageId: String
+  parent: String
+  viewMask: FieldMaskInput
+}
+
+type ListMessageCountPayload {
+  clientMutationId: String!
+  payload: ListMessageCountResponse
+}
+
+type ListMessageCountResponse {
+  messageCount: [MessageCount!]!
+}
+
+type ListMessageResponse {
+  message: [Message!]!
+}
+
+type ListMessagingEventResponse {
+  messagingEvent: [MessagingEvent!]!
+}
+
 type ListModuleLicenseResponse {
   moduleLicense: [ModuleLicense!]!
   moduleLicenseMap: Map
@@ -4893,10 +5259,6 @@ type ListNotificationReceiverResponse {
   notificationReceiver: [NotificationReceiver!]!
 }
 
-type ListNotificationTemplateResponse {
-  template: [NotificationTemplate!]!
-}
-
 type ListOpenHourRuleResponse {
   edges: [OpenHourRuleNode!]!
   pageInfo: PageInfo
@@ -4909,23 +5271,6 @@ type ListOpenHourRulesForCalendarResponse {
 type ListOrderResponse {
   edges: [OrderNode!]!
   pageInfo: PageInfo
-}
-
-input ListOrdersByUserInput {
-  after: String
-  before: String
-  clientMutationId: String
-  first: Int
-  last: Int
-  location: String
-  orderStatus: OrderStatus
-  userId: String
-  viewMask: FieldMaskInput
-}
-
-type ListOrdersByUserPayload {
-  clientMutationId: String!
-  payload: ListOrderResponse
 }
 
 type ListPackagesResponse {
@@ -4950,6 +5295,14 @@ type ListProfessionResponse {
   profession: [Profession!]!
 }
 
+type ListQueryResponse {
+  query: [MessagingQuery!]!
+}
+
+type ListQueryUsersResponse {
+  users: [UserEventProfile!]!
+}
+
 type ListReplyResponse {
   reply: [Reply!]!
 }
@@ -4970,6 +5323,10 @@ type ListResponse {
 type ListReviewHelpfulResponse {
   edges: [ReviewHelpfulNode!]!
   pageInfo: PageInfo
+}
+
+type ListReviewOfLocationResponse {
+  reviews: [Review!]!
 }
 
 type ListReviewResponse {
@@ -5005,6 +5362,10 @@ type ListSlotsResponse {
 
 type ListStaffProfileResponse {
   staffProfile: [StaffProfile!]!
+}
+
+type ListTemplateResponse {
+  template: [Template!]!
 }
 
 type ListUnacceptedPoliciesResponse {
@@ -5177,6 +5538,75 @@ type MembershipWalletItem {
   walletId: String!
 }
 
+type Message {
+  channel: ChannelType!
+  deliverySetting: DeliverySetting
+  description: String!
+  id: ID!
+  metadata: Map
+  queryId: String!
+  templateId: String!
+  title: String!
+}
+
+type MessageCount {
+  firstActivity: Timestamp
+  id: ID!
+  lastActivity: Timestamp
+  messageId: String!
+  userCount: Int!
+}
+
+input MessageInput {
+  channel: ChannelType
+  deliverySetting: DeliverySettingInput
+  description: String
+  id: ID
+  metadata: Map
+  queryId: String
+  templateId: String
+  title: String
+}
+
+enum MessageType {
+  """PROMOTIONAL"""
+  PROMOTIONAL
+
+  """TRANSACTIONAL"""
+  TRANSACTIONAL
+
+  """UNKNOWN"""
+  UNKNOWN
+}
+
+type MessagingEvent {
+  appTypeId: String!
+  dataType: DataType!
+  displayName: String!
+  eventType: String!
+  id: ID!
+  isDefault: Boolean!
+  name: String!
+  userId: String!
+  userProperty: String!
+}
+
+type MessagingQuery {
+  channel: ChannelType!
+  description: String!
+  id: ID!
+  queryString: String!
+  title: String!
+}
+
+input MessagingQueryInput {
+  channel: ChannelType
+  description: String
+  id: ID
+  queryString: String
+  title: String
+}
+
 type ModuleLicense {
   defaultLimit: Int!
   displayName: String!
@@ -5196,6 +5626,7 @@ type ModuleLicenses {
   maxLimit: Int!
   moduleName: String!
   paidAddonLimit: Int!
+  restrictionSlugs: [String!]!
   restrictionType: RestrictionTypes!
   rpcs: [String!]!
   slug: String!
@@ -5234,9 +5665,11 @@ type Mutation {
   changePolicyStatus(input: ChangePolicyStatusInput): ChangePolicyStatusPayload!
   checkOpenHourAvailability(input: CheckOpenHourAvailabilityInput): CheckOpenHourAvailabilityPayload!
   checkShortUrl(input: CheckShortUrlInput): CheckShortUrlPayload!
+  confirmDeleteAccount(input: ConfirmDeleteInfoInput): ConfirmDeleteInfoPayload!
   coupon(input: GetCouponByCodeInput): GetCouponByCodePayload!
   createAcceptance(input: CreateAcceptanceInput): CreateAcceptancePayload!
   createAddon(input: CreateAddonInput): CreateAddonPayload!
+  createAnalyticsTemplate(input: CreateAnalyticsTemplateInput): CreateAnalyticsTemplatePayload!
   createApp(input: CreateAppInput): CreateAppPayload!
   createAppType(input: CreateAppTypeInput): CreateAppTypePayload!
   createAppointment(input: CreateAppointmentInput): CreateAppointmentPayload!
@@ -5264,6 +5697,7 @@ type Mutation {
   createIntakeFormSubmission(input: CreateIntakeFormSubmissionInput): CreateIntakeFormSubmissionPayload!
   createLocation(input: CreateLocationInput): CreateLocationPayload!
   createMembership(input: CreateMembershipInput): CreateMembershipPayload!
+  createMessage(input: CreateMessageInput): CreateMessagePayload!
   createNote(input: CreateNoteInput): CreateNotePayload!
   createNotificationLogs(input: CreateNotificationLogInput): CreateNotificationLogPayload!
   createOpenHourRule(input: CreateOpenHourRuleInput): CreateOpenHourRulePayload!
@@ -5275,6 +5709,7 @@ type Mutation {
   createPolicyVersion(input: CreatePolicyVersionInput): CreatePolicyVersionPayload!
   createProfession(input: CreateProfessionInput): CreateProfessionPayload!
   createProfessionCategory(input: CreateProfessionCategoryInput): CreateProfessionCategoryPayload!
+  createQuery(input: CreateQueryInput): CreateQueryPayload!
   createReply(input: CreateReplyInput): CreateReplyPayload!
   createResource(input: CreateResourceInput): CreateResourcePayload!
   createResourceType(input: CreateResourceTypeInput): CreateResourceTypePayload!
@@ -5289,6 +5724,7 @@ type Mutation {
   createStaffProfile(input: CreateStaffProfileInput): CreateStaffProfilePayload!
   createSubscription(input: CreateSubscriptionInput): CreateSubscriptionPayload!
   deleteAddon(input: DeleteAddonInput): DeleteAddonPayload!
+  deleteAnalyticsTemplate(input: DeleteAnalyticsTemplateInput): DeleteAnalyticsTemplatePayload!
   deleteApp(input: DeleteAppInput): DeleteAppPayload!
   deleteAppointment(input: DeleteAppointmentInput): DeleteAppointmentPayload!
   deleteAreaCode(input: DeleteAreaCodeInput): DeleteAreaCodePayload!
@@ -5316,12 +5752,15 @@ type Mutation {
   deleteItemToCart(input: DeleteCartItemInput): DeleteCartItemPayload!
   deleteLocation(input: DeleteLocationInput): DeleteLocationPayload!
   deleteMembership(input: DeleteMembershipInput): DeleteMembershipPayload!
+  deleteMessage(input: DeleteMessageInput): DeleteMessagePayload!
   deleteNote(input: DeleteNoteInput): DeleteNotePayload!
   deleteOpenHourRule(input: DeleteOpenHourRuleInput): DeleteOpenHourRulePayload!
   deleteOpenHourSlotsBetweenDuration(input: DeleteOpenHourSlotsBetweenDurationInput): DeleteOpenHourSlotsBetweenDurationPayload!
   deletePackage(input: DeletePackagesInput): DeletePackagesPayload!
   deletePaymentMethod(input: DeleteBillingPaymentMethodInput): DeleteBillingPaymentMethodPayload!
   deletePlan(input: DeletePlanInput): DeletePlanPayload!
+  deleteQuery(input: DeleteQueryInput): DeleteQueryPayload!
+  deleteReply(input: DeleteReplyInput): DeleteReplyPayload!
   deleteResource(input: DeleteResourceInput): DeleteResourcePayload!
   deleteResourceType(input: DeleteResourceTypeInput): DeleteResourceTypePayload!
   deleteRole(input: DeleteRoleInput): DeleteRolePayload!
@@ -5339,15 +5778,18 @@ type Mutation {
   inviteEmployee(input: InviteEmployeeInput): InviteEmployeePayload!
   inviteUserToRole(input: InviteUserToRoleInput): InviteUserToRolePayload!
   markNotification(input: MarkNotificationInput): MarkNotificationPayload!
+  messageCounts(input: ListMessageCountInput): ListMessageCountPayload!
   optForNotificationPreference(input: OptForNotificationPreferenceInput): OptForNotificationPreferencePayload!
-  ordersByUser(input: ListOrdersByUserInput): ListOrdersByUserPayload!
   payOrder(input: PayOrderInput): PayOrderPayload!
   publishPolicyDraft(input: PublishDraftInput): PublishDraftPayload!
   refundOrder(input: RefundOrderInput): RefundOrderPayload!
   removeRole(input: RemoveRoleInput): RemoveRolePayload!
   renewToken(input: RenewTokenInput): RenewTokenPayload!
+  requestCancellation(input: RequestCancellationInput): RequestCancellationPayload!
   rescheduleClassRule(input: RescheduleRuleInput): RescheduleRulePayload!
   revokeToken(input: RevokeTokenInput): RevokeTokenPayload!
+  saveDeletionFields(input: SaveDeletionFieldsInput): SaveDeletionFieldsPayload!
+  searchPII(input: SearchPIIInput): SearchPIIPayload!
   sendPhoneOTP(input: SendPhoneOTPInput): SendPhoneOTPPayload!
   sendReviewMail(input: SendReviewMailInput): SendReviewMailPayload!
   setDefaultCalendars(input: SetDefaultCalendarsInput): SetDefaultCalendarsPayload!
@@ -5358,6 +5800,7 @@ type Mutation {
   toggleApp(input: ToggleAppInput): ToggleAppPayload!
   toggleInvitationStatus(input: ToggleInvitationStatusInput): ToggleInvitationStatusPayload!
   updateAddon(input: UpdateAddonInput): UpdateAddonPayload!
+  updateAnalyticsTemplate(input: UpdateAnalyticsTemplateInput): UpdateAnalyticsTemplatePayload!
   updateAppType(input: UpdateAppTypeInput): UpdateAppTypePayload!
   updateAppointment(input: UpdateAppointmentInput): UpdateAppointmentPayload!
   updateAppointmentByDataCode(input: UpdateAppointmentByDataCodeInput): UpdateAppointmentByDataCodePayload!
@@ -5390,6 +5833,7 @@ type Mutation {
   updateLocation(input: UpdateLocationInput): UpdateLocationPayload!
   updateLocationSlug(input: UpdateLocationSlugInput): UpdateLocationSlugPayload!
   updateMembership(input: UpdateMembershipInput): UpdateMembershipPayload!
+  updateMessage(input: UpdateMessageInput): UpdateMessagePayload!
   updateNote(input: UpdateNoteInput): UpdateNotePayload!
   updateNotificationLogs(input: UpdateNotificationLogInput): UpdateNotificationLogPayload!
   updateOpenHourRule(input: UpdateOpenHourRuleInput): UpdateOpenHourRulePayload!
@@ -5399,6 +5843,7 @@ type Mutation {
   updatePolicyDraft(input: UpdateDraftInput): UpdateDraftPayload!
   updateProfession(input: UpdateProfessionInput): UpdateProfessionPayload!
   updateProfessionCategory(input: UpdateProfessionCategoryInput): UpdateProfessionCategoryPayload!
+  updateQuery(input: UpdateQueryInput): UpdateQueryPayload!
   updateReply(input: UpdateReplyInput): UpdateReplyPayload!
   updateResource(input: UpdateResourceInput): UpdateResourcePayload!
   updateResourceDisplayOrder(input: UpdateResourceDisplayOrderInput): UpdateResourceDisplayOrderPayload!
@@ -5435,7 +5880,6 @@ type Mutation {
   upsertLocaleRecords(input: UpsertInput): UpsertPayload!
   upsertNotificationConfiguration(input: UpsertNotificationConfigurationInput): UpsertNotificationConfigurationPayload!
   upsertNotificationReceiver(input: UpsertNotificationReceiverInput): UpsertNotificationReceiverPayload!
-  upsertNotificationTemplate(input: UpsertNotificationTemplateInput): UpsertNotificationTemplatePayload!
   upsertRecurrenceRule(input: UpsertRecurrenceRuleInput): UpsertRecurrenceRulePayload!
   upsertResourceTypeSetting(input: UpsertResourceTypeSettingInput): UpsertResourceTypeSettingPayload!
   upsertReview(input: UpsertReviewInput): UpsertReviewPayload!
@@ -5445,6 +5889,7 @@ type Mutation {
   upsertServicePrices(input: BatchUpsertServicePriceInput): BatchUpsertServicePricePayload!
   upsertServiceRestriction(input: UpsertServiceRestrictionInput): UpsertServiceRestrictionPayload!
   upsertServiceSetting(input: UpsertServiceSettingInput): UpsertServiceSettingPayload!
+  upsertTemplate(input: UpsertTemplateInput): UpsertTemplatePayload!
   validateCart(input: ValidateCartInput): ValidateCartPayload!
   validateDiscount(input: ValidateDiscountInput): ValidateDiscountPayload!
   verifyPhoneOTP(input: VerifyPhoneOTPInput): VerifyPhoneOTPPayload!
@@ -5536,22 +5981,23 @@ enum NoteType {
 
 type NotificationConfiguration {
   businessId: String!
+  channelType: ChannelType!
   configuration: Configuration
   id: ID!
-  notificationType: NotificationType!
   productDefault: Boolean!
 }
 
 input NotificationConfigurationInput {
   businessId: String
+  channelType: ChannelType
   configuration: ConfigurationInput
   id: ID
-  notificationType: NotificationType
   productDefault: Boolean
 }
 
 type NotificationLog {
   business: BusinessInfo
+  channelType: ChannelType!
   createdOn: Timestamp
   customer: CustomerInfo
   eventId: String!
@@ -5561,7 +6007,6 @@ type NotificationLog {
   id: ID!
   metadata: Map
   notificationAddress: String!
-  notificationType: NotificationType!
   read: Boolean!
   readOn: Timestamp
   sentOn: Timestamp
@@ -5569,6 +6014,7 @@ type NotificationLog {
 
 input NotificationLogInput {
   business: BusinessInfoInput
+  channelType: ChannelType
   createdOn: Timestamp
   customer: CustomerInfoInput
   eventId: String
@@ -5578,27 +6024,26 @@ input NotificationLogInput {
   id: ID
   metadata: Map
   notificationAddress: String
-  notificationType: NotificationType
   read: Boolean
   readOn: Timestamp
   sentOn: Timestamp
 }
 
 type NotificationPreference {
+  channelType: ChannelType!
   companyId: String!
   eventType: String!
   id: ID!
-  notificationType: NotificationType!
   optIn: Boolean!
   templateId: String!
   userId: String!
 }
 
 input NotificationPreferenceInput {
+  channelType: ChannelType
   companyId: String
   eventType: String
   id: ID
-  notificationType: NotificationType
   optIn: Boolean
   templateId: String
   userId: String
@@ -5607,12 +6052,12 @@ input NotificationPreferenceInput {
 type NotificationReceiver {
   businessEnabled: Boolean!
   businessMandatory: Boolean!
+  channelType: ChannelType!
   companyId: String!
   emailLists: [String!]!
   eventType: String!
   id: ID!
   involved: Boolean!
-  notificationType: NotificationType!
   productMandatory: Boolean!
   roleIds: [String!]!
   templateId: String!
@@ -5621,12 +6066,12 @@ type NotificationReceiver {
 input NotificationReceiverInput {
   businessEnabled: Boolean
   businessMandatory: Boolean
+  channelType: ChannelType
   companyId: String
   emailLists: [String]
   eventType: String
   id: ID
   involved: Boolean
-  notificationType: NotificationType
   productMandatory: Boolean
   roleIds: [String]
   templateId: String
@@ -5644,70 +6089,6 @@ enum NotificationStatusType {
 
   """UNVIEWED"""
   UNVIEWED
-}
-
-type NotificationTemplate {
-  actions: String!
-  appName: String!
-  appTypeId: String!
-  businessId: String!
-  canOverride: Boolean!
-  channel: String!
-  classification: TemplateClassification!
-  content: [LocalisedTemplateContent!]!
-  description: String!
-  eventType: String!
-  id: ID!
-  level: TemplateLevel!
-  metadata: Map
-  mjml: [LocalisedTemplateContent!]!
-  notificationType: NotificationType!
-  productDefault: Boolean!
-  smartyTags: [String!]!
-  templateId: String!
-  title: String!
-}
-
-input NotificationTemplateInput {
-  actions: String
-  appName: String
-  appTypeId: String
-  businessId: String
-  canOverride: Boolean
-  channel: String
-  classification: TemplateClassification
-  content: [LocalisedTemplateContentInput]
-  description: String
-  eventType: String
-  id: ID
-  level: TemplateLevel
-  metadata: Map
-  mjml: [LocalisedTemplateContentInput]
-  notificationType: NotificationType
-  productDefault: Boolean
-  smartyTags: [String]
-  templateId: String
-  title: String
-}
-
-enum NotificationType {
-  """CALENDAR"""
-  CALENDAR
-
-  """EMAIL"""
-  EMAIL
-
-  """PUSH"""
-  PUSH
-
-  """SMS"""
-  SMS
-
-  """UNKNOWN_NOTIFICATION_TYPE"""
-  UNKNOWN_NOTIFICATION_TYPE
-
-  """WEB"""
-  WEB
 }
 
 type OpenHour {
@@ -5794,6 +6175,14 @@ type OrderBuyer {
 
 input OrderBuyerInput {
   buyerId: String
+}
+
+enum OrderBy {
+  """ASC"""
+  ASC
+
+  """DESC"""
+  DESC
 }
 
 type OrderItem {
@@ -5970,6 +6359,13 @@ type PageInfo {
   startCursor: String!
 }
 
+type PaginationInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  nextOffset: Int!
+  previousOffset: Int!
+}
+
 enum PaymentMethod {
   """CASH"""
   CASH
@@ -6027,6 +6423,41 @@ type PayOrderPayload {
 type PayOrderResponse {
   order: Order
   orderId: String!
+}
+
+type PiiRequests {
+  cancelled: Boolean!
+  dataCode: String!
+  dataDeleted: Boolean!
+  deletionFields: String!
+  deletionScheduled: Boolean!
+  email: String!
+  id: ID!
+  phoneNumber: String!
+  searchRequested: Boolean!
+  searchRequestedOn: Timestamp
+  userId: String!
+  waitTill: Timestamp
+}
+
+enum PIIRequestStatus {
+  """DataDeleted"""
+  DataDeleted
+
+  """DeletionScheduled"""
+  DeletionScheduled
+
+  """NoRequestFound"""
+  NoRequestFound
+
+  """RequestCancelled"""
+  RequestCancelled
+
+  """SearchIsRequested"""
+  SearchIsRequested
+
+  """WorkingOnDeletion"""
+  WorkingOnDeletion
 }
 
 type Plan {
@@ -6160,6 +6591,17 @@ input PrivilegeBagInput {
 
 input PrivilegeInput {
   id: ID
+}
+
+enum ProductFilter {
+  """ALL"""
+  ALL
+
+  """BUSINESS_CREATED"""
+  BUSINESS_CREATED
+
+  """PRODUCT_DEFAULT"""
+  PRODUCT_DEFAULT
 }
 
 type Profession {
@@ -6358,10 +6800,14 @@ type PublishDraftPayload {
 }
 
 type Query {
+  Templates(appTypeId: String, businessId: String, channelType: ChannelType, eventType: String, locale: String, viewMask: FieldMaskInput): ListTemplateResponse!
   acceptances(after: String, before: String, first: Int, last: Int, parent: String, policyId: String, signerId: String, sourceIds: [String], viewMask: FieldMaskInput): ListAcceptanceResponse!
+  activityLogFilters: ListActivityLogEventFilterResponse!
+  activityLogs(filter: ListActivityLogFilterInput, limit: Int, offset: Int, parents: [String], viewMask: FieldMaskInput): ListActivityLogResponse!
   addon(id: ID, viewMask: FieldMaskInput): Addon!
   addons(parent: String, viewMask: FieldMaskInput): ListAddonResponse!
   allLinksOfParent(firstResourceParent: listAllLinksOfParentRequestFirstResourceParent, linkType: String, secondResourceParent: listAllLinksOfParentRequestSecondResourceParent): LinkLists!
+  analyticsTemplates(filter: ProductFilter, parent: String, viewMask: FieldMaskInput): ListAnalyticsTemplateResponse!
   app(id: ID, viewMask: FieldMaskInput): App!
   appType(id: ID, viewMask: FieldMaskInput): AppType!
   appTypes(filter: AppTypeLevelFilter, parent: String, viewMask: FieldMaskInput): ListAppTypeResponse!
@@ -6370,7 +6816,6 @@ type Query {
   appointmentAvailability(filter: AvailabilityFilterInput): ListSlotsResponse!
   appointmentAvailabilityDates(filter: AvailabilityFilterInput, timezone: String): ListDatesResponse!
   appointmentCalendar(employeeIds: [String], endTime: Timestamp, parents: [String], resourceIds: [String], resourceTypeIds: [String], serviceIds: [String], startTime: Timestamp, viewMask: FieldMaskInput): ListAppointmentsForCalendarResponse!
-  appointmentReport(after: String, before: String, dateRange: DateslotInput, dateRangeOn: String, filters: Map, first: Int, last: Int, parents: [String], query: String, sortBy: String, viewMask: FieldMaskInput): AppointmentReportResponse!
   appointmentReviewMailSetting(locationId: String, viewMask: FieldMaskInput): AppointmentReviewMailSetting!
   appointmentSetting(parent: String, viewMask: FieldMaskInput): AppointmentSetting!
   appointments(after: String, before: String, customerId: listAppointmentRequestCustomerId, employeeId: listAppointmentRequestEmployeeId, first: Int, last: Int, parent: String, query: listAppointmentRequestQuery, timeDuration: TimeslotInput, viewMask: FieldMaskInput): ListAppointmentResponse!
@@ -6403,11 +6848,13 @@ type Query {
   certificates(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListCertificateResponse!
   channel(id: ID, viewMask: FieldMaskInput): Channel!
   channels(parent: String, viewMask: FieldMaskInput): ListChannelResponse!
+  checkBusinessOwner(dataCode: String): GetOwnedBusinessInfoResponse!
   checkCompanySlug(slug: String): CheckCompanySlugResponse!
   checkEmployeeSlug(parent: String, slug: String): CheckEmployeeSlugResponse!
   checkLocationSlug(parent: String, slug: String): CheckLocationSlugResponse!
   checkResourceSlug(parent: String, slug: String): CheckResourceSlugResponse!
   checkServiceSlug(parent: String, slug: String): CheckServiceSlugResponse!
+  checkStatusOfPII(dataCode: String): CheckStatusOfPIIResponse!
   class(id: ID, viewMask: FieldMaskInput): Class!
   classAvailabilityOfDate(activeConsidered: Boolean, categoryIds: [String], classId: String, customerId: String, endDate: Timestamp, filterType: ClassTypeFilter, locale: String, name: String, parent: String, priceFilter: ClassPriceFilter, roomIds: [String], serviceProviders: [String], startDate: Timestamp, viewMask: FieldMaskInput, waitingConsidered: Boolean): GetClassAvailabilityOfDateResponse!
   classAvailabilityOfDateRange(activeConsidered: Boolean, categoryIds: [String], classId: String, customerId: String, endDate: Timestamp, filterType: ClassTypeFilter, locale: String, name: String, parent: String, priceFilter: ClassPriceFilter, roomIds: [String], serviceProviders: [String], startDate: Timestamp, viewMask: FieldMaskInput, waitingConsidered: Boolean): GetClassAvailabilityOfDateRangeResponse!
@@ -6435,8 +6882,10 @@ type Query {
   departments(parent: String, viewMask: FieldMaskInput): ListDepartmentResponse!
   designation(id: ID, viewMask: FieldMaskInput): Designation!
   designations(parent: String, viewMask: FieldMaskInput): ListDesignationResponse!
+  detailedAppointmentReport(dateRange: DateslotInput, dateRangeOn: DateRangeOn, exportReport: Boolean, filters: DetailedAppointmentReportFilterInput, limit: Int, offset: Int, orderBy: OrderBy, parents: [String], query: String, sortBy: String, viewMask: FieldMaskInput): DetailedAppointmentReportResponse!
   discount(id: ID, viewMask: FieldMaskInput): Discount!
   discountByCode(code: String, parent: String, viewMask: FieldMaskInput): Discount!
+  discountTransactions(after: String, before: String, customerId: String, discountId: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): DiscountListTransactionsResponse!
   discounts(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListDiscountResponse!
   employee(id: ID, viewMask: FieldMaskInput): Employee!
   employeeByEmail(companyId: String, email: String, viewMask: FieldMaskInput): Employee!
@@ -6487,6 +6936,8 @@ type Query {
   membershipWalletItem(id: ID, viewMask: FieldMaskInput, walletId: String): MembershipWalletItem!
   membershipWalletItems(viewMask: FieldMaskInput, walletId: String): MembershipListWalletItemResponse!
   memberships(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListMembershipResponse!
+  messages(channel: ChannelType, parent: String, templateId: String, viewMask: FieldMaskInput): ListMessageResponse!
+  messagingEvents(parent: String, viewMask: FieldMaskInput): ListMessagingEventResponse!
   moduleLicense(slug: String, viewMask: FieldMaskInput): ModuleLicense!
   moduleRole(companyId: String, name: String, viewMask: FieldMaskInput): ModuleRole!
   moduleRoles(companyId: String, viewMask: FieldMaskInput): ListModuleRoleResponse!
@@ -6497,16 +6948,17 @@ type Query {
   notes(after: String, before: String, first: Int, getPrivate: Boolean, last: Int, noteType: NoteType, parent: String, statusType: NoteStatusType, viewMask: FieldMaskInput): ListNoteResponse!
   notificationLogByTransactionId(transactionId: String): NotificationLog!
   notificationLogs(businessId: String, customerId: String, lastPageId: String, limit: Int): ListNotificationLogResponse!
-  notificationPreferences(companyId: String, eventType: String, notificationType: NotificationType, templateId: String, userId: String, viewMask: FieldMaskInput): ListNotificationPreferenceResponse!
-  notificationReceivers(businessEnabled: Boolean, businessMandatory: Boolean, companyId: String, eventType: String, notificationType: NotificationType, viewMask: FieldMaskInput): ListNotificationReceiverResponse!
-  notificationTemplates(appTypeId: String, businessId: String, eventType: String, locale: String, notificationType: NotificationType, viewMask: FieldMaskInput): ListNotificationTemplateResponse!
+  notificationPreferences(channelType: ChannelType, companyId: String, eventType: String, templateId: String, userId: String, viewMask: FieldMaskInput): ListNotificationPreferenceResponse!
+  notificationReceivers(businessEnabled: Boolean, businessMandatory: Boolean, channelType: ChannelType, companyId: String, eventType: String, viewMask: FieldMaskInput): ListNotificationReceiverResponse!
   openHourRule(id: ID, viewMask: FieldMaskInput): OpenHourRule!
   openHourRules(after: String, before: String, filter: OpenHourFilterInput, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListOpenHourRuleResponse!
   order(id: ID, viewMask: FieldMaskInput): Order!
   orders(after: String, before: String, buyerId: String, first: Int, last: Int, orderStatus: OrderStatus, parent: String, viewMask: FieldMaskInput): ListOrderResponse!
+  ordersByItemId(itemId: String, viewMask: FieldMaskInput): GetOrdersByItemIdResponse!
+  ordersByUser(after: String, before: String, first: Int, last: Int, location: String, orderStatus: OrderStatus, userId: String, viewMask: FieldMaskInput): ListOrderResponse!
   package(id: ID, viewMask: FieldMaskInput): Packages!
   packageWalletItem(id: ID, viewMask: FieldMaskInput, walletId: String): WalletItem!
-  packageWalletItems(after: String, before: String, first: Int, last: Int, viewMask: FieldMaskInput, walletId: String): ListWalletItemResponse!
+  packageWalletItems(after: String, before: String, first: Int, last: Int, userId: String, viewMask: FieldMaskInput, walletId: String): ListWalletItemResponse!
   packages(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListPackagesResponse!
   payLink(orderId: String): GeneratePayLinkResponse!
   paymentGatewayPublicKey(gateway: BillingPaymentGateway): GetPaymentGatewayPublicKeyResponse!
@@ -6522,7 +6974,11 @@ type Query {
   professionCategories: ListProfessionCategoryResponse!
   professionCategory(id: ID): ProfessionCategory!
   professions: ListProfessionResponse!
-  renderNotificationTemplate(businessId: String, data: Bytes, locale: String, templateId: String): RenderNotificationTemplateResponse!
+  queries(channel: ChannelType, parent: String, viewMask: FieldMaskInput): ListQueryResponse!
+  query(id: ID): MessagingQuery!
+  queryUserCount(channel: ChannelType, parent: String, queryId: getQueryUsersCountRequestQueryId, queryString: getQueryUsersCountRequestQueryString): GetQueryUsersCountResponse!
+  queryUsers(channel: ChannelType, parent: String, queryId: getQueryUsersCountRequestQueryId, queryString: getQueryUsersCountRequestQueryString): ListQueryUsersResponse!
+  renderTemplate(businessId: String, data: Bytes, locale: String, templateId: String): RenderTemplateResponse!
   replies(parent: String, reviewId: String, userIds: [String], viewMask: FieldMaskInput): ListReplyResponse!
   reply(id: ID, viewMask: FieldMaskInput): Reply!
   resource(id: ID, viewMask: FieldMaskInput): Resource!
@@ -6531,6 +6987,7 @@ type Query {
   resourceTypes(filter: ResourceTypeFilterInputInput, parent: String, viewMask: FieldMaskInput): ListResourceTypeResponse!
   resources(after: String, before: String, first: Int, last: Int, parent: String, query: String, resourceTypeIds: [String], viewMask: FieldMaskInput): ListResourceResponse!
   review(id: ID, viewMask: FieldMaskInput): Review!
+  reviewOfLocation(parent: String, viewMask: FieldMaskInput): ListReviewOfLocationResponse!
   reviewStatus(dataCodeId: String): ReviewStatusResponse!
   reviews(after: String, appIds: [String], before: String, customerId: String, first: Int, last: Int, maxRating: Int, minRating: Int, parent: String, query: String, userId: String, viewMask: FieldMaskInput): ListReviewResponse!
   reviewsPageSetting(parent: String, viewMask: FieldMaskInput): ReviewPageSetting!
@@ -6545,6 +7002,7 @@ type Query {
   serializeMembershipPlan(planWallet: MembershipPlanWalletInput): SerializeMembershipResponse!
   serializePackageWallet(wallet: WalletItemInput): SerializePackageWalletResponse!
   service(id: ID, viewMask: FieldMaskInput): Service!
+  servicePerformanceReport(dateRange: DateslotInput, dateRangeOn: DateRangeOn, exportReport: Boolean, filters: ServicePerformanceReportFilterInput, orderBy: OrderBy, parents: [String], query: String, sortBy: String, viewMask: FieldMaskInput): ServicePerformanceReportResponse!
   servicePrice(id: ID): ServicePrice!
   servicePriceValue(channelId: String, duration: String, employeeId: String, resourceId: String, serviceId: String): GetServicePriceValueResponse!
   serviceSetting(parent: String, viewMask: FieldMaskInput): ServiceSetting!
@@ -6556,6 +7014,7 @@ type Query {
   shortUrls(parent: String): ListShortUrlResponse!
   shortenUrl(id: ID): ShortenUrl!
   shortenUrls(parent: String, userId: String): ListShortenUrlResponse!
+  staffPerformanceReport(dateRange: DateslotInput, dateRangeOn: DateRangeOn, exportReport: Boolean, filters: StaffPerformanceReportFilterInput, orderBy: OrderBy, parents: [String], query: String, sortBy: String, viewMask: FieldMaskInput): StaffPerformanceReportResponse!
   staffProfile(id: ID, viewMask: FieldMaskInput): StaffProfile!
   staffProfiles(parent: String, viewMask: FieldMaskInput): ListStaffProfileResponse!
   unacceptedPolicies(parent: String, signerId: String, sourceIds: [String]): ListUnacceptedPoliciesResponse!
@@ -6615,7 +7074,7 @@ type RemoveRolePayload {
   payload: Empty
 }
 
-type RenderNotificationTemplateResponse {
+type RenderTemplateResponse {
   body: String!
   subject: String!
 }
@@ -6665,18 +7124,6 @@ input ReplyInput {
   replierUserId: String
   reviewId: String
   updatedOn: Timestamp
-}
-
-type Report {
-  appointment: Appointment
-  cancelledOn: Timestamp
-  rescheduleOn: Timestamp
-}
-
-type ReportData {
-  metadata: Map
-  totalCount: Int!
-  totalPrice: Price
 }
 
 enum ReportFields {
@@ -6764,6 +7211,26 @@ enum ReportOperator {
 
   """NOT_IN_DATE"""
   NOT_IN_DATE
+}
+
+type ReportOverallData {
+  metadata: Map
+  totalCount: Int!
+  totalPrice: Price
+}
+
+input RequestCancellationInput {
+  clientMutationId: String
+  dataCode: String
+}
+
+type RequestCancellationPayload {
+  clientMutationId: String!
+  payload: RequestCancellationResponse
+}
+
+type RequestCancellationResponse {
+  status: PIIRequestStatus!
 }
 
 input RescheduleRuleInput {
@@ -7113,6 +7580,13 @@ type Role implements Node {
   roleName: String!
 }
 
+type RoleInformation {
+  description: String!
+  levelId: String!
+  roleId: String!
+  roleName: String!
+}
+
 input RoleInput {
   description: String
   id: ID
@@ -7123,8 +7597,29 @@ input RoleInput {
   roleName: String
 }
 
+input SaveDeletionFieldsInput {
+  clientMutationId: String
+  dataCode: String
+  deletionFields: String
+}
+
+type SaveDeletionFieldsPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
 type SearchBusinessResponse {
   businesses: [Business!]!
+}
+
+input SearchPIIInput {
+  clientMutationId: String
+  email: String
+}
+
+type SearchPIIPayload {
+  clientMutationId: String!
+  payload: Empty
 }
 
 enum SelectionOrder {
@@ -7250,6 +7745,23 @@ input ServicePaymentSettingInput {
   chargeType: ChargeType
   chargeValue: Float
   price: PriceInput
+}
+
+input ServicePerformanceReportFilterInput {
+  serviceIds: [String]
+}
+
+type ServicePerformanceReportObject {
+  id: ID!
+  serviceName: String!
+  totalHours: Int!
+  totalNumbersOfAppointments: Int!
+  totalSales: Price
+}
+
+type ServicePerformanceReportResponse {
+  data: ReportOverallData
+  nodes: [ServicePerformanceReportObject!]!
 }
 
 type ServicePrice {
@@ -7507,16 +8019,42 @@ input ShortenUrlInput {
 }
 
 type ShortUrl {
+  createdOn: Timestamp
+  data: ShortUrlUnion
   id: ID!
+  itemId: String!
+  shortUrlType: ShortUrlType!
   shortUrlValue: String!
   urlPath: String!
 }
 
 input ShortUrlInput {
+  createdOn: Timestamp
   id: ID
+  itemId: String
+  shortUrlType: ShortUrlType
   shortUrlValue: String
   urlPath: String
 }
+
+enum ShortUrlType {
+  """COMPANY"""
+  COMPANY
+
+  """EMPLOYEE"""
+  EMPLOYEE
+
+  """LOCATION"""
+  LOCATION
+
+  """RESOURCE"""
+  RESOURCE
+
+  """UNSPECIFIED"""
+  UNSPECIFIED
+}
+
+union ShortUrlUnion = Company | Employee | Location | Resource
 
 type SignerData {
   email: String!
@@ -7659,6 +8197,24 @@ enum SourceType {
   STRIPE
 }
 
+input StaffPerformanceReportFilterInput {
+  staffIds: [String]
+}
+
+type StaffPerformanceReportObject {
+  id: ID!
+  staffFirstName: String!
+  staffLastName: String!
+  totalHours: Int!
+  totalNumbersOfAppointments: Int!
+  totalSales: Price
+}
+
+type StaffPerformanceReportResponse {
+  data: ReportOverallData
+  nodes: [StaffPerformanceReportObject!]!
+}
+
 enum StaffPrioritization {
   """DISPLAY_ORDER"""
   DISPLAY_ORDER
@@ -7744,6 +8300,14 @@ input StepInput {
   steps: [String]
 }
 
+enum StopType {
+  """NEVER"""
+  NEVER
+
+  """SPECIFIC_DATE"""
+  SPECIFIC_DATE
+}
+
 type Subscription {
   appointments(employeeIds: [String], endTime: Timestamp, parents: [String], resourceIds: [String], serviceIds: [String], startTime: Timestamp, viewMask: FieldMaskInput): ListAppointmentsForCalendarResponse
   notifications(after: String, before: String, first: Int, last: Int, notificationStatusType: NotificationStatusType, userId: String): ListWebNotificationResponse
@@ -7780,6 +8344,30 @@ input TaxSettingInput {
   title: String
 }
 
+type Template {
+  actions: String!
+  appName: String!
+  appTypeId: String!
+  businessId: String!
+  canOverride: Boolean!
+  channel: String!
+  channelType: ChannelType!
+  classification: TemplateClassification!
+  content: [LocalisedTemplateContent!]!
+  description: String!
+  eventType: String!
+  id: ID!
+  level: TemplateLevel!
+  messageType: MessageType!
+  metadata: Map
+  mjml: [LocalisedTemplateContent!]!
+  productDefault: Boolean!
+  smartyTags: [String!]!
+  tags: [String!]!
+  templateId: String!
+  title: String!
+}
+
 enum TemplateClassification {
   """ADMIN_FACING"""
   ADMIN_FACING
@@ -7789,6 +8377,30 @@ enum TemplateClassification {
 
   """UNSPECIFIED"""
   UNSPECIFIED
+}
+
+input TemplateInput {
+  actions: String
+  appName: String
+  appTypeId: String
+  businessId: String
+  canOverride: Boolean
+  channel: String
+  channelType: ChannelType
+  classification: TemplateClassification
+  content: [LocalisedTemplateContentInput]
+  description: String
+  eventType: String
+  id: ID
+  level: TemplateLevel
+  messageType: MessageType
+  metadata: Map
+  mjml: [LocalisedTemplateContentInput]
+  productDefault: Boolean
+  smartyTags: [String]
+  tags: [String]
+  templateId: String
+  title: String
 }
 
 enum TemplateLevel {
@@ -7880,6 +8492,17 @@ input UpdateAddonInput {
 type UpdateAddonPayload {
   clientMutationId: String!
   payload: Addon
+}
+
+input UpdateAnalyticsTemplateInput {
+  analyticsTemplate: AnalyticsTemplateInput
+  clientMutationId: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateAnalyticsTemplatePayload {
+  clientMutationId: String!
+  payload: AnalyticsTemplate
 }
 
 input UpdateAppointmentByDataCodeInput {
@@ -8266,6 +8889,18 @@ type UpdateMembershipPayload {
   payload: Membership
 }
 
+input UpdateMessageInput {
+  clientMutationId: String
+  message: MessageInput
+  parent: String
+  updateMask: FieldMaskInput
+}
+
+type UpdateMessagePayload {
+  clientMutationId: String!
+  payload: Message
+}
+
 input UpdateNoteInput {
   clientMutationId: String
   note: NoteInput
@@ -8345,6 +8980,18 @@ input UpdateProfessionInput {
 type UpdateProfessionPayload {
   clientMutationId: String!
   payload: Profession
+}
+
+input UpdateQueryInput {
+  clientMutationId: String
+  parent: String
+  query: MessagingQueryInput
+  updateMask: FieldMaskInput
+}
+
+type UpdateQueryPayload {
+  clientMutationId: String!
+  payload: MessagingQuery
 }
 
 input UpdateReplyInput {
@@ -8782,17 +9429,6 @@ type UpsertNotificationReceiverPayload {
   payload: NotificationReceiver
 }
 
-input UpsertNotificationTemplateInput {
-  clientMutationId: String
-  template: NotificationTemplateInput
-  updateMask: FieldMaskInput
-}
-
-type UpsertNotificationTemplatePayload {
-  clientMutationId: String!
-  payload: NotificationTemplate
-}
-
 type UpsertPayload {
   clientMutationId: String!
   payload: UpsertResponse
@@ -8912,12 +9548,37 @@ type UpsertServiceSettingPayload {
   payload: ServiceSetting
 }
 
+input UpsertTemplateInput {
+  clientMutationId: String
+  template: TemplateInput
+  updateMask: FieldMaskInput
+}
+
+type UpsertTemplatePayload {
+  clientMutationId: String!
+  payload: Template
+}
+
 type UsageRestriction {
   quantity: Int!
 }
 
 input UsageRestrictionInput {
   quantity: Int
+}
+
+type UserEventProfile {
+  address: Address
+  birthDate: Timestamp
+  customerId: String!
+  email: String!
+  firstName: String!
+  gender: Gender!
+  id: ID!
+  lastName: String!
+  phone: String!
+  pushNotificationEnabled: String!
+  userId: String!
 }
 
 type UserPreference {
@@ -9043,10 +9704,10 @@ type ValidateCartPayload {
 input ValidateDiscountInput {
   clientMutationId: String
   code: String
+  customerId: String
   externalTransactionId: String
   itemMap: Map
   parent: String
-  userId: String
 }
 
 type ValidateDiscountPayload {
@@ -9139,13 +9800,13 @@ type WebNotification {
   appName: String!
   appTypeId: String!
   businessId: String!
+  channelType: ChannelType!
   content: [WebNotificationLocalisedTemplateContent!]!
   createdOn: Timestamp
   description: String!
   eventType: String!
   id: ID!
   metadata: Map
-  notificationType: NotificationType!
   read: Boolean!
   readOn: Timestamp
   smartyTags: [String!]!
