@@ -15,7 +15,6 @@ import { Switcher } from '@saastack/core'
 
 const DesignationAdd = loadable(() => import('./DesignationAdd'))
 const DesignationDelete = loadable(() => import('./DesignationDelete'))
-const DesignationDetail = loadable(() => import('./DesignationDetail'))
 const DesignationEmptyState = loadable(() => import('./DesignationEmptyState'))
 const DesignationUpdate = loadable(() => import('./DesignationUpdate'))
 
@@ -73,7 +72,6 @@ export default createRefetchContainer(
                     designation {
                         id
                         ...DesignationList_designations
-                        ...DesignationDetail_designations
                         ...DesignationUpdate_designations
                     }
                 }

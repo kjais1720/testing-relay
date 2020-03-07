@@ -7,7 +7,7 @@ export type DesignationMaster_designations = {
     readonly designations: {
         readonly designation: ReadonlyArray<{
             readonly id: string;
-            readonly " $fragmentRefs": FragmentRefs<"DesignationList_designations" | "DesignationDetail_designations" | "DesignationUpdate_designations">;
+            readonly " $fragmentRefs": FragmentRefs<"DesignationList_designations" | "DesignationUpdate_designations">;
         }>;
     };
     readonly " $refType": "DesignationMaster_designations";
@@ -72,11 +72,6 @@ const node: ReaderFragment = {
             },
             {
               "kind": "FragmentSpread",
-              "name": "DesignationDetail_designations",
-              "args": null
-            },
-            {
-              "kind": "FragmentSpread",
               "name": "DesignationUpdate_designations",
               "args": null
             }
@@ -86,5 +81,5 @@ const node: ReaderFragment = {
     }
   ]
 };
-(node as any).hash = '15c8985f9850dc5e6cb070cb9d65c1ac';
+(node as any).hash = '6c3872a7569cc73759b71daffe032fa8';
 export default node;

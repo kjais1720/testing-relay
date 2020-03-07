@@ -1,13 +1,13 @@
-import {useRelayEnvironment} from 'react-relay/hooks'
+import { useRelayEnvironment } from 'react-relay/hooks'
 import { Trans } from '@lingui/macro'
 import { useAlert } from '@saastack/core'
 import { ConfirmContainer } from '@saastack/layouts/containers'
-import {PubSub} from '@saastack/pubsub'
+import { PubSub } from '@saastack/pubsub'
 import namespace from '../namespace'
 import { useNavigate, useParams } from '@saastack/router'
 import DeleteDesignationMutation from '../mutations/DeleteDesignationMutation'
 import React from 'react'
-import {Variables} from 'relay-runtime'
+import { Variables } from 'relay-runtime'
 
 interface Props {
     variables: Variables,
@@ -23,7 +23,7 @@ const DesignationDelete: React.FC<Props> = ({ variables }) => {
 
     const handleDelete = () => {
         setLoading(true)
-        DeleteDesignationMutation.commit(environment, variables, window.atob(id!), {onSuccess, onError})
+        DeleteDesignationMutation.commit(environment, variables, window.atob(id!), { onSuccess, onError })
     }
 
     const navigateBack = () => navigate('../../')
@@ -38,15 +38,16 @@ const DesignationDelete: React.FC<Props> = ({ variables }) => {
 
     const onSuccess = (id: string) => {
         PubSub.publish(namespace.delete, id)
-                setLoading(false)
+        setLoading(false)
         showAlert(<Trans>Designation deleted successfully!</Trans>, {
             variant: 'info',
         })
-        handleClose();
+        handleClose()
     }
 
     return (
-        <ConfirmContainer loading={loading} header={<Trans>Delete Designation</Trans>} open={open} onClose={handleClose} onExited={navigateBack} onAction={handleDelete}/>
+        <ConfirmContainer loading={loading} header={<Trans>Delete designation</Trans>} open={open} onClose={handleClose}
+                          onExited={navigateBack} onAction={handleDelete}/>
     )
 }
 

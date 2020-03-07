@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 8d96edb5cd0fd2dcc0752adf0313e651 */
+/* @relayHash b67fca2c07ff0fbb416662d626f2820d */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,15 +24,6 @@ query DesignationPageQuery(
   ...DesignationMaster_designations_2XQG37
 }
 
-fragment DesignationDetail_designations on Designation {
-  id
-  ...DesignationInfo_designation
-}
-
-fragment DesignationInfo_designation on Designation {
-  id
-}
-
 fragment DesignationList_designations on Designation {
   id
   name
@@ -44,7 +35,6 @@ fragment DesignationMaster_designations_2XQG37 on Query {
     designation {
       id
       ...DesignationList_designations
-      ...DesignationDetail_designations
       ...DesignationUpdate_designations
     }
   }
@@ -143,7 +133,7 @@ return {
     "operationKind": "query",
     "name": "DesignationPageQuery",
     "id": null,
-    "text": "query DesignationPageQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationDetail_designations on Designation {\n  id\n  ...DesignationInfo_designation\n}\n\nfragment DesignationInfo_designation on Designation {\n  id\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationDetail_designations\n      ...DesignationUpdate_designations\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n}\n",
+    "text": "query DesignationPageQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n}\n",
     "metadata": {}
   }
 };

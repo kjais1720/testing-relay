@@ -1,4 +1,4 @@
-import { Field, Form, Input, Textarea } from '@saastack/forms'
+import { Form, Input, Textarea } from '@saastack/forms'
 import { FormProps } from '@saastack/forms/types'
 import React from 'react'
 import { Trans } from '@lingui/macro'

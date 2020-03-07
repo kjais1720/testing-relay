@@ -1,27 +1,27 @@
-import {useRelayEnvironment} from 'react-relay/hooks'
+import { useRelayEnvironment } from 'react-relay/hooks'
 import { Trans } from '@lingui/macro'
 import { useAlert } from '@saastack/core'
 import { FormContainer } from '@saastack/layouts/containers'
 import { FormContainerProps } from '@saastack/layouts/types'
 import { useNavigate, useParams } from '@saastack/router'
 import React from 'react'
-import {DesignationInput} from '../__generated__/UpdateDesignationMutation.graphql'
+import { DesignationInput } from '../__generated__/UpdateDesignationMutation.graphql'
 import UpdateDesignationMutation from '../mutations/UpdateDesignationMutation'
 import DesignationUpdateFormComponent from '../forms/DesignationUpdateFormComponent'
-import {PubSub} from '@saastack/pubsub'
+import { PubSub } from '@saastack/pubsub'
 import namespace from '../namespace'
-import {createFragmentContainer} from 'react-relay'
-import {graphql} from 'relay-runtime'
-import {DesignationUpdate_designations} from '../__generated__/DesignationUpdate_designations.graphql'
+import { createFragmentContainer } from 'react-relay'
+import { graphql } from 'relay-runtime'
+import { DesignationUpdate_designations } from '../__generated__/DesignationUpdate_designations.graphql'
 import DesignationAddValidations from '../utils/DesignationAddValidations'
 
 interface Props extends Omit<FormContainerProps, 'formId'> {
     designations: DesignationUpdate_designations,
 }
 
-const formId = 'designation-update-form';
+const formId = 'designation-update-form'
 
-const DesignationUpdate: React.FC<Props> = ({designations, ...props}) => {
+const DesignationUpdate: React.FC<Props> = ({ designations, ...props }) => {
     const environment = useRelayEnvironment()
     const showAlert = useAlert()
     const navigate = useNavigate()
@@ -44,39 +44,42 @@ const DesignationUpdate: React.FC<Props> = ({designations, ...props}) => {
     }
 
     const handleSubmit = (values: DesignationInput) => {
-        setLoading(true);
+        setLoading(true)
         const designation = {
             ...values,
-        };
-        UpdateDesignationMutation.commit(environment, designation, ['name', 'description'], {onSuccess, onError});
-    };
+        }
+        UpdateDesignationMutation.commit(environment, designation, ['name', 'description'], { onSuccess, onError })
+    }
 
     const onError = (e: string) => {
-        setLoading(false);
+        setLoading(false)
         showAlert(e, {
-            variant: 'error'
-        });
-    };
+            variant: 'error',
+        })
+    }
 
     const onSuccess = (response: DesignationInput) => {
-        PubSub.publish(namespace.update, response);
-                setLoading(false);
+        PubSub.publish(namespace.update, response)
+        setLoading(false)
         showAlert(<Trans>Designation updated successfully!</Trans>, {
-            variant: 'info'
-        });
+            variant: 'info',
+        })
         handleClose()
-    };
+    }
 
     const initialValues = {
         ...designation,
-    };
+    }
 
     return (
-        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>Update Designation</Trans>} formId={formId} loading={loading} {...props}>
-            <DesignationUpdateFormComponent<DesignationInput> onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
+        <FormContainer open={open} onClose={handleClose} onExited={navigateBack}
+                       header={<Trans>Update designation</Trans>} formId={formId} loading={loading} {...props}>
+            <DesignationUpdateFormComponent<DesignationInput> onSubmit={handleSubmit} id={formId}
+                                                              initialValues={initialValues}
+                                                              validationSchema={DesignationAddValidations}/>
         </FormContainer>
     )
-};
+}
 
 export default createFragmentContainer(
     DesignationUpdate,
@@ -87,6 +90,6 @@ export default createFragmentContainer(
                 name,
                 description
             }
-        `
-    }
+        `,
+    },
 )

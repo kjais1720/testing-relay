@@ -15,7 +15,6 @@ interface Props extends Omit<ListContainerProps<DesignationList_designations>, '
 }
 
 const DesignationList: React.FC<Props> = ({ designations, ...props }) => {
-    const [visibleColumns, onVisibleColumnsChange] = React.useState(['id'])
     const navigate = useNavigate()
     const listProps = {
         render: (e: DesignationList_designations[0]) => {

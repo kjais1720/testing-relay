@@ -1,18 +1,18 @@
-import {useRelayEnvironment} from 'react-relay/hooks';
+import { useRelayEnvironment } from 'react-relay/hooks'
 import { Trans } from '@lingui/macro'
 import { useAlert } from '@saastack/core'
 import { FormContainer } from '@saastack/layouts/containers'
 import { FormContainerProps } from '@saastack/layouts/types'
 import { useNavigate } from '@saastack/router'
 import React from 'react'
-import {DesignationInput} from '../__generated__/CreateDesignationMutation.graphql';
-import CreateDesignationMutation from '../mutations/CreateDesignationMutation';
+import { DesignationInput } from '../__generated__/CreateDesignationMutation.graphql'
+import CreateDesignationMutation from '../mutations/CreateDesignationMutation'
 import DesignationAddFormComponent from '../forms/DesignationAddFormComponent'
-import {PubSub} from '@saastack/pubsub'
+import { PubSub } from '@saastack/pubsub'
 import namespace from '../namespace'
 import DesignationAddInitialValues from '../utils/DesignationAddInitialValues'
 import DesignationAddValidations from '../utils/DesignationAddValidations'
-import {Variables} from 'relay-runtime'
+import { Variables } from 'relay-runtime'
 
 interface Props extends Omit<FormContainerProps, 'formId'> {
     variables: Variables,
@@ -20,7 +20,7 @@ interface Props extends Omit<FormContainerProps, 'formId'> {
 
 const formId = 'designation-add-form'
 
-const DesignationAdd: React.FC<Props> = ({variables, ...props}) => {
+const DesignationAdd: React.FC<Props> = ({ variables, ...props }) => {
     const environment = useRelayEnvironment()
     const showAlert = useAlert()
     const navigate = useNavigate()
@@ -31,12 +31,12 @@ const DesignationAdd: React.FC<Props> = ({variables, ...props}) => {
     const handleClose = () => setOpen(false)
 
     const handleSubmit = (values: DesignationInput) => {
-        setLoading(true);
+        setLoading(true)
         const designation = {
             ...values,
-        };
-        CreateDesignationMutation.commit(environment, variables, designation, {onSuccess, onError});
-    };
+        }
+        CreateDesignationMutation.commit(environment, variables, designation, { onSuccess, onError })
+    }
 
     const onError = (e: string) => {
         setLoading(false)
@@ -46,9 +46,9 @@ const DesignationAdd: React.FC<Props> = ({variables, ...props}) => {
     }
 
     const onSuccess = (response: DesignationInput) => {
-        PubSub.publish(namespace.create, response);
-                setLoading(false)
-        showAlert(<Trans>Designation successfully!</Trans>, {
+        PubSub.publish(namespace.create, response)
+        setLoading(false)
+        showAlert(<Trans>Designation added successfully!</Trans>, {
             variant: 'info',
         })
         handleClose()
@@ -59,8 +59,11 @@ const DesignationAdd: React.FC<Props> = ({variables, ...props}) => {
     }
 
     return (
-        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>New Designation</Trans>} formId={formId} loading={loading} {...props}>
-            <DesignationAddFormComponent<DesignationInput> onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
+        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>New designation</Trans>}
+                       formId={formId} loading={loading} {...props}>
+            <DesignationAddFormComponent<DesignationInput> onSubmit={handleSubmit} id={formId}
+                                                           initialValues={initialValues}
+                                                           validationSchema={DesignationAddValidations}/>
         </FormContainer>
     )
 }
