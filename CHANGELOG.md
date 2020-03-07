@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://gitlab.com/saastack/ui/designations/compare/v0.1.9...v0.1.10) (2020-03-07)
+
+
+### Bug Fixes
+
+* reviewed ([6b151b0](https://gitlab.com/saastack/ui/designations/commit/6b151b00aaf1c1490e13f1ce9cf3bdc3a5742477))
+
 ### [0.1.9](https://gitlab.com/saastack/ui/designations/compare/v0.1.8...v0.1.9) (2020-03-05)
 
 
