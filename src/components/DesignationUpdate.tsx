@@ -14,14 +14,18 @@ import { createFragmentContainer } from 'react-relay'
 import { graphql } from 'relay-runtime'
 import { DesignationUpdate_designations } from '../__generated__/DesignationUpdate_designations.graphql'
 import DesignationAddValidations from '../utils/DesignationAddValidations'
+import { DesignationUpdate_roles } from '../__generated__/DesignationUpdate_roles.graphql'
 
 interface Props extends Omit<FormContainerProps, 'formId'> {
     designations: DesignationUpdate_designations,
+    roles: DesignationUpdate_roles
+
 }
 
 const formId = 'designation-update-form'
 
-const DesignationUpdate: React.FC<Props> = ({ designations, ...props }) => {
+const DesignationUpdate: React.FC<Props> = ({ designations, roles, ...props }) => {
+
     const environment = useRelayEnvironment()
     const showAlert = useAlert()
     const navigate = useNavigate()
@@ -30,8 +34,7 @@ const DesignationUpdate: React.FC<Props> = ({ designations, ...props }) => {
 
     const { id } = useParams()
     const designation = designations.find(i => i.id === window.atob(id!))
-
-
+    
     const navigateBack = () => navigate('../../')
     const handleClose = () => setOpen(false)
     React.useEffect(() => {
@@ -48,7 +51,7 @@ const DesignationUpdate: React.FC<Props> = ({ designations, ...props }) => {
         const designation = {
             ...values,
         }
-        UpdateDesignationMutation.commit(environment, designation, ['name', 'description'], { onSuccess, onError })
+        UpdateDesignationMutation.commit(environment, designation, ['name', 'description','roleIds'], { onSuccess, onError })
     }
 
     const onError = (e: string) => {
@@ -73,10 +76,10 @@ const DesignationUpdate: React.FC<Props> = ({ designations, ...props }) => {
 
     return (
         <FormContainer open={open} onClose={handleClose} onExited={navigateBack}
-                       header={<Trans>Update designation</Trans>} formId={formId} loading={loading} {...props}>
-            <DesignationUpdateFormComponent<DesignationInput> onSubmit={handleSubmit} id={formId}
-                                                              initialValues={initialValues}
-                                                              validationSchema={DesignationAddValidations}/>
+            header={<Trans>Update designation</Trans>} formId={formId} loading={loading} {...props}>
+            <DesignationUpdateFormComponent<DesignationUpdate_roles> roles={roles! } onSubmit={handleSubmit} id={formId}
+                initialValues={initialValues}
+                validationSchema={DesignationAddValidations} />
         </FormContainer>
     )
 }
@@ -88,7 +91,15 @@ export default createFragmentContainer(
             fragment DesignationUpdate_designations on Designation @relay(plural: true) {
                 id,
                 name,
-                description
+                description,
+                roleIds
+            }
+        `,
+        roles: graphql`
+            fragment DesignationUpdate_roles on Role @relay(plural: true) {
+                id
+                roleName
+               
             }
         `,
     },

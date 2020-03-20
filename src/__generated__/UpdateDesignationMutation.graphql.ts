@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash e0029c738f854c74de5de9ef72ec2584 */
+/* @relayHash 9c78287e41c9b56eacd80a40c44a9869 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type UpdateDesignationInput = {
@@ -13,6 +13,7 @@ export type DesignationInput = {
     id?: string | null;
     metadata?: unknown | null;
     name?: string | null;
+    roleIds?: Array<string | null> | null;
 };
 export type FieldMaskInput = {
     paths?: Array<string | null> | null;

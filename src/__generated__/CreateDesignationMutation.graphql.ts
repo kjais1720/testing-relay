@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 221a700a78db09af9561566ec0831796 */
+/* @relayHash a9bef5c1c0bb1238918568a83ee2a1a0 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateDesignationInput = {
@@ -13,6 +13,7 @@ export type DesignationInput = {
     id?: string | null;
     metadata?: unknown | null;
     name?: string | null;
+    roleIds?: Array<string | null> | null;
 };
 export type CreateDesignationMutationVariables = {
     input?: CreateDesignationInput | null;

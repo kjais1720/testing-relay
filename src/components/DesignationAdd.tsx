@@ -12,15 +12,18 @@ import { PubSub } from '@saastack/pubsub'
 import namespace from '../namespace'
 import DesignationAddInitialValues from '../utils/DesignationAddInitialValues'
 import DesignationAddValidations from '../utils/DesignationAddValidations'
-import { Variables } from 'relay-runtime'
-
+import { DesignationAdd_roles } from '../__generated__/DesignationAdd_roles.graphql'
+import { Variables, createFragmentContainer, graphql } from 'react-relay'
 interface Props extends Omit<FormContainerProps, 'formId'> {
-    variables: Variables,
+    roles: DesignationAdd_roles,
+    variables: Variables
 }
 
 const formId = 'designation-add-form'
 
-const DesignationAdd: React.FC<Props> = ({ variables, ...props }) => {
+const DesignationAdd: React.FC<Props> = ({ roles, variables, ...props }) => {
+
+
     const environment = useRelayEnvironment()
     const showAlert = useAlert()
     const navigate = useNavigate()
@@ -29,6 +32,9 @@ const DesignationAdd: React.FC<Props> = ({ variables, ...props }) => {
 
     const navigateBack = () => navigate('../')
     const handleClose = () => setOpen(false)
+
+   
+
 
     const handleSubmit = (values: DesignationInput) => {
         setLoading(true)
@@ -60,12 +66,25 @@ const DesignationAdd: React.FC<Props> = ({ variables, ...props }) => {
 
     return (
         <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>New designation</Trans>}
-                       formId={formId} loading={loading} {...props}>
-            <DesignationAddFormComponent<DesignationInput> onSubmit={handleSubmit} id={formId}
-                                                           initialValues={initialValues}
-                                                           validationSchema={DesignationAddValidations}/>
+            formId={formId} loading={loading} {...props}>
+            <DesignationAddFormComponent< DesignationAdd_roles> roles={roles} onSubmit={handleSubmit} id={formId}
+                initialValues={initialValues}
+                validationSchema={DesignationAddValidations} />
         </FormContainer>
     )
 }
 
-export default DesignationAdd
+export default createFragmentContainer(
+    DesignationAdd,
+    {
+
+        roles: graphql`
+            fragment DesignationAdd_roles on Role @relay(plural: true) {
+                id
+                roleName
+               
+            }
+        `,
+    },
+)
+

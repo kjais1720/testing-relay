@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 84d49188a0544f0aeec0e415e19fd6c8 */
+/* @relayHash e77b3c0dbc81ebd34652ffe2b754c409 */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -24,10 +24,22 @@ query DesignationMasterRefetchQuery(
   ...DesignationMaster_designations_2XQG37
 }
 
+fragment DesignationAdd_roles on Role {
+  id
+  roleName
+}
+
 fragment DesignationList_designations on Designation {
   id
   name
   description
+  roleIds
+}
+
+fragment DesignationList_roles on Role {
+  id
+  roleName
+  level
 }
 
 fragment DesignationMaster_designations_2XQG37 on Query {
@@ -38,12 +50,26 @@ fragment DesignationMaster_designations_2XQG37 on Query {
       ...DesignationUpdate_designations
     }
   }
+  roles(hide: true, parent: $parent) {
+    role {
+      id
+      ...DesignationList_roles
+      ...DesignationUpdate_roles
+      ...DesignationAdd_roles
+    }
+  }
 }
 
 fragment DesignationUpdate_designations on Designation {
   id
   name
   description
+  roleIds
+}
+
+fragment DesignationUpdate_roles on Role {
+  id
+  roleName
 }
 */
 
@@ -56,13 +82,21 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "parent",
-    "variableName": "parent"
-  }
-];
+v1 = {
+  "kind": "Variable",
+  "name": "parent",
+  "variableName": "parent"
+},
+v2 = [
+  (v1/*: any*/)
+],
+v3 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+};
 return {
   "kind": "Request",
   "fragment": {
@@ -75,7 +109,7 @@ return {
       {
         "kind": "FragmentSpread",
         "name": "DesignationMaster_designations",
-        "args": (v1/*: any*/)
+        "args": (v2/*: any*/)
       }
     ]
   },
@@ -89,7 +123,7 @@ return {
         "alias": null,
         "name": "designations",
         "storageKey": null,
-        "args": (v1/*: any*/),
+        "args": (v2/*: any*/),
         "concreteType": "ListDesignationResponse",
         "plural": false,
         "selections": [
@@ -102,13 +136,7 @@ return {
             "concreteType": "Designation",
             "plural": true,
             "selections": [
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "id",
-                "args": null,
-                "storageKey": null
-              },
+              (v3/*: any*/),
               {
                 "kind": "ScalarField",
                 "alias": null,
@@ -122,6 +150,57 @@ return {
                 "name": "description",
                 "args": null,
                 "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "roleIds",
+                "args": null,
+                "storageKey": null
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "LinkedField",
+        "alias": null,
+        "name": "roles",
+        "storageKey": null,
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "hide",
+            "value": true
+          },
+          (v1/*: any*/)
+        ],
+        "concreteType": "ListRoleResponse",
+        "plural": false,
+        "selections": [
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "role",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Role",
+            "plural": true,
+            "selections": [
+              (v3/*: any*/),
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "roleName",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "level",
+                "args": null,
+                "storageKey": null
               }
             ]
           }
@@ -133,7 +212,7 @@ return {
     "operationKind": "query",
     "name": "DesignationMasterRefetchQuery",
     "id": null,
-    "text": "query DesignationMasterRefetchQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n}\n",
+    "text": "query DesignationMasterRefetchQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationAdd_roles on Role {\n  id\n  roleName\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationList_roles on Role {\n  id\n  roleName\n  level\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n  roles(hide: true, parent: $parent) {\n    role {\n      id\n      ...DesignationList_roles\n      ...DesignationUpdate_roles\n      ...DesignationAdd_roles\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationUpdate_roles on Role {\n  id\n  roleName\n}\n",
     "metadata": {}
   }
 };
