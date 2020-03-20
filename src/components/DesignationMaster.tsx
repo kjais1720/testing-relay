@@ -48,8 +48,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
     }, [designations])
 
 
-    const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> :
-        <DesignationList roles={roles} designations={designations}/>
+    const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> : <DesignationList designations={designations}/>
 
     return (
         <Layout switcher={<Switcher levels={'com'} value={variables.parent} onChange={setParent}/>}
@@ -57,8 +56,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
                 col1={col1}>
             <Routes>
                 <Route path="add" element={<DesignationAdd roles={roles} variables={variables}/>}/>
-                <Route path=":id/update"
-                       element={<DesignationUpdate roles={roles} variables={variables} designations={designations}/>}/>
+                <Route path=":id/update" element={<DesignationUpdate roles={roles} variables={variables} designations={designations}/>}/>
                 <Route path=":id/delete" element={<DesignationDelete variables={variables}/>}/>
             </Routes>
         </Layout>
@@ -80,7 +78,6 @@ export default createRefetchContainer(
                 roles(hide: true, parent: $parent) {
                     role {
                         id
-                        ...DesignationList_roles
                         ...DesignationUpdate_roles
                         ...DesignationAdd_roles
                     }

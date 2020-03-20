@@ -1,19 +1,20 @@
-import { useRelayEnvironment } from 'react-relay/hooks'
 import { Trans } from '@lingui/macro'
 import { useAlert } from '@saastack/core'
 import { FormContainer } from '@saastack/layouts/containers'
 import { FormContainerProps } from '@saastack/layouts/types'
+import { PubSub } from '@saastack/pubsub'
 import { useNavigate } from '@saastack/router'
 import React from 'react'
+import { createFragmentContainer, graphql, Variables } from 'react-relay'
+import { useRelayEnvironment } from 'react-relay/hooks'
 import { DesignationInput } from '../__generated__/CreateDesignationMutation.graphql'
-import CreateDesignationMutation from '../mutations/CreateDesignationMutation'
+import { DesignationAdd_roles } from '../__generated__/DesignationAdd_roles.graphql'
 import DesignationAddFormComponent from '../forms/DesignationAddFormComponent'
-import { PubSub } from '@saastack/pubsub'
+import CreateDesignationMutation from '../mutations/CreateDesignationMutation'
 import namespace from '../namespace'
 import DesignationAddInitialValues from '../utils/DesignationAddInitialValues'
 import DesignationAddValidations from '../utils/DesignationAddValidations'
-import { DesignationAdd_roles } from '../__generated__/DesignationAdd_roles.graphql'
-import { Variables, createFragmentContainer, graphql } from 'react-relay'
+
 interface Props extends Omit<FormContainerProps, 'formId'> {
     roles: DesignationAdd_roles,
     variables: Variables
@@ -32,8 +33,6 @@ const DesignationAdd: React.FC<Props> = ({ roles, variables, ...props }) => {
 
     const navigateBack = () => navigate('../')
     const handleClose = () => setOpen(false)
-
-   
 
 
     const handleSubmit = (values: DesignationInput) => {
@@ -65,11 +64,8 @@ const DesignationAdd: React.FC<Props> = ({ roles, variables, ...props }) => {
     }
 
     return (
-        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>New designation</Trans>}
-            formId={formId} loading={loading} {...props}>
-            <DesignationAddFormComponent< DesignationAdd_roles> roles={roles} onSubmit={handleSubmit} id={formId}
-                initialValues={initialValues}
-                validationSchema={DesignationAddValidations} />
+        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>New designation</Trans>} formId={formId} loading={loading} {...props}>
+            <DesignationAddFormComponent<DesignationAdd_roles> roles={roles} onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
         </FormContainer>
     )
 }
@@ -77,12 +73,11 @@ const DesignationAdd: React.FC<Props> = ({ roles, variables, ...props }) => {
 export default createFragmentContainer(
     DesignationAdd,
     {
-
         roles: graphql`
             fragment DesignationAdd_roles on Role @relay(plural: true) {
                 id
                 roleName
-               
+
             }
         `,
     },

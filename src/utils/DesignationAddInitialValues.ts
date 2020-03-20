@@ -1,10 +1,10 @@
-import {DesignationInput} from '../__generated__/CreateDesignationMutation.graphql';
+import { DesignationInput } from '../__generated__/CreateDesignationMutation.graphql'
 
 const DesignationAddInitialValues: DesignationInput = {
     id: '',
     name: '',
     description: '',
-    roleIds:[]
-};
+    roleIds: [''],
+}
 
-export default DesignationAddInitialValues;
+export default DesignationAddInitialValues

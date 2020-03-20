@@ -7,7 +7,9 @@ export type DesignationList_designations = ReadonlyArray<{
     readonly id: string;
     readonly name: string;
     readonly description: string;
-    readonly roleIds: ReadonlyArray<string>;
+    readonly roles: ReadonlyArray<{
+        readonly roleName: string;
+    }>;
     readonly " $refType": "DesignationList_designations";
 }>;
 export type DesignationList_designations$data = DesignationList_designations;
@@ -49,13 +51,24 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
+      "kind": "LinkedField",
       "alias": null,
-      "name": "roleIds",
+      "name": "roles",
+      "storageKey": null,
       "args": null,
-      "storageKey": null
+      "concreteType": "Role",
+      "plural": true,
+      "selections": [
+        {
+          "kind": "ScalarField",
+          "alias": null,
+          "name": "roleName",
+          "args": null,
+          "storageKey": null
+        }
+      ]
     }
   ]
 };
-(node as any).hash = '39160f272554a64065ed0230a50a701d';
+(node as any).hash = '7835db2060d63b860e6eb6ab6cb50bb7';
 export default node;

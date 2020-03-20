@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash e77b3c0dbc81ebd34652ffe2b754c409 */
+/* @relayHash 9e35d48c9cb3f2419916c0fffe316807 */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -33,13 +33,10 @@ fragment DesignationList_designations on Designation {
   id
   name
   description
-  roleIds
-}
-
-fragment DesignationList_roles on Role {
-  id
-  roleName
-  level
+  roles {
+    roleName
+    id
+  }
 }
 
 fragment DesignationMaster_designations_2XQG37 on Query {
@@ -53,7 +50,6 @@ fragment DesignationMaster_designations_2XQG37 on Query {
   roles(hide: true, parent: $parent) {
     role {
       id
-      ...DesignationList_roles
       ...DesignationUpdate_roles
       ...DesignationAdd_roles
     }
@@ -94,6 +90,13 @@ v3 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "roleName",
   "args": null,
   "storageKey": null
 };
@@ -152,6 +155,19 @@ return {
                 "storageKey": null
               },
               {
+                "kind": "LinkedField",
+                "alias": null,
+                "name": "roles",
+                "storageKey": null,
+                "args": null,
+                "concreteType": "Role",
+                "plural": true,
+                "selections": [
+                  (v4/*: any*/),
+                  (v3/*: any*/)
+                ]
+              },
+              {
                 "kind": "ScalarField",
                 "alias": null,
                 "name": "roleIds",
@@ -188,20 +204,7 @@ return {
             "plural": true,
             "selections": [
               (v3/*: any*/),
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "roleName",
-                "args": null,
-                "storageKey": null
-              },
-              {
-                "kind": "ScalarField",
-                "alias": null,
-                "name": "level",
-                "args": null,
-                "storageKey": null
-              }
+              (v4/*: any*/)
             ]
           }
         ]
@@ -212,7 +215,7 @@ return {
     "operationKind": "query",
     "name": "DesignationMasterRefetchQuery",
     "id": null,
-    "text": "query DesignationMasterRefetchQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationAdd_roles on Role {\n  id\n  roleName\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationList_roles on Role {\n  id\n  roleName\n  level\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n  roles(hide: true, parent: $parent) {\n    role {\n      id\n      ...DesignationList_roles\n      ...DesignationUpdate_roles\n      ...DesignationAdd_roles\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationUpdate_roles on Role {\n  id\n  roleName\n}\n",
+    "text": "query DesignationMasterRefetchQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationAdd_roles on Role {\n  id\n  roleName\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n  roles {\n    roleName\n    id\n  }\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n  roles(hide: true, parent: $parent) {\n    role {\n      id\n      ...DesignationUpdate_roles\n      ...DesignationAdd_roles\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationUpdate_roles on Role {\n  id\n  roleName\n}\n",
     "metadata": {}
   }
 };

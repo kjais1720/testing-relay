@@ -13,7 +13,7 @@ export type DesignationMaster_designations = {
     readonly roles: {
         readonly role: ReadonlyArray<{
             readonly id: string;
-            readonly " $fragmentRefs": FragmentRefs<"DesignationList_roles" | "DesignationUpdate_roles" | "DesignationAdd_roles">;
+            readonly " $fragmentRefs": FragmentRefs<"DesignationUpdate_roles" | "DesignationAdd_roles">;
         }>;
     };
     readonly " $refType": "DesignationMaster_designations";
@@ -116,11 +116,6 @@ return {
             (v1/*: any*/),
             {
               "kind": "FragmentSpread",
-              "name": "DesignationList_roles",
-              "args": null
-            },
-            {
-              "kind": "FragmentSpread",
               "name": "DesignationUpdate_roles",
               "args": null
             },
@@ -136,5 +131,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '5012560c2217ea72ba6f4d024aff16d4';
+(node as any).hash = '5500785fbf947e8108cfa5cfee6ff83e';
 export default node;
