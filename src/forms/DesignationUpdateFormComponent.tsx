@@ -1,7 +1,7 @@
-import { Form, Input, Textarea, Select, Checkbox } from '@saastack/forms'
+import { Checkbox, Form, Input, Select, Textarea } from '@saastack/forms'
 import { FormProps } from '@saastack/forms/types'
 import React from 'react'
-import { Trans, Plural, t } from '@lingui/macro'
+import { Plural, t, Trans } from '@lingui/macro'
 import { Toggle } from '@saastack/components'
 import MenuItem from '@material-ui/core/MenuItem/MenuItem'
 import { DesignationUpdate_roles } from '../__generated__/DesignationUpdate_roles.graphql'
@@ -14,28 +14,24 @@ export interface Props<T extends ReadonlyArray<{}>> extends FormProps {
 
 
 }
+
 const useStyles = makeStyles(({ typography: { body2, body1, h6, fontWeightRegular } }: Theme) => ({
     item: {
-        paddingTop: 20
+        paddingTop: 20,
     },
     deleteButton: {
         position: 'absolute',
-
         left: 30,
-        top: "82%",
+        top: '82%',
         bottom: 0,
-        color: "grey",
-
-
-    }
-
-
-}));
+        color: 'grey',
+    },
+}))
 
 const DesignationUpdateFormComponent = <T extends ReadonlyArray<{}> = any>({ roles, initialValues, ...props }: Props<T>) => {
-    const [show, setShow] = React.useState(false);
+    const [show, setShow] = React.useState(false)
     const navigate = useNavigate()
-    const classes = useStyles();
+    const classes = useStyles()
     const renderValue = (values: unknown): React.ReactNode => {
         const selected = values as string[]
         if (selected && selected.length) {
@@ -43,7 +39,7 @@ const DesignationUpdateFormComponent = <T extends ReadonlyArray<{}> = any>({ rol
                 {roles.find(r => r.id === selected[0])!.roleName}
                 &nbsp;
                 {selected.length > 1 &&
-                    <small>(+{selected.length - 1} <Plural value={selected.length} _2="other" other="others" />)</small>}
+                <small>(+{selected.length - 1} <Plural value={selected.length} _2="other" other="others"/>)</small>}
             </>
         }
         return null
@@ -53,26 +49,31 @@ const DesignationUpdateFormComponent = <T extends ReadonlyArray<{}> = any>({ rol
         <Form initialValues={initialValues} {...props}>
             {({ values: { roleIds } }) => (<>
                 <Input variant={'standard'} large={true} placeholder={t`Name`} name="name" label={<Trans>Title</Trans>}
-                    grid={{ xs: 12 }} />
+                       grid={{ xs: 12 }}/>
                 <Toggle label={<Trans>Add Description</Trans>} show={show} onShow={setShow}>
-                    <Textarea placeholder={t`Description`} grid={{ xs: 12 }} label={<Trans>Description</Trans>} name="description" />
+                    <Textarea placeholder={t`Description`} grid={{ xs: 12 }} label={<Trans>Description</Trans>}
+                              name="description"/>
                 </Toggle>
                 <ListItemText className={classes.item} secondary={<Trans>
                     By default which roles should be assigned to person who is being assigned this designation
-                </Trans>}></ListItemText>
+                </Trans>}/>
 
-                <Select renderValue={renderValue} multiple grid={{ xs: 12 }} placeholder={t`Role`} label={<Trans>Role</Trans>} name="roleIds">
+                <Select renderValue={renderValue} multiple grid={{ xs: 12 }} placeholder={t`Role`}
+                        label={<Trans>Role</Trans>} name="roleIds">
                     {
                         roles && roles.map(
                             (r, i) => {
                                 return <MenuItem key={i} value={r.id}>
-                                    <Checkbox value={roleIds && roleIds.includes(r.id)} /> {r.roleName}
+                                    <Checkbox value={roleIds && roleIds.includes(r.id)}/> {r.roleName}
                                 </MenuItem>
                             })
                     }
                 </Select>
 
-                <Button className={classes.deleteButton} variant="text" onClick={() => navigate("../delete")}><ListItemText primary={<Trans>Remove Designation</Trans>}></ListItemText></Button>
+                <Button className={classes.deleteButton} variant="text"
+                        onClick={() => navigate('../delete')}>
+                    <Trans>Remove</Trans>
+                </Button>
             </>)}
 
         </Form>

@@ -27,10 +27,11 @@ interface Props {
 const DesignationMaster: React.FC<Props> = ({ designations: { designations: { designation: designations }, roles: { role: roles } }, parent: _, relay: { refetch } }) => {
     const navigate = useNavigate()
     const [parent, setParent] = React.useState(_)
-    const breadcrumbs = <Breadcrumb items={[{ title: <Trans>Settings</Trans>, to: '../../' }]} />
+    const breadcrumbs = <Breadcrumb items={[{ title: <Trans>Settings</Trans>, to: '../../' }]}/>
     const variables = { parent }
 
-    const header = <Trans>Designation is a official role or title of a person in your organization </Trans>
+    const header = <Trans>Designation</Trans>
+    const subHeader = <Trans>Designation is a official role or title of a person in your organization </Trans>
 
     const actions: ActionItem[] = [
         { icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans> },
@@ -47,16 +48,18 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
     }, [designations])
 
 
-    const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')} /> :
-        <DesignationList roles={roles} designations={designations} />
+    const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> :
+        <DesignationList roles={roles} designations={designations}/>
 
     return (
-        <Layout switcher={<Switcher levels={'com'} value={variables.parent} onChange={setParent} />}
-            breadcrumbs={breadcrumbs} type="OneColumnLayout" actions={actions} header={header} col1={col1}>
+        <Layout switcher={<Switcher levels={'com'} value={variables.parent} onChange={setParent}/>}
+                breadcrumbs={breadcrumbs} type="OneColumnLayout" actions={actions} header={header} subHeader={subHeader}
+                col1={col1}>
             <Routes>
-                <Route path="add" element={<DesignationAdd roles={roles} variables={variables} />} />
-                <Route path=":id/update" element={<DesignationUpdate roles={roles} variables={variables} designations={designations} />} />
-                <Route path=":id/delete" element={<DesignationDelete variables={variables} />} />
+                <Route path="add" element={<DesignationAdd roles={roles} variables={variables}/>}/>
+                <Route path=":id/update"
+                       element={<DesignationUpdate roles={roles} variables={variables} designations={designations}/>}/>
+                <Route path=":id/delete" element={<DesignationDelete variables={variables}/>}/>
             </Routes>
         </Layout>
     )
@@ -82,7 +85,7 @@ export default createRefetchContainer(
                         ...DesignationAdd_roles
                     }
                 }
-        
+
             }
         `,
     },
