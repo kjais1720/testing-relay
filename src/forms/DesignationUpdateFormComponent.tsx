@@ -25,6 +25,7 @@ const useStyles = makeStyles(({ typography: { body2, body1, h6, fontWeightRegula
         top: '82%',
         bottom: 0,
         color: 'grey',
+        textTransform: 'none!important' as any
     },
 }))
 
@@ -72,7 +73,7 @@ const DesignationUpdateFormComponent = <T extends ReadonlyArray<{}> = any>({ rol
 
                 <Button className={classes.deleteButton} variant="text"
                         onClick={() => navigate('../delete')}>
-                    <Trans>Remove</Trans>
+                    <Trans>Remove Designation</Trans>
                 </Button>
             </>)}
 
