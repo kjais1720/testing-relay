@@ -1,10 +1,11 @@
 # source: https://dev-waqt.appointy.com/graphql
-# timestamp: Thu Mar 05 2020 15:59:04 GMT+0530 (India Standard Time)
+# timestamp: Fri Mar 20 2020 16:09:27 GMT+0530 (India Standard Time)
 
 type Acceptance {
   acceptedDate: Timestamp
   id: ID!
   issuerName: String!
+  itemId: String!
   place: String!
   policyId: String!
   signerData: SignerData
@@ -16,6 +17,7 @@ input AcceptanceInput {
   acceptedDate: Timestamp
   id: ID
   issuerName: String
+  itemId: String
   place: String
   policyId: String
   signerData: SignerDataInput
@@ -166,6 +168,29 @@ input AllowedDayInput {
   timeZone: String
 }
 
+type Analytic {
+  accountName: String!
+  active: Boolean!
+  analyticsId: String!
+  id: ID!
+  integrationType: IntegrationType!
+  targetId: String!
+}
+
+input AnalyticInput {
+  accountName: String
+  active: Boolean
+  analyticsId: String
+  id: ID
+  integrationType: IntegrationType
+  targetId: String
+}
+
+type AnalyticsAccount {
+  id: ID!
+  name: String!
+}
+
 type AnalyticsTemplate {
   description: String!
   id: ID!
@@ -194,8 +219,9 @@ type App {
   active: Boolean!
   appType: AppType
   appTypeId: String!
-  category: AppCategory!
-  classification: AppClassification!
+  categories: [AppCategory!]!
+  classification: AppCategory
+  dependentAppTypes: [String!]!
   description: String!
   enabledOn: Timestamp
   gallery: Gallery
@@ -209,53 +235,9 @@ type App {
   serviceModules: [String!]!
 }
 
-enum AppCategory {
-  """ACCOUNTING"""
-  ACCOUNTING
-
-  """ANALYTICS"""
-  ANALYTICS
-
-  """CALENDAR"""
-  CALENDAR
-
-  """CMS"""
-  CMS
-
-  """DEVELOPER"""
-  DEVELOPER
-
-  """MARKETING"""
-  MARKETING
-
-  """MEETING"""
-  MEETING
-
-  """PAYMENT"""
-  PAYMENT
-
-  """SCHEDULING"""
-  SCHEDULING
-
-  """SOCIAL"""
-  SOCIAL
-
-  """STAFFPICK"""
-  STAFFPICK
-
-  """UNKNOWN"""
-  UNKNOWN
-}
-
-enum AppClassification {
-  """APPOINTY"""
-  APPOINTY
-
-  """EXTERNAL"""
-  EXTERNAL
-
-  """UNSPECIFIED"""
-  UNSPECIFIED
+type AppCategory {
+  image: String!
+  name: String!
 }
 
 type ApplicableOn {
@@ -264,6 +246,14 @@ type ApplicableOn {
 
 input ApplicableOnInput {
   id: ID
+}
+
+enum ApplicationMethod {
+  """PRIVATE"""
+  PRIVATE
+
+  """PUBLIC"""
+  PUBLIC
 }
 
 enum AppLinkingLevel {
@@ -596,8 +586,9 @@ enum AppSource {
 }
 
 type AppType {
-  category: AppTypeCategory!
-  classification: AppTypeClassification!
+  categories: [AppTypeCategory!]!
+  classification: AppTypeCategory
+  dependentAppTypes: [String!]!
   description: String!
   gallery: Gallery
   id: ID!
@@ -610,68 +601,9 @@ type AppType {
   serviceModules: [String!]!
 }
 
-enum AppTypeCategory {
-  """ACCOUNTING"""
-  ACCOUNTING
-
-  """ANALYTICS"""
-  ANALYTICS
-
-  """CALENDAR"""
-  CALENDAR
-
-  """CMS"""
-  CMS
-
-  """DEVELOPER"""
-  DEVELOPER
-
-  """MARKETING"""
-  MARKETING
-
-  """MEETING"""
-  MEETING
-
-  """PAYMENT"""
-  PAYMENT
-
-  """SCHEDULING"""
-  SCHEDULING
-
-  """SOCIAL"""
-  SOCIAL
-
-  """STAFFPICK"""
-  STAFFPICK
-
-  """UNKNOWN"""
-  UNKNOWN
-}
-
-enum AppTypeClassification {
-  """APPOINTY"""
-  APPOINTY
-
-  """EXTERNAL"""
-  EXTERNAL
-
-  """UNSPECIFIED"""
-  UNSPECIFIED
-}
-
-input AppTypeInput {
-  category: AppTypeCategory
-  classification: AppTypeClassification
-  description: String
-  gallery: GalleryInput
-  id: ID
-  integrationType: IntegrationType
-  invisible: Boolean
-  level: AppTypeLevel
-  markdown: String
-  metadata: Map
-  name: String
-  serviceModules: [String]
+type AppTypeCategory {
+  image: String!
+  name: String!
 }
 
 enum AppTypeLevel {
@@ -1155,6 +1087,17 @@ input BookingPortalSettingInput {
   uISettings: String
 }
 
+enum BooleanFilter {
+  """ALL"""
+  ALL
+
+  """FALSE"""
+  FALSE
+
+  """TRUE"""
+  TRUE
+}
+
 type Business {
   address: Address
   businessId: String!
@@ -1453,6 +1396,27 @@ input changeCustomerStatusRequestNewCustomerStatus {
 
 input changeCustomerStatusRequestNewCustomStatus {
   newCustomStatus: CustomStatusAppointmentInput
+}
+
+input ChangeIntegrationStatusInput {
+  clientMutationId: String
+  requests: [ToggleActivationInput]
+}
+
+type ChangeIntegrationStatusPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input ChangePolicyAcceptanceCriteriaInput {
+  clientMutationId: String
+  oneTimeAcceptance: Boolean
+  policyId: String
+}
+
+type ChangePolicyAcceptanceCriteriaPayload {
+  clientMutationId: String!
+  payload: Policy
 }
 
 input ChangePolicyStatusInput {
@@ -1996,6 +1960,7 @@ enum ClassTypeFilter {
 }
 
 type Company implements Node {
+  active: Boolean!
   address: Address
   appointments(after: String, before: String, first: Int, last: Int): ListAppointmentResponse
   apps: [App!]!
@@ -2010,6 +1975,7 @@ type Company implements Node {
   id: ID!
   licenseWallet: LicenseWallet
   locations(after: String, before: String, first: Int, last: Int): ListLocationResponse
+  metadata: Map
   preference: CompanyPreference
   profession: String!
   professionObject: Profession
@@ -2022,12 +1988,14 @@ type Company implements Node {
 }
 
 input CompanyInput {
+  active: Boolean
   address: AddressInput
   description: String
   displayName: String
   emails: [String]
   gallery: GalleryInput
   id: ID
+  metadata: Map
   preference: CompanyPreferenceInput
   profession: String
   slug: String
@@ -2240,17 +2208,6 @@ input createAppointmentRequestLeaseId {
 type CreateAppPayload {
   clientMutationId: String!
   payload: App
-}
-
-input CreateAppTypeInput {
-  appType: AppTypeInput
-  clientMutationId: String
-  parent: String
-}
-
-type CreateAppTypePayload {
-  clientMutationId: String!
-  payload: AppType
 }
 
 input CreateAreaCodeInput {
@@ -2802,17 +2759,6 @@ type CreateServiceTemplatePayload {
   payload: ServiceTemplate
 }
 
-input CreateShortenUrlInput {
-  clientMutationId: String
-  parent: String
-  shortenUrl: ShortenUrlInput
-}
-
-type CreateShortenUrlPayload {
-  clientMutationId: String!
-  payload: ShortenUrl
-}
-
 input CreateShortUrlInput {
   clientMutationId: String
   parent: String
@@ -3219,6 +3165,16 @@ input DeleteAddonInput {
 }
 
 type DeleteAddonPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
+input DeleteAnalyticInput {
+  clientMutationId: String
+  id: ID
+}
+
+type DeleteAnalyticPayload {
   clientMutationId: String!
   payload: Empty
 }
@@ -3666,16 +3622,6 @@ type DeleteServiceTemplatePayload {
   payload: Empty
 }
 
-input DeleteShortenUrlInput {
-  clientMutationId: String
-  id: ID
-}
-
-type DeleteShortenUrlPayload {
-  clientMutationId: String!
-  payload: Empty
-}
-
 input DeleteShortUrlInput {
   clientMutationId: String
   id: ID
@@ -3762,6 +3708,7 @@ type Designation implements Node {
   id: ID!
   metadata: Map
   name: String!
+  roleIds: [String!]!
 }
 
 input DesignationInput {
@@ -3769,6 +3716,7 @@ input DesignationInput {
   id: ID
   metadata: Map
   name: String
+  roleIds: [String]
 }
 
 input DetailedAppointmentReportFilterInput {
@@ -3813,7 +3761,9 @@ type DetailedAppointmentReportResponse {
 }
 
 type Discount {
+  applyMethod: ApplicationMethod!
   code: String!
+  createdOn: Timestamp
   description: String!
   discountType: DiscountType!
   discountValue: Float!
@@ -3832,7 +3782,9 @@ type Discountables {
 }
 
 input DiscountInput {
+  applyMethod: ApplicationMethod
   code: String
+  createdOn: Timestamp
   description: String
   discountType: DiscountType
   discountValue: Float
@@ -4020,6 +3972,7 @@ type Employee implements Node {
   profileIds: [String!]!
   profileImage: GalleryItem
   provideServices: Boolean!
+  roles: UserRole
   slug: String!
   staffProfiles: [StaffProfile!]!
   timeZone: String!
@@ -4029,8 +3982,16 @@ type Employee implements Node {
 }
 
 input EmployeeFilterInput {
+  active: BooleanFilter
   department: String
   designation: String
+  email: String
+  firstName: String
+  internal: BooleanFilter
+  lastName: String
+  locationIds: [String]
+  phoneNumber: String
+  provideServices: BooleanFilter
 }
 
 input EmployeeInput {
@@ -4120,6 +4081,12 @@ input EmployeeUserRoleInput {
 }
 
 scalar Empty
+
+type Entity {
+  analyticsId: String!
+  id: ID!
+  name: String!
+}
 
 type Feature {
   enabled: Boolean!
@@ -4267,25 +4234,12 @@ enum Gender {
   UNSPECIFIED
 }
 
-input GenerateCodeInput {
-  clientMutationId: String
-  data: String
-  dataCodeType: DataCodeType
-  userId: String
-  validTill: Timestamp
-}
-
-type GenerateCodePayload {
-  clientMutationId: String!
-  payload: GenerateCodeResponse
-}
-
-type GenerateCodeResponse {
-  code: String!
-}
-
 type GeneratePayLinkResponse {
   link: String!
+}
+
+type GetAppCountResponse {
+  count: Int!
 }
 
 type GetAssignedUsersByRoleResponse {
@@ -4319,6 +4273,10 @@ type GetDataFromCodeResponse {
   userId: String!
 }
 
+type GetEmployeeCountResponse {
+  count: Int!
+}
+
 type GetEmployeeReportResponse {
   edges: [EmployeeReportNode!]!
   pageInfo: PageInfo
@@ -4331,6 +4289,10 @@ type GetFilteredCustomersResponse {
 
 type GetInvitedUsersResponse {
   invitedUsers: [InvitedUser!]!
+}
+
+type GetLocationCountResponse {
+  count: Int!
 }
 
 type GetNoteByTypeResponse {
@@ -4371,6 +4333,14 @@ type GetQueryUsersCountResponse {
   usersCount: Int!
 }
 
+type GetResourceTypeCountResponse {
+  count: Int!
+}
+
+type GetServiceCountResponse {
+  count: Int!
+}
+
 type GetServicePriceValueResponse {
   price: Price
   serviceId: String!
@@ -4387,7 +4357,7 @@ type GetUrlInfoResponse {
 type GetUsersByLevelIdResponse {
   edges: [UserRoleNode!]!
   pageInfo: PageInfo
-  users: [UserProfile!]!
+  users: [Employee!]!
 }
 
 input GetUsersByLevelInput {
@@ -4592,6 +4562,8 @@ input IntakeFormSubmissionInput {
 type IntegrationToken {
   active: Boolean!
   appTypeId: String!
+  createdBy: String!
+  createdOn: Timestamp
   deviceId: String!
   id: ID!
   integrationType: IntegrationType!
@@ -4600,14 +4572,26 @@ type IntegrationToken {
 }
 
 enum IntegrationType {
+  """FACEBOOK_PIXEL"""
+  FACEBOOK_PIXEL
+
   """FIREBASE"""
   FIREBASE
 
   """GOOGLECALENDAR"""
   GOOGLECALENDAR
 
+  """GOOGLE_ANALYTICS"""
+  GOOGLE_ANALYTICS
+
   """GOOGLE_BUSINESS_REVIEW"""
   GOOGLE_BUSINESS_REVIEW
+
+  """GOOGLE_TAG_MANAGER"""
+  GOOGLE_TAG_MANAGER
+
+  """MIXPANEL"""
+  MIXPANEL
 
   """OTHERS"""
   OTHERS
@@ -4643,8 +4627,7 @@ type InvitedUser {
 
 input InviteEmployeeInput {
   clientMutationId: String
-  employee: EmployeeInput
-  groupId: String
+  employees: [EmployeeInput]
   language: String
   locationIds: [String]
   parent: String
@@ -4658,7 +4641,7 @@ type InviteEmployeePayload {
 }
 
 type InviteEmployeeResponse {
-  employee: Employee
+  employees: [Employee!]!
   userRoles: [EmployeeUserRole!]!
 }
 
@@ -4962,6 +4945,14 @@ input listAllLinksOfParentRequestSecondResourceParent {
   secondResourceParent: String
 }
 
+type ListAnalyticAccountsResponse {
+  accounts: [AnalyticsAccount!]!
+}
+
+type ListAnalyticResponse {
+  analytic: [Analytic!]!
+}
+
 type ListAnalyticsTemplateResponse {
   analyticsTemplate: [AnalyticsTemplate!]!
 }
@@ -4987,8 +4978,33 @@ type ListAppointmentsForCalendarResponse {
   appointments: [Appointment!]!
 }
 
+input listAppRequestAppsOfCompany {
+  appsOfCompany: ListAppsOfCompanyInput
+}
+
+input listAppRequestAppsOfLocation {
+  appsOfLocation: ListAppsOfLocationInput
+}
+
+input listAppRequestAppsOfUser {
+  appsOfUser: ListAppsOfUserInput
+}
+
 type ListAppResponse {
   app: [App!]!
+}
+
+input ListAppsOfCompanyInput {
+  companyId: String
+}
+
+input ListAppsOfLocationInput {
+  locationId: String
+}
+
+input ListAppsOfUserInput {
+  companyId: String
+  userId: String
 }
 
 type ListAppTypeResponse {
@@ -5126,10 +5142,6 @@ type ListDiscountResponse {
   pageInfo: PageInfo
 }
 
-type ListEmployeeByLocationResponse {
-  employees: [Employee!]!
-}
-
 type ListEmployeeResponse {
   edges: [EmployeeNode!]!
   pageInfo: PageInfo
@@ -5137,6 +5149,10 @@ type ListEmployeeResponse {
 
 type ListEmployeesByUserIdResponse {
   employees: [Employee!]!
+}
+
+type ListEntitiesResponse {
+  entities: [Entity!]!
 }
 
 type ListFeatureNotificationResponse {
@@ -5167,7 +5183,6 @@ type ListIntakeFormSubmissionResponse {
 
 type ListIntegrationsResponse {
   integrations: [IntegrationToken!]!
-  targetId: String!
 }
 
 type ListInvitedUserResponse {
@@ -5347,10 +5362,6 @@ type ListServiceTemplateResponse {
   serviceTemplate: [ServiceTemplate!]!
 }
 
-type ListShortenUrlResponse {
-  shortenUrl: [ShortenUrl!]!
-}
-
 type ListShortUrlResponse {
   shortUrl: [ShortUrl!]!
 }
@@ -5370,6 +5381,13 @@ type ListTemplateResponse {
 
 type ListUnacceptedPoliciesResponse {
   policies: [AcceptancePolicy!]!
+}
+
+type ListUsersOfModuleRolesResponse {
+  companyId: String!
+  employees: [Employee!]!
+  userIds: [String!]!
+  userRoles: [UserRole!]!
 }
 
 type ListWalletItemResponse {
@@ -5643,6 +5661,11 @@ type ModuleRole {
   uniqueForModule: Boolean!
 }
 
+input ModuleRoleAtLevelInput {
+  levelId: String
+  moduleRoleName: String
+}
+
 type Mutation {
   addBenefitToMembership(input: AddBenefitToMembershipInput): AddBenefitToMembershipPayload!
   addCartItem(input: AddCartItemInput): AddCartItemPayload!
@@ -5662,6 +5685,8 @@ type Mutation {
   cancelSubscription(input: CancelSubscriptionInput): CancelSubscriptionPayload!
   changeAppointmentStatus(input: ChangeAppointmentStatusInput): ChangeAppointmentStatusPayload!
   changeCustomerStatus(input: ChangeCustomerStatusInput): ChangeCustomerStatusPayload!
+  changeIntegrationStatus(input: ChangeIntegrationStatusInput): ChangeIntegrationStatusPayload!
+  changePolicyAcceptanceCriteria(input: ChangePolicyAcceptanceCriteriaInput): ChangePolicyAcceptanceCriteriaPayload!
   changePolicyStatus(input: ChangePolicyStatusInput): ChangePolicyStatusPayload!
   checkOpenHourAvailability(input: CheckOpenHourAvailabilityInput): CheckOpenHourAvailabilityPayload!
   checkShortUrl(input: CheckShortUrlInput): CheckShortUrlPayload!
@@ -5671,7 +5696,6 @@ type Mutation {
   createAddon(input: CreateAddonInput): CreateAddonPayload!
   createAnalyticsTemplate(input: CreateAnalyticsTemplateInput): CreateAnalyticsTemplatePayload!
   createApp(input: CreateAppInput): CreateAppPayload!
-  createAppType(input: CreateAppTypeInput): CreateAppTypePayload!
   createAppointment(input: CreateAppointmentInput): CreateAppointmentPayload!
   createAreaCode(input: CreateAreaCodeInput): CreateAreaCodePayload!
   createBillingAccount(input: CreateBillingAccountInput): CreateBillingAccountPayload!
@@ -5720,10 +5744,10 @@ type Mutation {
   createServiceTemplate(input: CreateServiceTemplateInput): CreateServiceTemplatePayload!
   createServices(input: BatchCreateServiceInput): BatchCreateServicePayload!
   createShortUrl(input: CreateShortUrlInput): CreateShortUrlPayload!
-  createShortenUrl(input: CreateShortenUrlInput): CreateShortenUrlPayload!
   createStaffProfile(input: CreateStaffProfileInput): CreateStaffProfilePayload!
   createSubscription(input: CreateSubscriptionInput): CreateSubscriptionPayload!
   deleteAddon(input: DeleteAddonInput): DeleteAddonPayload!
+  deleteAnalytic(input: DeleteAnalyticInput): DeleteAnalyticPayload!
   deleteAnalyticsTemplate(input: DeleteAnalyticsTemplateInput): DeleteAnalyticsTemplatePayload!
   deleteApp(input: DeleteAppInput): DeleteAppPayload!
   deleteAppointment(input: DeleteAppointmentInput): DeleteAppointmentPayload!
@@ -5768,12 +5792,10 @@ type Mutation {
   deleteServiceRestrictions(input: DeleteServiceRestrictionsInput): DeleteServiceRestrictionsPayload!
   deleteServiceTemplate(input: DeleteServiceTemplateInput): DeleteServiceTemplatePayload!
   deleteShortUrl(input: DeleteShortUrlInput): DeleteShortUrlPayload!
-  deleteShortenUrl(input: DeleteShortenUrlInput): DeleteShortenUrlPayload!
   deleteSingleSlot(input: DeleteSingleSlotInput): DeleteSingleSlotPayload!
   deleteStaffProfile(input: DeleteStaffProfileInput): DeleteStaffProfilePayload!
   dropoutClass(input: DropOutClassInput): DropOutClassPayload!
   dropoutSession(input: DropOutSessionInput): DropOutSessionPayload!
-  generateCode(input: GenerateCodeInput): GenerateCodePayload!
   getUsersByLevel(input: GetUsersByLevelInput): GetUsersByLevelPayload!
   inviteEmployee(input: InviteEmployeeInput): InviteEmployeePayload!
   inviteUserToRole(input: InviteUserToRoleInput): InviteUserToRolePayload!
@@ -5782,11 +5804,12 @@ type Mutation {
   optForNotificationPreference(input: OptForNotificationPreferenceInput): OptForNotificationPreferencePayload!
   payOrder(input: PayOrderInput): PayOrderPayload!
   publishPolicyDraft(input: PublishDraftInput): PublishDraftPayload!
+  reInviteEmployee(input: ReInviteEmployeeInput): ReInviteEmployeePayload!
   refundOrder(input: RefundOrderInput): RefundOrderPayload!
   removeRole(input: RemoveRoleInput): RemoveRolePayload!
-  renewToken(input: RenewTokenInput): RenewTokenPayload!
   requestCancellation(input: RequestCancellationInput): RequestCancellationPayload!
   rescheduleClassRule(input: RescheduleRuleInput): RescheduleRulePayload!
+  revokeEmployeeInvitation(input: RevokeInvitationInput): RevokeInvitationPayload!
   revokeToken(input: RevokeTokenInput): RevokeTokenPayload!
   saveDeletionFields(input: SaveDeletionFieldsInput): SaveDeletionFieldsPayload!
   searchPII(input: SearchPIIInput): SearchPIIPayload!
@@ -5801,7 +5824,6 @@ type Mutation {
   toggleInvitationStatus(input: ToggleInvitationStatusInput): ToggleInvitationStatusPayload!
   updateAddon(input: UpdateAddonInput): UpdateAddonPayload!
   updateAnalyticsTemplate(input: UpdateAnalyticsTemplateInput): UpdateAnalyticsTemplatePayload!
-  updateAppType(input: UpdateAppTypeInput): UpdateAppTypePayload!
   updateAppointment(input: UpdateAppointmentInput): UpdateAppointmentPayload!
   updateAppointmentByDataCode(input: UpdateAppointmentByDataCodeInput): UpdateAppointmentByDataCodePayload!
   updateAreaCode(input: UpdateAreaCodeInput): UpdateAreaCodePayload!
@@ -5857,13 +5879,13 @@ type Mutation {
   updateServiceTemplate(input: UpdateServiceTemplateInput): UpdateServiceTemplatePayload!
   updateSession(input: UpdateSessionsInput): UpdateSessionsPayload!
   updateShortUrl(input: UpdateShortUrlInput): UpdateShortUrlPayload!
-  updateShortenUrl(input: UpdateShortenUrlInput): UpdateShortenUrlPayload!
   updateSingleSlot(input: UpdateSingleSlotInput): UpdateSingleSlotPayload!
   updateStaffProfile(input: UpdateStaffProfileInput): UpdateStaffProfilePayload!
   updateSubscription(input: UpdateSubscriptionInput): UpdateSubscriptionPayload!
   updateUserPassword(input: UpdateUserPasswordInput): UpdateUserPasswordPayload!
   updateUserProfile(input: UpdateUserProfileInput): UpdateUserProfilePayload!
   updateWizardPosition(input: UpdateWizardPositionInput): UpdateWizardPositionPayload!
+  upsertAnalytic(input: UpsertAnalyticInput): UpsertAnalyticPayload!
   upsertAppointmentReviewMailSetting(input: UpsertAppointmentReviewMailSettingInput): UpsertAppointmentReviewMailSettingPayload!
   upsertAppointmentSetting(input: UpsertAppointmentSettingInput): UpsertAppointmentSettingPayload!
   upsertBookingPortalSetting(input: UpsertBookingPortalSettingInput): UpsertBookingPortalSettingPayload!
@@ -6517,6 +6539,7 @@ type Policy implements Node {
   id: ID!
   isDefault: Boolean!
   name: String!
+  oneTimeAcceptance: Boolean!
   policyNumber: String!
   versions: [PolicyVersion!]!
 }
@@ -6528,6 +6551,7 @@ input PolicyInput {
   id: ID
   isDefault: Boolean
   name: String
+  oneTimeAcceptance: Boolean
   policyNumber: String
   versions: [PolicyVersionInput]
 }
@@ -6807,10 +6831,14 @@ type Query {
   addon(id: ID, viewMask: FieldMaskInput): Addon!
   addons(parent: String, viewMask: FieldMaskInput): ListAddonResponse!
   allLinksOfParent(firstResourceParent: listAllLinksOfParentRequestFirstResourceParent, linkType: String, secondResourceParent: listAllLinksOfParentRequestSecondResourceParent): LinkLists!
+  analytic(id: ID, viewMask: FieldMaskInput): Analytic!
+  analytics(active: Boolean, targetId: String, viewMask: FieldMaskInput): ListAnalyticResponse!
+  analyticsAccounts(integrationType: IntegrationType, targetId: String): ListAnalyticAccountsResponse!
+  analyticsEntities(accountId: String, integrationType: IntegrationType, targetId: String): ListEntitiesResponse!
   analyticsTemplates(filter: ProductFilter, parent: String, viewMask: FieldMaskInput): ListAnalyticsTemplateResponse!
   app(id: ID, viewMask: FieldMaskInput): App!
   appType(id: ID, viewMask: FieldMaskInput): AppType!
-  appTypes(filter: AppTypeLevelFilter, parent: String, viewMask: FieldMaskInput): ListAppTypeResponse!
+  appTypes(filter: AppTypeLevelFilter, viewMask: FieldMaskInput): ListAppTypeResponse!
   appTypesOfCompany(companyId: String, viewMask: FieldMaskInput): ListAppTypeResponse!
   appointment(id: ID, viewMask: FieldMaskInput): Appointment!
   appointmentAvailability(filter: AvailabilityFilterInput): ListSlotsResponse!
@@ -6819,18 +6847,20 @@ type Query {
   appointmentReviewMailSetting(locationId: String, viewMask: FieldMaskInput): AppointmentReviewMailSetting!
   appointmentSetting(parent: String, viewMask: FieldMaskInput): AppointmentSetting!
   appointments(after: String, before: String, customerId: listAppointmentRequestCustomerId, employeeId: listAppointmentRequestEmployeeId, first: Int, last: Int, parent: String, query: listAppointmentRequestQuery, timeDuration: TimeslotInput, viewMask: FieldMaskInput): ListAppointmentResponse!
-  apps(parent: String, viewMask: FieldMaskInput): ListAppResponse!
-  appsOfUser(parent: String, userId: String, viewMask: FieldMaskInput): ListAppResponse!
+  apps(appsOfCompany: listAppRequestAppsOfCompany, appsOfLocation: listAppRequestAppsOfLocation, appsOfUser: listAppRequestAppsOfUser, viewMask: FieldMaskInput): ListAppResponse!
+  appsCount(parent: String): GetAppCountResponse!
   areaCode(id: ID, viewMask: FieldMaskInput): AreaCode!
   areaCodes(parent: String, viewMask: FieldMaskInput): ListAreaCodeResponse!
   assignedUsersByRole(after: String, before: String, first: Int, last: Int, levelId: String, roleId: String): GetAssignedUsersByRoleResponse!
   averageRating(locationId: String, viewMask: FieldMaskInput): AverageRating!
+  batchGetIntegrations(integrationType: IntegrationType, targetIds: [String]): ListIntegrationsResponse!
   billingAccount(id: ID, viewMask: FieldMaskInput): BillingAccount!
   billingAccounts(companyId: listBillingAccountRequestCompanyId, locationId: listBillingAccountRequestLocationId, viewMask: FieldMaskInput): ListBillingAccountResponse!
   billingMembership(id: ID, viewMask: FieldMaskInput): BillingMembership!
   billingMemberships(viewMask: FieldMaskInput): ListBillingMembershipResponse!
   billingPlan(id: ID, viewMask: FieldMaskInput): BillingPlan!
   billingPlanWallet(companyId: String, id: ID, viewMask: FieldMaskInput): BillingPlanWallet!
+  billingPlanWallets(companyId: String, licenseId: String, planId: String, viewMask: FieldMaskInput): ListBillingPlanWalletResponse!
   billingPlans(parent: String, viewMask: FieldMaskInput): ListBillingPlanResponse!
   blockHourRule(id: ID, viewMask: FieldMaskInput): BlockHourRule!
   blockHourRules(after: String, before: String, first: Int, last: Int, parent: listBlockHourRuleRequestParent, resourceId: listBlockHourRuleRequestResourceId, viewMask: FieldMaskInput): ListBlockHourRuleResponse!
@@ -6889,12 +6919,13 @@ type Query {
   discounts(after: String, before: String, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListDiscountResponse!
   employee(id: ID, viewMask: FieldMaskInput): Employee!
   employeeByEmail(companyId: String, email: String, viewMask: FieldMaskInput): Employee!
-  employeeByLocation(parent: String, viewMask: FieldMaskInput): ListEmployeeByLocationResponse!
+  employeeCount(parent: String): GetEmployeeCountResponse!
   employeeReport(after: String, before: String, departmentId: [String], designationId: [String], first: Int, last: Int, parent: String, query: String): GetEmployeeReportResponse!
   employeeSetting(parent: String, viewMask: FieldMaskInput): EmployeeSetting!
-  employees(active: Boolean, after: String, before: String, filter: EmployeeFilterInput, first: Int, last: Int, parent: String, provideServices: Boolean, query: String, viewMask: FieldMaskInput): ListEmployeeResponse!
+  employees(active: Boolean, after: String, before: String, department: String, designation: String, first: Int, last: Int, parent: String, provideServices: Boolean, query: String, viewMask: FieldMaskInput): ListEmployeeResponse!
   employeesByUserId(userId: String, viewMask: FieldMaskInput): ListEmployeesByUserIdResponse!
   feedback(id: ID): Feedback!
+  filteredEmployees(after: String, before: String, filter: EmployeeFilterInput, first: Int, last: Int, parent: String, viewMask: FieldMaskInput): ListEmployeeResponse!
   getCompanyBySlug(slug: String, viewMask: FieldMaskInput): Company!
   getEmployeeBySlug(parent: String, slug: String, viewMask: FieldMaskInput): Employee!
   getLocationBySlug(parent: String, slug: String, viewMask: FieldMaskInput): Location!
@@ -6909,7 +6940,7 @@ type Query {
   group(id: ID, viewMask: FieldMaskInput): Group!
   intakeForm(id: ID, viewMask: FieldMaskInput): IntakeForm!
   intakeForms(groupId: String, parent: String, viewMask: FieldMaskInput): ListIntakeFormResponse!
-  integrations(targetId: String): ListIntegrationsResponse!
+  integrations(active: Boolean, integrationType: [IntegrationType], parent: String, useParentAsTargetId: Boolean): ListIntegrationsResponse!
   invitedUsers(levelId: String, userId: String): GetInvitedUsersResponse!
   invitedUsersByLevel(after: String, before: String, first: Int, last: Int, levelId: String, levelOnly: Boolean): ListInvitedUserResponse!
   invoice(id: ID, viewMask: FieldMaskInput): Invoice!
@@ -6925,10 +6956,10 @@ type Query {
   listIntakeFormSubmission(groupId: listIntakeFormSubmissionRequestGroupId, intakeFormId: listIntakeFormSubmissionRequestIntakeFormId, userId: String, viewMask: FieldMaskInput): ListIntakeFormSubmissionResponse!
   listModuleLicenses(viewMask: FieldMaskInput): ListModuleLicenseResponse!
   listOpenHourRulesForCalendar(employeeIds: [String], endTime: Timestamp, parents: [String], resourceIds: [String], serviceIds: [String], startTime: Timestamp, viewMask: FieldMaskInput): ListOpenHourRulesForCalendarResponse!
-  listPlanWallet(companyId: String, licenseId: String, planId: String, viewMask: FieldMaskInput): ListBillingPlanWalletResponse!
   listReviewHelpful(after: String, before: String, filter: ReviewHelpfulFilterInput, first: Int, last: Int, viewMask: FieldMaskInput): ListReviewHelpfulResponse!
   localeRecords(id: ID): ListResponse!
   location(id: ID, viewMask: FieldMaskInput): Location!
+  locationCount(parent: String): GetLocationCountResponse!
   locations(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListLocationResponse!
   membership(id: ID, viewMask: FieldMaskInput): Membership!
   membershipPlanWallet(id: ID, viewMask: FieldMaskInput): MembershipPlanWallet!
@@ -6983,6 +7014,7 @@ type Query {
   reply(id: ID, viewMask: FieldMaskInput): Reply!
   resource(id: ID, viewMask: FieldMaskInput): Resource!
   resourceType(id: ID, viewMask: FieldMaskInput): ResourceType!
+  resourceTypeCount(parent: String): GetResourceTypeCountResponse!
   resourceTypeSetting(id: ID, viewMask: FieldMaskInput): ResourceTypeSetting!
   resourceTypes(filter: ResourceTypeFilterInputInput, parent: String, viewMask: FieldMaskInput): ListResourceTypeResponse!
   resources(after: String, before: String, first: Int, last: Int, parent: String, query: String, resourceTypeIds: [String], viewMask: FieldMaskInput): ListResourceResponse!
@@ -6997,6 +7029,7 @@ type Query {
   role(id: ID, viewMask: FieldMaskInput): Role!
   roles(hide: Boolean, parent: String, viewMask: FieldMaskInput): ListRoleResponse!
   searchBusiness(address: String, name: String, phone: String, type: BusinessType): SearchBusinessResponse!
+  searchPublicDiscountCode(itemIds: [String], parent: String): SearchPublicDiscountCodeResponse!
   serializeAppointment(appointment: AppointmentInput, parent: String, userId: String): SerializeAppointmentResponse!
   serializeGiftCertificateWallet(wallet: GiftCertificateWalletItemInput): SerializeGiftCertificateWalletResponse!
   serializeMembershipPlan(planWallet: MembershipPlanWalletInput): SerializeMembershipResponse!
@@ -7009,11 +7042,10 @@ type Query {
   serviceTemplate(id: ID, viewMask: FieldMaskInput): ServiceTemplate!
   serviceTemplates(parent: String, query: String, viewMask: FieldMaskInput): ListServiceTemplateResponse!
   services(after: String, before: String, first: Int, last: Int, parent: String, query: String, viewMask: FieldMaskInput): ListServiceResponse!
+  servicesCount(parent: String): GetServiceCountResponse!
   session(classId: String, sessionId: String, viewMask: FieldMaskInput): Session!
   shortUrl(id: ID): ShortUrl!
   shortUrls(parent: String): ListShortUrlResponse!
-  shortenUrl(id: ID): ShortenUrl!
-  shortenUrls(parent: String, userId: String): ListShortenUrlResponse!
   staffPerformanceReport(dateRange: DateslotInput, dateRangeOn: DateRangeOn, exportReport: Boolean, filters: StaffPerformanceReportFilterInput, orderBy: OrderBy, parents: [String], query: String, sortBy: String, viewMask: FieldMaskInput): StaffPerformanceReportResponse!
   staffProfile(id: ID, viewMask: FieldMaskInput): StaffProfile!
   staffProfiles(parent: String, viewMask: FieldMaskInput): ListStaffProfileResponse!
@@ -7022,6 +7054,7 @@ type Query {
   userProfile(id: ID, viewMask: FieldMaskInput): UserProfile!
   userRole(levelId: String, userId: String, viewMask: FieldMaskInput): UserRole!
   usersByLevelId(after: String, before: String, first: Int, last: Int, parent: String, roleId: String): GetUsersByLevelIdResponse!
+  usersOfModuleRoles(companyId: String, moduleRolesAtLevels: [ModuleRoleAtLevelInput]): ListUsersOfModuleRolesResponse!
   validateLinks(links: [LinkInput]): ValidateLinksResponse!
   viewer: UserProfile!
   webNotifications(after: String, before: String, eventType: String, first: Int, last: Int, locale: String, notificationStatusType: NotificationStatusType, userId: String, viewMask: FieldMaskInput): ListWebNotificationResponse!
@@ -7063,6 +7096,16 @@ type RefundOrderResponse {
   orderId: String!
 }
 
+input ReInviteEmployeeInput {
+  clientMutationId: String
+  employeeId: String
+}
+
+type ReInviteEmployeePayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
 input RemoveRoleInput {
   clientMutationId: String
   roles: [UserRoleRoleInput]
@@ -7087,17 +7130,6 @@ type RenewalFrequency {
 input RenewalFrequencyInput {
   days: Int
   quantity: Int
-}
-
-input RenewTokenInput {
-  clientMutationId: String
-  integrationType: IntegrationType
-  targetId: String
-}
-
-type RenewTokenPayload {
-  clientMutationId: String!
-  payload: Empty
 }
 
 type Reply {
@@ -7371,6 +7403,7 @@ type Restriction {
   consumeRules: ConsumeRule
   maxDiscount: Price
   maxDiscountableItems: Int!
+  minOrderAmount: Price
   order: SelectionOrder!
   recurrenceRule: [DiscountRestrictionRecurrenceRule!]!
 }
@@ -7380,6 +7413,7 @@ input RestrictionInput {
   consumeRules: ConsumeRuleInput
   maxDiscount: PriceInput
   maxDiscountableItems: Int
+  minOrderAmount: PriceInput
   order: SelectionOrder
   recurrenceRule: [DiscountRestrictionRecurrenceRuleInput]
 }
@@ -7548,6 +7582,16 @@ type ReviewStatusResponse {
   source: ReviewPageUrl
 }
 
+input RevokeInvitationInput {
+  clientMutationId: String
+  employeeId: String
+}
+
+type RevokeInvitationPayload {
+  clientMutationId: String!
+  payload: Empty
+}
+
 input RevokeTokenInput {
   clientMutationId: String
   integrationType: IntegrationType
@@ -7620,6 +7664,10 @@ input SearchPIIInput {
 type SearchPIIPayload {
   clientMutationId: String!
   payload: Empty
+}
+
+type SearchPublicDiscountCodeResponse {
+  discount: [Discount!]!
 }
 
 enum SelectionOrder {
@@ -8003,19 +8051,6 @@ type SetupRoles {
 input SetupRolesInput {
   moduleRoles: [SetupModuleRoleInput]
   roleName: String
-}
-
-type ShortenUrl {
-  id: ID!
-  slug: String!
-  url: String!
-  userId: String!
-}
-
-input ShortenUrlInput {
-  id: ID
-  slug: String
-  url: String
 }
 
 type ShortUrl {
@@ -8447,6 +8482,12 @@ input TimeslotInput {
 
 scalar Timestamp
 
+input ToggleActivationInput {
+  active: Boolean
+  integrationType: IntegrationType
+  targetId: String
+}
+
 input ToggleAppInput {
   active: Boolean
   clientMutationId: String
@@ -8528,17 +8569,6 @@ input UpdateAppointmentInput {
 type UpdateAppointmentPayload {
   clientMutationId: String!
   payload: Appointment
-}
-
-input UpdateAppTypeInput {
-  appType: AppTypeInput
-  clientMutationId: String
-  updateMask: FieldMaskInput
-}
-
-type UpdateAppTypePayload {
-  clientMutationId: String!
-  payload: AppType
 }
 
 input UpdateAreaCodeInput {
@@ -9136,17 +9166,6 @@ type UpdateSessionsPayload {
   payload: Empty
 }
 
-input UpdateShortenUrlInput {
-  clientMutationId: String
-  shortenUrl: ShortenUrlInput
-  updateMask: FieldMaskInput
-}
-
-type UpdateShortenUrlPayload {
-  clientMutationId: String!
-  payload: ShortenUrl
-}
-
 input UpdateShortUrlInput {
   clientMutationId: String
   shortUrl: ShortUrlInput
@@ -9252,6 +9271,16 @@ type UpdateWizardPositionPayload {
 
 type UpdateWizardPositionResponse {
   wizardPosition: Int!
+}
+
+input UpsertAnalyticInput {
+  analytic: AnalyticInput
+  clientMutationId: String
+}
+
+type UpsertAnalyticPayload {
+  clientMutationId: String!
+  payload: Analytic
 }
 
 input UpsertAppointmentReviewMailSettingInput {
