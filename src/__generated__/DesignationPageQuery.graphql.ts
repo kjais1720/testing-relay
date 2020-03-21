@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 7a698d974f3e41da4e825be031992dc7 */
+/* @relayHash 465ed6e324f83c7fccc0f6969a1fae56 */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -27,6 +27,8 @@ query DesignationPageQuery(
 fragment DesignationAdd_roles on Role {
   id
   roleName
+  priority
+  isDefault
 }
 
 fragment DesignationList_designations on Designation {
@@ -66,6 +68,8 @@ fragment DesignationUpdate_designations on Designation {
 fragment DesignationUpdate_roles on Role {
   id
   roleName
+  priority
+  isDefault
 }
 */
 
@@ -204,7 +208,21 @@ return {
             "plural": true,
             "selections": [
               (v3/*: any*/),
-              (v4/*: any*/)
+              (v4/*: any*/),
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "priority",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "isDefault",
+                "args": null,
+                "storageKey": null
+              }
             ]
           }
         ]
@@ -215,7 +233,7 @@ return {
     "operationKind": "query",
     "name": "DesignationPageQuery",
     "id": null,
-    "text": "query DesignationPageQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationAdd_roles on Role {\n  id\n  roleName\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n  roles {\n    roleName\n    id\n  }\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n  roles(hide: true, parent: $parent) {\n    role {\n      id\n      ...DesignationUpdate_roles\n      ...DesignationAdd_roles\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationUpdate_roles on Role {\n  id\n  roleName\n}\n",
+    "text": "query DesignationPageQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationAdd_roles on Role {\n  id\n  roleName\n  priority\n  isDefault\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n  roles {\n    roleName\n    id\n  }\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n  roles(hide: true, parent: $parent) {\n    role {\n      id\n      ...DesignationUpdate_roles\n      ...DesignationAdd_roles\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationUpdate_roles on Role {\n  id\n  roleName\n  priority\n  isDefault\n}\n",
     "metadata": {}
   }
 };

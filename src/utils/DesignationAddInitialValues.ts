@@ -4,7 +4,7 @@ const DesignationAddInitialValues: DesignationInput = {
     id: '',
     name: '',
     description: '',
-    roleIds: [''],
+    roleIds: [],
 }
 
 export default DesignationAddInitialValues
