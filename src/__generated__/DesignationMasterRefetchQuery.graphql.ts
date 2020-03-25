@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 502f8c47eaaa07ae5d80a975aadfdf14 */
+/* @relayHash 000cbc10817c462a37ea1aab42a5207e */
 
 import { ConcreteRequest } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -97,16 +97,13 @@ v3 = {
   "args": null,
   "storageKey": null
 },
-v4 = [
-  (v3/*: any*/),
-  {
-    "kind": "ScalarField",
-    "alias": null,
-    "name": "roleName",
-    "args": null,
-    "storageKey": null
-  }
-];
+v4 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "roleName",
+  "args": null,
+  "storageKey": null
+};
 return {
   "kind": "Request",
   "fragment": {
@@ -169,7 +166,10 @@ return {
                 "args": null,
                 "concreteType": "Role",
                 "plural": true,
-                "selections": (v4/*: any*/)
+                "selections": [
+                  (v3/*: any*/),
+                  (v4/*: any*/)
+                ]
               },
               {
                 "kind": "ScalarField",
@@ -206,7 +206,24 @@ return {
             "args": null,
             "concreteType": "Role",
             "plural": true,
-            "selections": (v4/*: any*/)
+            "selections": [
+              (v3/*: any*/),
+              (v4/*: any*/),
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "priority",
+                "args": null,
+                "storageKey": null
+              },
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "isDefault",
+                "args": null,
+                "storageKey": null
+              }
+            ]
           }
         ]
       }
@@ -216,7 +233,7 @@ return {
     "operationKind": "query",
     "name": "DesignationMasterRefetchQuery",
     "id": null,
-    "text": "query DesignationMasterRefetchQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationAdd_roles on Role {\n  id\n  roleName\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n  roles {\n    id\n    roleName\n  }\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n  roles(hide: true, parent: $parent) {\n    role {\n      id\n      ...DesignationUpdate_roles\n      ...DesignationAdd_roles\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationUpdate_roles on Role {\n  id\n  roleName\n}\n",
+    "text": "query DesignationMasterRefetchQuery(\n  $parent: String\n) {\n  ...DesignationMaster_designations_2XQG37\n}\n\nfragment DesignationAdd_roles on Role {\n  id\n  roleName\n  priority\n  isDefault\n}\n\nfragment DesignationList_designations on Designation {\n  id\n  name\n  description\n  roles {\n    id\n    roleName\n  }\n}\n\nfragment DesignationMaster_designations_2XQG37 on Query {\n  designations(parent: $parent) {\n    designation {\n      id\n      ...DesignationList_designations\n      ...DesignationUpdate_designations\n    }\n  }\n  roles(hide: true, parent: $parent) {\n    role {\n      id\n      ...DesignationUpdate_roles\n      ...DesignationAdd_roles\n    }\n  }\n}\n\nfragment DesignationUpdate_designations on Designation {\n  id\n  name\n  description\n  roleIds\n}\n\nfragment DesignationUpdate_roles on Role {\n  id\n  roleName\n  priority\n  isDefault\n}\n",
     "metadata": {}
   }
 };
