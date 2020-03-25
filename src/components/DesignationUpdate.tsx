@@ -59,9 +59,17 @@ const DesignationUpdate: React.FC<Props> = ({ designations, roles, ...props }) =
 
     const handleSubmit = (values: DesignationInput) => {
         setLoading(true)
+      const roleIds=values.roleIds
+      let updatedRoles
+         if (roleIds){
+              updatedRoles=roles.filter((role)=>roleIds.includes(role.id))
+         }
+
         const designation = {
             ...values,
+            roles:updatedRoles
         }
+
         UpdateDesignationMutation.commit(environment, designation, ['name', 'description', 'roleIds'], {
             onSuccess,
             onError,
@@ -90,7 +98,7 @@ const DesignationUpdate: React.FC<Props> = ({ designations, roles, ...props }) =
 
     return (
         <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>Update designation</Trans>} formId={formId} loading={loading} {...props}>
-            <DesignationUpdateFormComponent<DesignationUpdate_roles> roles={roles!} onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
+            <DesignationUpdateFormComponent<DesignationUpdate_roles> isUpdate roles={roles!} onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
 
 
             <Button className={classes.button} variant="text" onClick={() => navigate('../delete')}>

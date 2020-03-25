@@ -26,7 +26,7 @@ const sharedUpdater = (store: RecordSourceSelectorProxy, designation: Designatio
     if (designation.id) {
         const node = store.get(designation.id)
         if (node) {
-            setNodeValue(store, node, pick(designation, updateMask))
+            setNodeValue(store, node, designation)
         }
     }
 }
