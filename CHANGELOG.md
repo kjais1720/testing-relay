@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.20](https://gitlab.com/saastack/ui/designations/compare/v0.1.18...v0.1.20) (2020-03-25)
+
+
+### Bug Fixes
+
+* **correction:** skip ([5311c1f](https://gitlab.com/saastack/ui/designations/commit/5311c1f76e9901f2c12cf9b8e1ce7aa332bb23b3))
+
 ### [0.1.18](https://gitlab.com/saastack/ui/designations/compare/v0.1.17...v0.1.18) (2020-03-25)
 
 
