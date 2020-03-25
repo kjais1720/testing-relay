@@ -123,7 +123,8 @@ export default createFragmentContainer(
             fragment DesignationUpdate_roles on Role @relay(plural: true) {
                 id
                 roleName
-
+                priority
+                isDefault
             }
         `,
     },

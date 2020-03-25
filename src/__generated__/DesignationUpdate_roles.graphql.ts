@@ -6,6 +6,8 @@ import { FragmentRefs } from "relay-runtime";
 export type DesignationUpdate_roles = ReadonlyArray<{
     readonly id: string;
     readonly roleName: string;
+    readonly priority: number;
+    readonly isDefault: boolean;
     readonly " $refType": "DesignationUpdate_roles";
 }>;
 export type DesignationUpdate_roles$data = DesignationUpdate_roles;
@@ -38,8 +40,22 @@ const node: ReaderFragment = {
       "name": "roleName",
       "args": null,
       "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "priority",
+      "args": null,
+      "storageKey": null
+    },
+    {
+      "kind": "ScalarField",
+      "alias": null,
+      "name": "isDefault",
+      "args": null,
+      "storageKey": null
     }
   ]
 };
-(node as any).hash = '40e75b40f53964bf0ff62baef44027a1';
+(node as any).hash = '48bd9e69aad9262a8c3f89a2607f3af7';
 export default node;

@@ -27,6 +27,8 @@ query DesignationMasterRefetchQuery(
 fragment DesignationAdd_roles on Role {
   id
   roleName
+  priority
+  isDefault
 }
 
 fragment DesignationList_designations on Designation {
@@ -66,6 +68,8 @@ fragment DesignationUpdate_designations on Designation {
 fragment DesignationUpdate_roles on Role {
   id
   roleName
+  priority
+  isDefault
 }
 */
 
