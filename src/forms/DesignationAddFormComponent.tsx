@@ -7,15 +7,16 @@ import { FormProps } from '@saastack/forms/types'
 import React from 'react'
 
 export interface Props<T extends ReadonlyArray<{}>> extends FormProps {
-    roles: any
+    roles: any,
+    isUpdate?:boolean
 }
 
-const DesignationAddFormComponent = <T extends ReadonlyArray<{}> = any>({ roles, ...props }: Props<T>) => {
+const DesignationAddFormComponent = <T extends ReadonlyArray<{}> = any>({ roles, isUpdate,...props }: Props<T>) => {
     const [show, setShow] = React.useState(false)
     return (
         <Form {...props}>
             <Input large name="name" label={<Trans>Title</Trans>} grid={{ xs: 12 }}/>
-            <Toggle label={<Trans>Add Description</Trans>} show={show} onShow={setShow}>
+            <Toggle label={isUpdate ? <Trans>Update Description</Trans>: <Trans>Add Description</Trans>} show={show} onShow={setShow}>
                 <Textarea grid={{ xs: 12 }} label={<Trans>Description</Trans>} name="description"/>
             </Toggle>
             <Grid item xs={12}>

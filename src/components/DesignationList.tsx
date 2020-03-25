@@ -30,9 +30,14 @@ const DesignationList: React.FC<Props> = ({ designations, ...props }) => {
                 label: <Trans>Default Role</Trans>,
 
             },
+            {
+                key: 'description',
+                label: <Trans>Description</Trans>,
+
+            },
         ],
         render: {
-            defaultRole: (e: DesignationList_designations[0]) => e.roles.map(r => r.roleName).join(', '),
+            defaultRole: (e: DesignationList_designations[0]) => e.roles?.map(r => r.roleName).join(', '),
         },
 
     }
@@ -47,6 +52,7 @@ export default createFragmentContainer(DesignationList, {
             name
             description
             roles {
+                id
                 roleName
             }
         }
