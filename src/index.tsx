@@ -4,6 +4,7 @@ import loadable from '@loadable/component'
 import { SupervisorAccountOutlined } from '@material-ui/icons'
 import { PubSub } from '@saastack/pubsub'
 import namespace from './namespace'
+import { Roles } from '@saastack/core/roles'
 
 PubSub.register(Object.values(namespace))
 
@@ -22,6 +23,8 @@ const load = () => {
         path: 'designations',
         title: t`Designations`,
         parent: 'masters',
+        role: [Roles.DesignationsAdmin, Roles.DesignationsEditor, Roles.DesignationsViewer],
+        level: 'com',
     })
 }
 
