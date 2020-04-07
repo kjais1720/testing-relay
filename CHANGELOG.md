@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.24](https://gitlab.com/saastack/ui/designations/compare/v0.1.23...v0.1.24) (2020-04-07)
+
+
+### Bug Fixes
+
+* roles in settings hooks ([b9e25dd](https://gitlab.com/saastack/ui/designations/commit/b9e25dd62273d305c93285188dd657748c8437c5))
+
 ### [0.1.23](https://gitlab.com/saastack/ui/designations/compare/v0.1.22...v0.1.23) (2020-04-06)
 
 
