@@ -1,10 +1,11 @@
+import { ErrorComponent, Loading } from '@saastack/components'
 import { useConfig } from '@saastack/core'
-import { withQuery, WithQueryProps } from '@saastack/relay'
+import { useQuery } from '@saastack/relay'
+import { useDidMountEffect } from '@saastack/utils'
 import React from 'react'
 import { graphql } from 'react-relay'
 import { DesignationPageQuery } from '../__generated__/DesignationPageQuery.graphql'
 import DesignationMaster from '../components/DesignationMaster'
-import { Loading } from '@saastack/components'
 
 const query = graphql`
     query DesignationPageQuery($parent: String) {
@@ -12,24 +13,26 @@ const query = graphql`
     }
 `
 
-interface WrapperProps extends WithQueryProps<DesignationPageQuery> {
-    parent: string,
-}
-
-const DesignationMasterWrapper: React.FC<WrapperProps> = ({ query, ...props }) =>
-    <DesignationMaster {...props} designations={query}/>
-
 interface PageProps {
     parent?: string,
 }
 
 const DesignationPage: React.FC<PageProps> = props => {
     const { companyId } = useConfig()
-    const parent = props.parent || companyId
-    return React.useMemo(() => {
-        const Wrapper = withQuery({ query, variables: { parent }, Loading })(DesignationMasterWrapper)
-        return <Wrapper parent={parent}/>
-    }, [])
+    const parent = (props.parent || companyId)!
+    const variables: DesignationPageQuery['variables'] = { parent }
+    const { data, loading, error, refetch } = useQuery<DesignationPageQuery>(query, variables)
+    useDidMountEffect(() => {
+        refetch(variables)
+    }, [parent])
+    if (loading) {
+        return <Loading/>
+    }
+    if (error) {
+        return <ErrorComponent error={error}/>
+    }
+
+    return <DesignationMaster {...props} designations={data!} parent={parent}/>
 }
 
 export default DesignationPage

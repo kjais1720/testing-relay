@@ -1,17 +1,15 @@
-import { ActionItem, Breadcrumb } from '@saastack/components'
-import { Layout } from '@saastack/layouts'
-import { PubSub } from '@saastack/pubsub'
-import namespace from '../namespace'
 import { Trans } from '@lingui/macro'
 import loadable from '@loadable/component'
 import { AddOutlined } from '@material-ui/icons'
-import React from 'react'
-import { createRefetchContainer, graphql, RelayRefetchProp } from 'react-relay'
-import { DesignationMaster_designations } from '../__generated__/DesignationMaster_designations.graphql'
-import DesignationList from './DesignationList'
+import { ActionItem } from '@saastack/components'
+import { Layout } from '@saastack/layouts'
+import { PubSub } from '@saastack/pubsub'
 import { Route, Routes, useNavigate } from '@saastack/router'
-import { useDidMountEffect } from '@saastack/utils'
-import { Switcher } from '@saastack/core'
+import React from 'react'
+import { createFragmentContainer, graphql } from 'react-relay'
+import { DesignationMaster_designations } from '../__generated__/DesignationMaster_designations.graphql'
+import namespace from '../namespace'
+import DesignationList from './DesignationList'
 
 const DesignationAdd = loadable(() => import('./DesignationAdd'))
 const DesignationDelete = loadable(() => import('./DesignationDelete'))
@@ -21,27 +19,18 @@ const DesignationUpdate = loadable(() => import('./DesignationUpdate'))
 interface Props {
     parent: string,
     designations: DesignationMaster_designations,
-    relay: RelayRefetchProp
 }
 
-const DesignationMaster: React.FC<Props> = ({ designations: { designations: { designation: designations }, roles: { role: roles } }, parent: _, relay: { refetch } }) => {
+const DesignationMaster: React.FC<Props> = ({ designations: { designations: { designation: designations }, roles: { role: roles } }, parent }) => {
     const navigate = useNavigate()
-    const [parent, setParent] = React.useState(_)
-    const breadcrumbs = <Breadcrumb items={[{ title: <Trans>Settings</Trans>, to: '../../' }]}/>
     const variables = { parent }
 
-    const header = <Trans>Designation</Trans>
-    const subHeader = <Trans>Designation is a official role or title of a person in your organization </Trans>
+    const header = <Trans>Designations</Trans>
+    const subHeader = <Trans>Designation is a official role or title of a person in your organization</Trans>
 
     const actions: ActionItem[] = [
         { icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans> },
     ]
-
-    const refetchDesignations = () => refetch({}, {}, undefined, { force: true })
-
-    useDidMountEffect(() => {
-        refetchDesignations()
-    }, [parent])
 
     React.useEffect(() => {
         PubSub.publish(namespace.fetch, designations)
@@ -51,9 +40,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
     const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> : <DesignationList designations={designations}/>
 
     return (
-        <Layout switcher={<Switcher levels={'com'} value={variables.parent} onChange={setParent}/>}
-                breadcrumbs={breadcrumbs} type="OneColumnLayout" actions={actions} header={header} subHeader={subHeader}
-                col1={col1}>
+        <Layout actions={actions} header={header} subHeader={subHeader} col1={col1}>
             <Routes>
                 <Route path="add" element={<DesignationAdd roles={roles} variables={variables}/>}/>
                 <Route path=":id/update" element={<DesignationUpdate roles={roles} variables={variables} designations={designations}/>}/>
@@ -63,7 +50,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
     )
 }
 
-export default createRefetchContainer(
+export default createFragmentContainer(
     DesignationMaster,
     {
         designations: graphql`
@@ -86,10 +73,6 @@ export default createRefetchContainer(
             }
         `,
     },
-    graphql`
-        query DesignationMasterRefetchQuery($parent:String){
-            ...DesignationMaster_designations @arguments(parent: $parent)
-        }`,
 )
 
 

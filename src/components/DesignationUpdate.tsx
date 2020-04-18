@@ -99,8 +99,6 @@ const DesignationUpdate: React.FC<Props> = ({ designations, roles, ...props }) =
     return (
         <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>Update designation</Trans>} formId={formId} loading={loading} {...props}>
             <DesignationUpdateFormComponent<DesignationUpdate_roles> isUpdate roles={roles!} onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
-
-
             <Button className={classes.button} variant="text" onClick={() => navigate('../delete')}>
                 <Trans>Remove Designation</Trans>
             </Button>
