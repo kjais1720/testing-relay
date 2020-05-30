@@ -16,7 +16,7 @@ export interface Props<T extends ReadonlyArray<{}>> extends FormProps {
 
 const DesignationAddFormComponent = <T extends ReadonlyArray<{}> = any>({ roles, isUpdate,...props }: Props<T>) => {
     const [show, setShow] = React.useState(false)
-  
+
     const isDisabled = (id: string, roleIds: string[]) => {
         const _role = roles.find((r: any) => r.id === id && r.isDefault && r.priority)
         const _roles = roleIds.map(_r => roles.find((r: any) => r.id === _r)).filter(r => r.isDefault && r.priority)
@@ -25,7 +25,7 @@ const DesignationAddFormComponent = <T extends ReadonlyArray<{}> = any>({ roles,
         }
         return false
     }
-    
+
     return (
         <Form {...props}>
             <Input large name="name" label={<Trans>Title</Trans>} grid={{ xs: 12 }}/>
@@ -34,7 +34,7 @@ const DesignationAddFormComponent = <T extends ReadonlyArray<{}> = any>({ roles,
             </Toggle>
             <Grid item xs={12}>
                 <Box mt={3} fontSize="body2.fontSize" color="text.secondary">
-                   <Trans>By default which roles should be assigned to person who is being assigned this designation</Trans>
+                   <Trans>By default which roles should be assigned to the person who is being assigned this designation</Trans>
                 </Box>
             </Grid>
             <Select grid={{ xs: 12 }} label={<Trans>Role</Trans>} name="roleIds.0">
