@@ -22,7 +22,7 @@ const mutation = graphql`
 let tempID = 0
 
 const sharedUpdater = (store: RecordSourceSelectorProxy, node: RecordProxy, designation: DesignationInput, filters: Variables) => {
-    setNodeValue(store, node, designation)
+    setNodeValue(store as any, node, designation)
     const rootProxy = store.getRoot()
     const listProxy = rootProxy.getLinkedRecord('designations', filters)
     if (listProxy) {
