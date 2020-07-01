@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 4c1126dad8048bde163c496ede006ac8 */
+/* @relayHash 042231694e3e469038873321b2ceb657 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type WrapperQueryVariables = {};
@@ -18,7 +18,6 @@ export type WrapperQueryResponse = {
             readonly language: string;
             readonly timeFormat: string;
             readonly timezone: string;
-            readonly uIInfo: string;
         } | null;
         readonly userRoles: {
             readonly role: ReadonlyArray<{
@@ -98,7 +97,6 @@ query WrapperQuery {
       language
       timeFormat
       timezone
-      uIInfo
       id
     }
     userRoles {
@@ -251,24 +249,17 @@ v9 = {
   "args": null,
   "storageKey": null
 },
-v10 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "uIInfo",
-  "args": null,
-  "storageKey": null
-},
-v11 = [
+v10 = [
   (v0/*: any*/)
 ],
-v12 = {
+v11 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "name",
   "args": null,
   "storageKey": null
 },
-v13 = {
+v12 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "moduleRoles",
@@ -277,38 +268,38 @@ v13 = {
   "concreteType": "ModuleRole",
   "plural": true,
   "selections": [
-    (v12/*: any*/)
+    (v11/*: any*/)
   ]
 },
-v14 = {
+v13 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "title",
   "args": null,
   "storageKey": null
 },
-v15 = {
+v14 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "displayName",
   "args": null,
   "storageKey": null
 },
-v16 = {
+v15 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "metadata",
   "args": null,
   "storageKey": null
 },
-v17 = {
+v16 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "slug",
   "args": null,
   "storageKey": null
 },
-v18 = {
+v17 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "gallery",
@@ -329,7 +320,7 @@ v18 = {
     }
   ]
 },
-v19 = {
+v18 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "address",
@@ -347,14 +338,14 @@ v19 = {
     }
   ]
 },
-v20 = {
+v19 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "navMenus",
   "args": null,
   "storageKey": null
 },
-v21 = {
+v20 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "aliases",
@@ -367,7 +358,7 @@ v21 = {
   ],
   "storageKey": "aliases(locale:\"en-US\")"
 },
-v22 = {
+v21 = {
   "kind": "LinkedField",
   "alias": null,
   "name": "apps",
@@ -384,7 +375,7 @@ v22 = {
       "args": null,
       "storageKey": null
     },
-    (v12/*: any*/),
+    (v11/*: any*/),
     {
       "kind": "ScalarField",
       "alias": null,
@@ -401,14 +392,14 @@ v22 = {
     }
   ]
 },
-v23 = [
+v22 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 500
   }
 ],
-v24 = {
+v23 = {
   "kind": "ScalarField",
   "alias": null,
   "name": "currency",
@@ -450,8 +441,7 @@ return {
               (v6/*: any*/),
               (v7/*: any*/),
               (v8/*: any*/),
-              (v9/*: any*/),
-              (v10/*: any*/)
+              (v9/*: any*/)
             ]
           },
           {
@@ -484,17 +474,17 @@ return {
                       {
                         "kind": "InlineFragment",
                         "type": "Location",
-                        "selections": (v11/*: any*/)
+                        "selections": (v10/*: any*/)
                       },
                       {
                         "kind": "InlineFragment",
                         "type": "Company",
-                        "selections": (v11/*: any*/)
+                        "selections": (v10/*: any*/)
                       },
                       {
                         "kind": "InlineFragment",
                         "type": "Group",
-                        "selections": (v11/*: any*/)
+                        "selections": (v10/*: any*/)
                       }
                     ]
                   },
@@ -507,7 +497,7 @@ return {
                     "concreteType": "Role",
                     "plural": false,
                     "selections": [
-                      (v13/*: any*/)
+                      (v12/*: any*/)
                     ]
                   }
                 ]
@@ -524,7 +514,7 @@ return {
             "plural": true,
             "selections": [
               (v0/*: any*/),
-              (v12/*: any*/),
+              (v11/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -535,12 +525,12 @@ return {
                 "plural": true,
                 "selections": [
                   (v0/*: any*/),
+                  (v13/*: any*/),
                   (v14/*: any*/),
                   (v15/*: any*/),
                   (v16/*: any*/),
                   (v17/*: any*/),
                   (v18/*: any*/),
-                  (v19/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -550,17 +540,17 @@ return {
                     "concreteType": "CompanySetting",
                     "plural": false,
                     "selections": [
-                      (v20/*: any*/),
-                      (v21/*: any*/)
+                      (v19/*: any*/),
+                      (v20/*: any*/)
                     ]
                   },
-                  (v22/*: any*/),
+                  (v21/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
                     "name": "locations",
                     "storageKey": "locations(first:500)",
-                    "args": (v23/*: any*/),
+                    "args": (v22/*: any*/),
                     "concreteType": "ListLocationResponse",
                     "plural": false,
                     "selections": [
@@ -583,7 +573,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v0/*: any*/),
-                              (v12/*: any*/),
+                              (v11/*: any*/),
                               {
                                 "kind": "LinkedField",
                                 "alias": null,
@@ -593,10 +583,10 @@ return {
                                 "concreteType": "LocationPreference",
                                 "plural": false,
                                 "selections": [
-                                  (v24/*: any*/)
+                                  (v23/*: any*/)
                                 ]
                               },
-                              (v17/*: any*/)
+                              (v16/*: any*/)
                             ]
                           }
                         ]
@@ -643,7 +633,6 @@ return {
               (v7/*: any*/),
               (v8/*: any*/),
               (v9/*: any*/),
-              (v10/*: any*/),
               (v0/*: any*/)
             ]
           },
@@ -693,7 +682,7 @@ return {
                     "concreteType": "Role",
                     "plural": false,
                     "selections": [
-                      (v13/*: any*/),
+                      (v12/*: any*/),
                       (v0/*: any*/)
                     ]
                   }
@@ -712,7 +701,7 @@ return {
             "plural": true,
             "selections": [
               (v0/*: any*/),
-              (v12/*: any*/),
+              (v11/*: any*/),
               {
                 "kind": "LinkedField",
                 "alias": null,
@@ -723,12 +712,12 @@ return {
                 "plural": true,
                 "selections": [
                   (v0/*: any*/),
+                  (v13/*: any*/),
                   (v14/*: any*/),
                   (v15/*: any*/),
                   (v16/*: any*/),
                   (v17/*: any*/),
                   (v18/*: any*/),
-                  (v19/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
@@ -738,18 +727,18 @@ return {
                     "concreteType": "CompanySetting",
                     "plural": false,
                     "selections": [
+                      (v19/*: any*/),
                       (v20/*: any*/),
-                      (v21/*: any*/),
                       (v0/*: any*/)
                     ]
                   },
-                  (v22/*: any*/),
+                  (v21/*: any*/),
                   {
                     "kind": "LinkedField",
                     "alias": null,
                     "name": "locations",
                     "storageKey": "locations(first:500)",
-                    "args": (v23/*: any*/),
+                    "args": (v22/*: any*/),
                     "concreteType": "ListLocationResponse",
                     "plural": false,
                     "selections": [
@@ -772,7 +761,7 @@ return {
                             "plural": false,
                             "selections": [
                               (v0/*: any*/),
-                              (v12/*: any*/),
+                              (v11/*: any*/),
                               {
                                 "kind": "LinkedField",
                                 "alias": null,
@@ -782,11 +771,11 @@ return {
                                 "concreteType": "LocationPreference",
                                 "plural": false,
                                 "selections": [
-                                  (v24/*: any*/),
+                                  (v23/*: any*/),
                                   (v0/*: any*/)
                                 ]
                               },
-                              (v17/*: any*/)
+                              (v16/*: any*/)
                             ]
                           }
                         ]
@@ -805,10 +794,10 @@ return {
     "operationKind": "query",
     "name": "WrapperQuery",
     "id": null,
-    "text": "query WrapperQuery {\n  viewer {\n    id\n    firstName\n    lastName\n    email\n    profileImage {\n      thumbImage\n    }\n    preferences {\n      dateFormat\n      language\n      timeFormat\n      timezone\n      uIInfo\n      id\n    }\n    userRoles {\n      role {\n        levelDetails {\n          __typename\n          ... on Location {\n            id\n          }\n          ... on Company {\n            id\n          }\n          ... on Group {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        role {\n          moduleRoles {\n            name\n          }\n          id\n        }\n      }\n      id\n    }\n    groups {\n      id\n      name\n      companies {\n        id\n        title\n        displayName\n        metadata\n        slug\n        gallery {\n          default {\n            thumbImage\n          }\n        }\n        address {\n          country\n        }\n        companySettings {\n          navMenus\n          aliases(locale: \"en-US\")\n          id\n        }\n        apps {\n          id\n          appTypeId\n          name\n          active\n          serviceModules\n        }\n        locations(first: 500) {\n          edges {\n            node {\n              id\n              name\n              preference {\n                currency\n                id\n              }\n              slug\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
+    "text": "query WrapperQuery {\n  viewer {\n    id\n    firstName\n    lastName\n    email\n    profileImage {\n      thumbImage\n    }\n    preferences {\n      dateFormat\n      language\n      timeFormat\n      timezone\n      id\n    }\n    userRoles {\n      role {\n        levelDetails {\n          __typename\n          ... on Location {\n            id\n          }\n          ... on Company {\n            id\n          }\n          ... on Group {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        role {\n          moduleRoles {\n            name\n          }\n          id\n        }\n      }\n      id\n    }\n    groups {\n      id\n      name\n      companies {\n        id\n        title\n        displayName\n        metadata\n        slug\n        gallery {\n          default {\n            thumbImage\n          }\n        }\n        address {\n          country\n        }\n        companySettings {\n          navMenus\n          aliases(locale: \"en-US\")\n          id\n        }\n        apps {\n          id\n          appTypeId\n          name\n          active\n          serviceModules\n        }\n        locations(first: 500) {\n          edges {\n            node {\n              id\n              name\n              preference {\n                currency\n                id\n              }\n              slug\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = '48d4fc8ed2601826781ce283023e3f08';
+(node as any).hash = 'b4bdf79476967c5600add8affd412a44';
 export default node;

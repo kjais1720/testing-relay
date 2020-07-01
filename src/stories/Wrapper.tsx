@@ -21,7 +21,6 @@ const query = graphql`
                 language
                 timeFormat
                 timezone
-                uIInfo
             }
             userRoles {
                 role {
