@@ -49,7 +49,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
 
     const canManageGroup = can([Roles.GroupsAdmin, Roles.GroupsEditor], groupId!)
     if (!canManageGroup)
-        rolesArr = filterRoles(roles, ['Owner', 'Co-Owner'])
+        rolesArr = filterRoles(rolesArr, ['Owner', 'Co-Owner'])
 
 
     React.useEffect(() => {
