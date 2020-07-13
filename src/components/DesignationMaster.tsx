@@ -63,7 +63,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
     return (
         <Layout actions={actions} header={header} subHeader={subHeader} col1={col1}>
             <Routes>
-                <Route path="add" element={<DesignationAdd roles={roles} variables={variables}/>}/>
+                <Route path="add" element={<DesignationAdd roles={rolesArr} variables={variables}/>}/>
                 <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}
                                                                      designations={designations}/>}/>
                 <Route path=":id/delete" element={<DesignationDelete variables={variables}/>}/>
