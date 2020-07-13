@@ -13,6 +13,9 @@ export type DesignationMaster_designations = {
     readonly roles: {
         readonly role: ReadonlyArray<{
             readonly id: string;
+            readonly level: string;
+            readonly isDefault: boolean;
+            readonly roleName: string;
             readonly " $fragmentRefs": FragmentRefs<"DesignationUpdate_roles" | "DesignationAdd_roles">;
         }>;
     };
@@ -115,6 +118,27 @@ return {
           "selections": [
             (v1/*: any*/),
             {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "level",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "isDefault",
+              "args": null,
+              "storageKey": null
+            },
+            {
+              "kind": "ScalarField",
+              "alias": null,
+              "name": "roleName",
+              "args": null,
+              "storageKey": null
+            },
+            {
               "kind": "FragmentSpread",
               "name": "DesignationUpdate_roles",
               "args": null
@@ -131,5 +155,5 @@ return {
   ]
 };
 })();
-(node as any).hash = '5500785fbf947e8108cfa5cfee6ff83e';
+(node as any).hash = '9b44a1b6fb32e72fb94b0756588e95d3';
 export default node;

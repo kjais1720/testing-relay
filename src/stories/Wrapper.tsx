@@ -50,7 +50,6 @@ const query = graphql`
                     title
                     displayName
                     metadata
-                    slug
                     gallery {
                         default {
                             thumbImage
@@ -78,7 +77,6 @@ const query = graphql`
                                 preference {
                                     currency
                                 }
-                                slug
                             }
                         }
                     }

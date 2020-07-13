@@ -10,6 +10,7 @@ import { createFragmentContainer, graphql } from 'react-relay'
 import { DesignationMaster_designations } from '../__generated__/DesignationMaster_designations.graphql'
 import namespace from '../namespace'
 import DesignationList from './DesignationList'
+import { useConfig } from '@saastack/core'
 
 const DesignationAdd = loadable(() => import('./DesignationAdd'))
 const DesignationDelete = loadable(() => import('./DesignationDelete'))
@@ -20,10 +21,13 @@ interface Props {
     parent: string,
     designations: DesignationMaster_designations,
 }
+const filterRoles = (roles:  DesignationMaster_designations['roles']['role'], exclude: string[]) => roles.filter(r => (r && !r.isDefault) || (r.isDefault && !exclude.find(k => r.roleName.includes(k))))
 
 const DesignationMaster: React.FC<Props> = ({ designations: { designations: { designation: designations }, roles: { role: roles } }, parent }) => {
     const navigate = useNavigate()
     const variables = { parent }
+    const { companies } = useConfig()
+
 
     const header = <Trans>Designations</Trans>
     const subHeader = <Trans>Designation is a official role or title of a person in your organization</Trans>
@@ -31,6 +35,15 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
     const actions: ActionItem[] = [
         { icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans> },
     ]
+
+    if (!companies) {
+        return null
+    }
+    const allRoles = roles.filter(r => r && ['com', 'grp', 'loc', 'emp'].includes(r.level))
+
+
+    const locationCount = companies.reduce((a, b) => a + (b.locations ? b.locations!.edges!.length : 0), 0)
+    const rolesArr = companies.length > 1 ? allRoles : (locationCount > 1 ? filterRoles(allRoles, ['Group', 'Company']) : filterRoles(allRoles, ['Group', 'Company', 'Location']))
 
     React.useEffect(() => {
         PubSub.publish(namespace.fetch, designations)
@@ -43,7 +56,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
         <Layout actions={actions} header={header} subHeader={subHeader} col1={col1}>
             <Routes>
                 <Route path="add" element={<DesignationAdd roles={roles} variables={variables}/>}/>
-                <Route path=":id/update" element={<DesignationUpdate roles={roles} variables={variables} designations={designations}/>}/>
+                <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables} designations={designations}/>}/>
                 <Route path=":id/delete" element={<DesignationDelete variables={variables}/>}/>
             </Routes>
         </Layout>
@@ -65,6 +78,9 @@ export default createFragmentContainer(
                 roles(hide: true, parent: $parent) {
                     role {
                         id
+                        level
+                        isDefault
+                        roleName
                         ...DesignationUpdate_roles
                         ...DesignationAdd_roles
                     }
