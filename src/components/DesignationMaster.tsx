@@ -11,6 +11,7 @@ import { DesignationMaster_designations } from '../__generated__/DesignationMast
 import namespace from '../namespace'
 import DesignationList from './DesignationList'
 import { useConfig } from '@saastack/core'
+import { Roles, useCan } from '@saastack/core/roles'
 
 const DesignationAdd = loadable(() => import('./DesignationAdd'))
 const DesignationDelete = loadable(() => import('./DesignationDelete'))
@@ -21,13 +22,14 @@ interface Props {
     parent: string,
     designations: DesignationMaster_designations,
 }
-const filterRoles = (roles:  DesignationMaster_designations['roles']['role'], exclude: string[]) => roles.filter(r => (r && !r.isDefault) || (r.isDefault && !exclude.find(k => r.roleName.includes(k))))
+
+const filterRoles = (roles: DesignationMaster_designations['roles']['role'], exclude: string[]) => roles.filter(r => (r && !r.isDefault) || (r.isDefault && !exclude.find(k => r.roleName.includes(k))))
 
 const DesignationMaster: React.FC<Props> = ({ designations: { designations: { designation: designations }, roles: { role: roles } }, parent }) => {
     const navigate = useNavigate()
     const variables = { parent }
-    const { companies } = useConfig()
-
+    const { companies, groupId } = useConfig()
+    const can = useCan()
 
     const header = <Trans>Designations</Trans>
     const subHeader = <Trans>Designation is a official role or title of a person in your organization</Trans>
@@ -43,20 +45,27 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
 
 
     const locationCount = companies.reduce((a, b) => a + (b.locations ? b.locations!.edges!.length : 0), 0)
-    const rolesArr = companies.length > 1 ? allRoles : (locationCount > 1 ? filterRoles(allRoles, ['Group', 'Company']) : filterRoles(allRoles, ['Group', 'Company', 'Location']))
+    let rolesArr = companies.length > 1 ? allRoles : (locationCount > 1 ? filterRoles(allRoles, ['Group', 'Company']) : filterRoles(allRoles, ['Group', 'Company', 'Location']))
+
+    const canManageGroup = can([Roles.GroupsAdmin, Roles.GroupsEditor], groupId!)
+    if (!canManageGroup)
+        rolesArr = filterRoles(roles, ['Owner', 'Co-Owner'])
+
 
     React.useEffect(() => {
         PubSub.publish(namespace.fetch, designations)
     }, [designations])
 
 
-    const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> : <DesignationList designations={designations}/>
+    const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> :
+        <DesignationList designations={designations}/>
 
     return (
         <Layout actions={actions} header={header} subHeader={subHeader} col1={col1}>
             <Routes>
                 <Route path="add" element={<DesignationAdd roles={roles} variables={variables}/>}/>
-                <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables} designations={designations}/>}/>
+                <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}
+                                                                     designations={designations}/>}/>
                 <Route path=":id/delete" element={<DesignationDelete variables={variables}/>}/>
             </Routes>
         </Layout>
