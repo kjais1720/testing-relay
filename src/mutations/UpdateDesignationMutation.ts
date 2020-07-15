@@ -15,6 +15,12 @@ const mutation = graphql`
             clientMutationId
             payload {
                 id
+                name
+                description
+                roles {
+                    id
+                    roleName
+                }
             }
         }
     }

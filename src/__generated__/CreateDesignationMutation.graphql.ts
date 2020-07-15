@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 70842c059679e4451aaf993ce8800660 */
+/* @relayHash 39a47976524be816bd589b74ec64b879 */
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateDesignationInput = {
@@ -23,6 +23,12 @@ export type CreateDesignationMutationResponse = {
         readonly clientMutationId: string;
         readonly payload: {
             readonly id: string;
+            readonly name: string;
+            readonly description: string;
+            readonly roles: ReadonlyArray<{
+                readonly id: string;
+                readonly roleName: string;
+            }>;
         } | null;
     };
 };
@@ -41,6 +47,12 @@ mutation CreateDesignationMutation(
     clientMutationId
     payload {
       id
+      name
+      description
+      roles {
+        id
+        roleName
+      }
     }
   }
 }
@@ -55,7 +67,14 @@ var v0 = [
     "defaultValue": null
   }
 ],
-v1 = [
+v1 = {
+  "kind": "ScalarField",
+  "alias": null,
+  "name": "id",
+  "args": null,
+  "storageKey": null
+},
+v2 = [
   {
     "kind": "LinkedField",
     "alias": null,
@@ -87,12 +106,39 @@ v1 = [
         "concreteType": "Designation",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
           {
             "kind": "ScalarField",
             "alias": null,
-            "name": "id",
+            "name": "name",
             "args": null,
             "storageKey": null
+          },
+          {
+            "kind": "ScalarField",
+            "alias": null,
+            "name": "description",
+            "args": null,
+            "storageKey": null
+          },
+          {
+            "kind": "LinkedField",
+            "alias": null,
+            "name": "roles",
+            "storageKey": null,
+            "args": null,
+            "concreteType": "Role",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "kind": "ScalarField",
+                "alias": null,
+                "name": "roleName",
+                "args": null,
+                "storageKey": null
+              }
+            ]
           }
         ]
       }
@@ -107,22 +153,22 @@ return {
     "type": "Mutation",
     "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "operation": {
     "kind": "Operation",
     "name": "CreateDesignationMutation",
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "selections": (v2/*: any*/)
   },
   "params": {
     "operationKind": "mutation",
     "name": "CreateDesignationMutation",
     "id": null,
-    "text": "mutation CreateDesignationMutation(\n  $input: CreateDesignationInput\n) {\n  createDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n    }\n  }\n}\n",
+    "text": "mutation CreateDesignationMutation(\n  $input: CreateDesignationInput\n) {\n  createDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n      name\n      description\n      roles {\n        id\n        roleName\n      }\n    }\n  }\n}\n",
     "metadata": {}
   }
 };
 })();
-(node as any).hash = '934a9adf8c4e0a81d41df5c964b8806d';
+(node as any).hash = '0a56ea7c11c72cf3c11b20e421a3c461';
 export default node;
