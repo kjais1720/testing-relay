@@ -7,6 +7,7 @@ import useNavigate from '@saastack/router/useNavigate'
 import React from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import { DesignationList_designations } from '../__generated__/DesignationList_designations.graphql'
+import { ReadMore } from '@saastack/components'
 
 interface Props extends Omit<ListContainerProps<DesignationList_designations>, 'items'> {
     designations: DesignationList_designations,
@@ -28,11 +29,6 @@ const DesignationList: React.FC<Props> = ({ designations, ...props }) => {
             {
                 key: 'defaultRole',
                 label: <Trans>Default Role</Trans>,
-
-            },
-            {
-                key: 'description',
-                label: <Trans>Description</Trans>,
 
             },
         ],
