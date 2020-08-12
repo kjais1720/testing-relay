@@ -23,8 +23,6 @@ interface Props extends Omit<FormContainerProps, 'formId'> {
 const formId = 'designation-add-form'
 
 const DesignationAdd: React.FC<Props> = ({ roles, variables, ...props }) => {
-
-
     const environment = useRelayEnvironment()
     const showAlert = useAlert()
     const navigate = useNavigate()
@@ -64,8 +62,11 @@ const DesignationAdd: React.FC<Props> = ({ roles, variables, ...props }) => {
     }
 
     return (
-        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>New designation</Trans>} formId={formId} loading={loading} {...props}>
-            <DesignationAddFormComponent<DesignationAdd_roles> roles={roles} onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
+        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>New Designation</Trans>}
+                       formId={formId} loading={loading} {...props}>
+            <DesignationAddFormComponent<DesignationAdd_roles> roles={roles} onSubmit={handleSubmit} id={formId}
+                                                               initialValues={initialValues}
+                                                               validationSchema={DesignationAddValidations}/>
         </FormContainer>
     )
 }

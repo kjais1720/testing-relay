@@ -46,7 +46,7 @@ const DesignationDelete: React.FC<Props> = ({ variables }) => {
     }
 
     return (
-        <ConfirmContainer loading={loading} header={<Trans>Delete designation</Trans>} open={open} onClose={handleClose}
+        <ConfirmContainer loading={loading} header={<Trans>Delete Designation</Trans>} open={open} onClose={handleClose}
                           onExited={navigateBack} onAction={handleDelete}/>
     )
 }
