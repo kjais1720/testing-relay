@@ -3,7 +3,7 @@ import { ListItemText } from '@material-ui/core'
 import { ListContainer } from '@saastack/layouts/containers'
 import { ListContainerProps } from '@saastack/layouts/types'
 
-import useNavigate from '@saastack/router/useNavigate'
+import { useNavigate } from '@saastack/router'
 import React from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import { DesignationList_designations } from '../__generated__/DesignationList_designations.graphql'
