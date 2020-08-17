@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.37](https://gitlab.com/saastack/ui/designations/compare/v0.1.36...v0.1.37) (2020-08-17)
+
+
+### Bug Fixes
+
+* router path ([0b4f042](https://gitlab.com/saastack/ui/designations/commit/0b4f042077768689d81b03d6c37a45e7b0e3aee6))
+
 ### [0.1.36](https://gitlab.com/saastack/ui/designations/compare/v0.1.35...v0.1.36) (2020-08-13)
 
 
