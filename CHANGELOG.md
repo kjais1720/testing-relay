@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.38](https://gitlab.com/saastack/ui/designations/compare/v0.1.37...v0.1.38) (2020-08-18)
+
+
+### Bug Fixes
+
+* relay update ([b2d07a5](https://gitlab.com/saastack/ui/designations/commit/b2d07a5118488651e54f91e79a83727ed888266c))
+
 ### [0.1.37](https://gitlab.com/saastack/ui/designations/compare/v0.1.36...v0.1.37) (2020-08-17)
 
 
