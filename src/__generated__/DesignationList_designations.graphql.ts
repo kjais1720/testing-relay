@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -23,56 +24,57 @@ export type DesignationList_designations$key = ReadonlyArray<{
 
 const node: ReaderFragment = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "DesignationList_designations",
-  "type": "Designation",
   "metadata": {
     "plural": true
   },
-  "argumentDefinitions": [],
+  "name": "DesignationList_designations",
   "selections": [
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
-      "args": null,
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
-      "alias": null,
       "name": "description",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "roles",
-      "storageKey": null,
       "args": null,
       "concreteType": "Role",
+      "kind": "LinkedField",
+      "name": "roles",
       "plural": true,
       "selections": [
         (v0/*: any*/),
         {
-          "kind": "ScalarField",
           "alias": null,
-          "name": "roleName",
           "args": null,
+          "kind": "ScalarField",
+          "name": "roleName",
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Designation",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '32b0594e4f1962beedfe52001fcacaba';

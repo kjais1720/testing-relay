@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -19,43 +20,44 @@ export type DesignationUpdate_designations$key = ReadonlyArray<{
 
 
 const node: ReaderFragment = {
+  "argumentDefinitions": [],
   "kind": "Fragment",
-  "name": "DesignationUpdate_designations",
-  "type": "Designation",
   "metadata": {
     "plural": true
   },
-  "argumentDefinitions": [],
+  "name": "DesignationUpdate_designations",
   "selections": [
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "id",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "name",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "description",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "roleIds",
       "args": null,
+      "kind": "ScalarField",
+      "name": "roleIds",
       "storageKey": null
     }
-  ]
+  ],
+  "type": "Designation",
+  "abstractKey": null
 };
 (node as any).hash = '71d7ed4c9e5886a299ce97f7c42eece9';
 export default node;

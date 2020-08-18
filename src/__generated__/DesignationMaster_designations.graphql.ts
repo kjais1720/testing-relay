@@ -1,5 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
+// @ts-nocheck
 
 import { ReaderFragment } from "relay-runtime";
 import { FragmentRefs } from "relay-runtime";
@@ -36,66 +37,61 @@ var v0 = {
   "variableName": "parent"
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
-  "kind": "Fragment",
-  "name": "DesignationMaster_designations",
-  "type": "Query",
-  "metadata": null,
   "argumentDefinitions": [
     {
+      "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "parent",
-      "type": "String",
-      "defaultValue": null
+      "name": "parent"
     }
   ],
+  "kind": "Fragment",
+  "metadata": null,
+  "name": "DesignationMaster_designations",
   "selections": [
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "designations",
-      "storageKey": null,
       "args": [
         (v0/*: any*/)
       ],
       "concreteType": "ListDesignationResponse",
+      "kind": "LinkedField",
+      "name": "designations",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "designation",
-          "storageKey": null,
           "args": null,
           "concreteType": "Designation",
+          "kind": "LinkedField",
+          "name": "designation",
           "plural": true,
           "selections": [
             (v1/*: any*/),
             {
+              "args": null,
               "kind": "FragmentSpread",
-              "name": "DesignationList_designations",
-              "args": null
+              "name": "DesignationList_designations"
             },
             {
+              "args": null,
               "kind": "FragmentSpread",
-              "name": "DesignationUpdate_designations",
-              "args": null
+              "name": "DesignationUpdate_designations"
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     },
     {
-      "kind": "LinkedField",
       "alias": null,
-      "name": "roles",
-      "storageKey": null,
       "args": [
         {
           "kind": "Literal",
@@ -105,54 +101,59 @@ return {
         (v0/*: any*/)
       ],
       "concreteType": "ListRoleResponse",
+      "kind": "LinkedField",
+      "name": "roles",
       "plural": false,
       "selections": [
         {
-          "kind": "LinkedField",
           "alias": null,
-          "name": "role",
-          "storageKey": null,
           "args": null,
           "concreteType": "Role",
+          "kind": "LinkedField",
+          "name": "role",
           "plural": true,
           "selections": [
             (v1/*: any*/),
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "level",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
+              "args": null,
+              "kind": "ScalarField",
               "name": "isDefault",
-              "args": null,
               "storageKey": null
             },
             {
-              "kind": "ScalarField",
               "alias": null,
-              "name": "roleName",
               "args": null,
+              "kind": "ScalarField",
+              "name": "roleName",
               "storageKey": null
             },
             {
+              "args": null,
               "kind": "FragmentSpread",
-              "name": "DesignationUpdate_roles",
-              "args": null
+              "name": "DesignationUpdate_roles"
             },
             {
+              "args": null,
               "kind": "FragmentSpread",
-              "name": "DesignationAdd_roles",
-              "args": null
+              "name": "DesignationAdd_roles"
             }
-          ]
+          ],
+          "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
-  ]
+  ],
+  "type": "Query",
+  "abstractKey": null
 };
 })();
 (node as any).hash = '9b44a1b6fb32e72fb94b0756588e95d3';

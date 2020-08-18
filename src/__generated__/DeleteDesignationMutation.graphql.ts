@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 66ae077f11ef3434f4e7abf92d4e228b */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type DeleteDesignationInput = {
@@ -35,18 +35,14 @@ mutation DeleteDesignationMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "DeleteDesignationInput",
-    "defaultValue": null
+    "name": "input"
   }
 ],
 v1 = [
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "deleteDesignation",
-    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -55,40 +51,45 @@ v1 = [
       }
     ],
     "concreteType": "DeleteDesignationPayload",
+    "kind": "LinkedField",
+    "name": "deleteDesignation",
     "plural": false,
     "selections": [
       {
-        "kind": "ScalarField",
         "alias": null,
-        "name": "clientMutationId",
         "args": null,
+        "kind": "ScalarField",
+        "name": "clientMutationId",
         "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "DeleteDesignationMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v1/*: any*/)
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "DeleteDesignationMutation",
+    "selections": (v1/*: any*/),
+    "type": "Mutation",
+    "abstractKey": null
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "DeleteDesignationMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": (v1/*: any*/)
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "DeleteDesignationMutation",
+    "cacheID": "4b0fc51d73faf9b6bfa632b26998cd78",
     "id": null,
-    "text": "mutation DeleteDesignationMutation(\n  $input: DeleteDesignationInput\n) {\n  deleteDesignation(input: $input) {\n    clientMutationId\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "DeleteDesignationMutation",
+    "operationKind": "mutation",
+    "text": "mutation DeleteDesignationMutation(\n  $input: DeleteDesignationInput\n) {\n  deleteDesignation(input: $input) {\n    clientMutationId\n  }\n}\n"
   }
 };
 })();

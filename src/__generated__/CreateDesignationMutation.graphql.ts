@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash 39a47976524be816bd589b74ec64b879 */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type CreateDesignationInput = {
@@ -61,25 +61,21 @@ mutation CreateDesignationMutation(
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
+    "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "input",
-    "type": "CreateDesignationInput",
-    "defaultValue": null
+    "name": "input"
   }
 ],
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v2 = [
   {
-    "kind": "LinkedField",
     "alias": null,
-    "name": "createDesignation",
-    "storageKey": null,
     "args": [
       {
         "kind": "Variable",
@@ -88,85 +84,90 @@ v2 = [
       }
     ],
     "concreteType": "CreateDesignationPayload",
+    "kind": "LinkedField",
+    "name": "createDesignation",
     "plural": false,
     "selections": [
       {
-        "kind": "ScalarField",
         "alias": null,
-        "name": "clientMutationId",
         "args": null,
+        "kind": "ScalarField",
+        "name": "clientMutationId",
         "storageKey": null
       },
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "payload",
-        "storageKey": null,
         "args": null,
         "concreteType": "Designation",
+        "kind": "LinkedField",
+        "name": "payload",
         "plural": false,
         "selections": [
           (v1/*: any*/),
           {
-            "kind": "ScalarField",
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "name",
-            "args": null,
             "storageKey": null
           },
           {
+            "alias": null,
+            "args": null,
             "kind": "ScalarField",
-            "alias": null,
             "name": "description",
-            "args": null,
             "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "roles",
-            "storageKey": null,
             "args": null,
             "concreteType": "Role",
+            "kind": "LinkedField",
+            "name": "roles",
             "plural": true,
             "selections": [
               (v1/*: any*/),
               {
-                "kind": "ScalarField",
                 "alias": null,
-                "name": "roleName",
                 "args": null,
+                "kind": "ScalarField",
+                "name": "roleName",
                 "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "storageKey": null
   }
 ];
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "CreateDesignationMutation",
-    "type": "Mutation",
-    "metadata": null,
     "argumentDefinitions": (v0/*: any*/),
-    "selections": (v2/*: any*/)
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "CreateDesignationMutation",
+    "selections": (v2/*: any*/),
+    "type": "Mutation",
+    "abstractKey": null
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "CreateDesignationMutation",
-    "argumentDefinitions": (v0/*: any*/),
     "selections": (v2/*: any*/)
   },
   "params": {
-    "operationKind": "mutation",
-    "name": "CreateDesignationMutation",
+    "cacheID": "1fb39d7e34141f33cc743116c7070358",
     "id": null,
-    "text": "mutation CreateDesignationMutation(\n  $input: CreateDesignationInput\n) {\n  createDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n      name\n      description\n      roles {\n        id\n        roleName\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "CreateDesignationMutation",
+    "operationKind": "mutation",
+    "text": "mutation CreateDesignationMutation(\n  $input: CreateDesignationInput\n) {\n  createDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n      name\n      description\n      roles {\n        id\n        roleName\n      }\n    }\n  }\n}\n"
   }
 };
 })();

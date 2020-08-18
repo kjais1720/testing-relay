@@ -1,6 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
-/* @relayHash a563e3fe49488590cd31d7e405775a15 */
+// @ts-nocheck
 
 import { ConcreteRequest } from "relay-runtime";
 export type WrapperQueryVariables = {};
@@ -111,6 +111,7 @@ query WrapperQuery {
             id
           }
           ... on Node {
+            __isNode: __typename
             id
           }
         }
@@ -171,173 +172,189 @@ query WrapperQuery {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "id",
   "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "firstName",
   "args": null,
+  "kind": "ScalarField",
+  "name": "firstName",
   "storageKey": null
 },
 v2 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "lastName",
   "args": null,
+  "kind": "ScalarField",
+  "name": "lastName",
   "storageKey": null
 },
 v3 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "email",
   "args": null,
+  "kind": "ScalarField",
+  "name": "email",
   "storageKey": null
 },
 v4 = [
   {
-    "kind": "ScalarField",
     "alias": null,
-    "name": "thumbImage",
     "args": null,
+    "kind": "ScalarField",
+    "name": "thumbImage",
     "storageKey": null
   }
 ],
 v5 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "profileImage",
-  "storageKey": null,
   "args": null,
   "concreteType": "GalleryItem",
+  "kind": "LinkedField",
+  "name": "profileImage",
   "plural": false,
-  "selections": (v4/*: any*/)
+  "selections": (v4/*: any*/),
+  "storageKey": null
 },
 v6 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "dateFormat",
   "args": null,
+  "kind": "ScalarField",
+  "name": "dateFormat",
   "storageKey": null
 },
 v7 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "language",
   "args": null,
+  "kind": "ScalarField",
+  "name": "language",
   "storageKey": null
 },
 v8 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "timeFormat",
   "args": null,
+  "kind": "ScalarField",
+  "name": "timeFormat",
   "storageKey": null
 },
 v9 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "timezone",
   "args": null,
+  "kind": "ScalarField",
+  "name": "timezone",
   "storageKey": null
 },
 v10 = [
   (v0/*: any*/)
 ],
 v11 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "name",
-  "args": null,
-  "storageKey": null
+  "kind": "InlineFragment",
+  "selections": (v10/*: any*/),
+  "type": "Location",
+  "abstractKey": null
 },
 v12 = {
-  "kind": "LinkedField",
-  "alias": null,
-  "name": "moduleRoles",
-  "storageKey": null,
-  "args": null,
-  "concreteType": "ModuleRole",
-  "plural": true,
-  "selections": [
-    (v11/*: any*/)
-  ]
+  "kind": "InlineFragment",
+  "selections": (v10/*: any*/),
+  "type": "Company",
+  "abstractKey": null
 },
 v13 = {
-  "kind": "ScalarField",
-  "alias": null,
-  "name": "title",
-  "args": null,
-  "storageKey": null
+  "kind": "InlineFragment",
+  "selections": (v10/*: any*/),
+  "type": "Group",
+  "abstractKey": null
 },
 v14 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "displayName",
   "args": null,
+  "kind": "ScalarField",
+  "name": "name",
   "storageKey": null
 },
 v15 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "metadata",
   "args": null,
+  "concreteType": "ModuleRole",
+  "kind": "LinkedField",
+  "name": "moduleRoles",
+  "plural": true,
+  "selections": [
+    (v14/*: any*/)
+  ],
   "storageKey": null
 },
 v16 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "gallery",
-  "storageKey": null,
   "args": null,
-  "concreteType": "Gallery",
-  "plural": false,
-  "selections": [
-    {
-      "kind": "LinkedField",
-      "alias": null,
-      "name": "default",
-      "storageKey": null,
-      "args": null,
-      "concreteType": "GalleryItem",
-      "plural": false,
-      "selections": (v4/*: any*/)
-    }
-  ]
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
 },
 v17 = {
-  "kind": "LinkedField",
   "alias": null,
-  "name": "address",
-  "storageKey": null,
   "args": null,
-  "concreteType": "Address",
-  "plural": false,
-  "selections": [
-    {
-      "kind": "ScalarField",
-      "alias": null,
-      "name": "country",
-      "args": null,
-      "storageKey": null
-    }
-  ]
+  "kind": "ScalarField",
+  "name": "displayName",
+  "storageKey": null
 },
 v18 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "navMenus",
   "args": null,
+  "kind": "ScalarField",
+  "name": "metadata",
   "storageKey": null
 },
 v19 = {
-  "kind": "ScalarField",
   "alias": null,
-  "name": "aliases",
+  "args": null,
+  "concreteType": "Gallery",
+  "kind": "LinkedField",
+  "name": "gallery",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "GalleryItem",
+      "kind": "LinkedField",
+      "name": "default",
+      "plural": false,
+      "selections": (v4/*: any*/),
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v20 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "Address",
+  "kind": "LinkedField",
+  "name": "address",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "country",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v21 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "navMenus",
+  "storageKey": null
+},
+v22 = {
+  "alias": null,
   "args": [
     {
       "kind": "Literal",
@@ -345,72 +362,71 @@ v19 = {
       "value": "en-US"
     }
   ],
+  "kind": "ScalarField",
+  "name": "aliases",
   "storageKey": "aliases(locale:\"en-US\")"
 },
-v20 = {
-  "kind": "LinkedField",
+v23 = {
   "alias": null,
-  "name": "apps",
-  "storageKey": null,
   "args": null,
   "concreteType": "App",
+  "kind": "LinkedField",
+  "name": "apps",
   "plural": true,
   "selections": [
     (v0/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "appTypeId",
-      "args": null,
       "storageKey": null
     },
-    (v11/*: any*/),
+    (v14/*: any*/),
     {
-      "kind": "ScalarField",
       "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "active",
-      "args": null,
       "storageKey": null
     },
     {
-      "kind": "ScalarField",
       "alias": null,
-      "name": "serviceModules",
       "args": null,
+      "kind": "ScalarField",
+      "name": "serviceModules",
       "storageKey": null
     }
-  ]
+  ],
+  "storageKey": null
 },
-v21 = [
+v24 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 500
   }
 ],
-v22 = {
-  "kind": "ScalarField",
+v25 = {
   "alias": null,
-  "name": "currency",
   "args": null,
+  "kind": "ScalarField",
+  "name": "currency",
   "storageKey": null
 };
 return {
-  "kind": "Request",
   "fragment": {
-    "kind": "Fragment",
-    "name": "WrapperQuery",
-    "type": "Query",
-    "metadata": null,
     "argumentDefinitions": [],
+    "kind": "Fragment",
+    "metadata": null,
+    "name": "WrapperQuery",
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "viewer",
-        "storageKey": null,
         "args": null,
         "concreteType": "UserProfile",
+        "kind": "LinkedField",
+        "name": "viewer",
         "plural": false,
         "selections": [
           (v0/*: any*/),
@@ -419,187 +435,178 @@ return {
           (v3/*: any*/),
           (v5/*: any*/),
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "preferences",
-            "storageKey": null,
             "args": null,
             "concreteType": "UserPreference",
+            "kind": "LinkedField",
+            "name": "preferences",
             "plural": false,
             "selections": [
               (v6/*: any*/),
               (v7/*: any*/),
               (v8/*: any*/),
               (v9/*: any*/)
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "userRoles",
-            "storageKey": null,
             "args": null,
             "concreteType": "UserRole",
+            "kind": "LinkedField",
+            "name": "userRoles",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "role",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "UserRoleRole",
+                "kind": "LinkedField",
+                "name": "role",
                 "plural": true,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "levelDetails",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "levelDetails",
                     "plural": false,
                     "selections": [
-                      {
-                        "kind": "InlineFragment",
-                        "type": "Location",
-                        "selections": (v10/*: any*/)
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "type": "Company",
-                        "selections": (v10/*: any*/)
-                      },
-                      {
-                        "kind": "InlineFragment",
-                        "type": "Group",
-                        "selections": (v10/*: any*/)
-                      }
-                    ]
+                      (v11/*: any*/),
+                      (v12/*: any*/),
+                      (v13/*: any*/)
+                    ],
+                    "storageKey": null
                   },
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "role",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Role",
+                    "kind": "LinkedField",
+                    "name": "role",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/)
-                    ]
+                      (v15/*: any*/)
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "groups",
-            "storageKey": null,
             "args": null,
             "concreteType": "Group",
+            "kind": "LinkedField",
+            "name": "groups",
             "plural": true,
             "selections": [
               (v0/*: any*/),
-              (v11/*: any*/),
+              (v14/*: any*/),
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "companies",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Company",
+                "kind": "LinkedField",
+                "name": "companies",
                 "plural": true,
                 "selections": [
                   (v0/*: any*/),
-                  (v13/*: any*/),
-                  (v14/*: any*/),
-                  (v15/*: any*/),
                   (v16/*: any*/),
                   (v17/*: any*/),
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "companySettings",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "CompanySetting",
-                    "plural": false,
-                    "selections": [
-                      (v18/*: any*/),
-                      (v19/*: any*/)
-                    ]
-                  },
+                  (v18/*: any*/),
+                  (v19/*: any*/),
                   (v20/*: any*/),
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "locations",
-                    "storageKey": "locations(first:500)",
-                    "args": (v21/*: any*/),
+                    "args": null,
+                    "concreteType": "CompanySetting",
+                    "kind": "LinkedField",
+                    "name": "companySettings",
+                    "plural": false,
+                    "selections": [
+                      (v21/*: any*/),
+                      (v22/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v23/*: any*/),
+                  {
+                    "alias": null,
+                    "args": (v24/*: any*/),
                     "concreteType": "ListLocationResponse",
+                    "kind": "LinkedField",
+                    "name": "locations",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "edges",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "LocationNode",
+                        "kind": "LinkedField",
+                        "name": "edges",
                         "plural": true,
                         "selections": [
                           {
-                            "kind": "LinkedField",
                             "alias": null,
-                            "name": "node",
-                            "storageKey": null,
                             "args": null,
                             "concreteType": "Location",
+                            "kind": "LinkedField",
+                            "name": "node",
                             "plural": false,
                             "selections": [
                               (v0/*: any*/),
-                              (v11/*: any*/),
+                              (v14/*: any*/),
                               {
-                                "kind": "LinkedField",
                                 "alias": null,
-                                "name": "preference",
-                                "storageKey": null,
                                 "args": null,
                                 "concreteType": "LocationPreference",
+                                "kind": "LinkedField",
+                                "name": "preference",
                                 "plural": false,
                                 "selections": [
-                                  (v22/*: any*/)
-                                ]
+                                  (v25/*: any*/)
+                                ],
+                                "storageKey": null
                               }
-                            ]
+                            ],
+                            "storageKey": null
                           }
-                        ]
+                        ],
+                        "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": "locations(first:500)"
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
-    ]
+    ],
+    "type": "Query",
+    "abstractKey": null
   },
+  "kind": "Request",
   "operation": {
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "WrapperQuery",
-    "argumentDefinitions": [],
     "selections": [
       {
-        "kind": "LinkedField",
         "alias": null,
-        "name": "viewer",
-        "storageKey": null,
         "args": null,
         "concreteType": "UserProfile",
+        "kind": "LinkedField",
+        "name": "viewer",
         "plural": false,
         "selections": [
           (v0/*: any*/),
@@ -608,12 +615,11 @@ return {
           (v3/*: any*/),
           (v5/*: any*/),
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "preferences",
-            "storageKey": null,
             "args": null,
             "concreteType": "UserPreference",
+            "kind": "LinkedField",
+            "name": "preferences",
             "plural": false,
             "selections": [
               (v6/*: any*/),
@@ -621,166 +627,177 @@ return {
               (v8/*: any*/),
               (v9/*: any*/),
               (v0/*: any*/)
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "userRoles",
-            "storageKey": null,
             "args": null,
             "concreteType": "UserRole",
+            "kind": "LinkedField",
+            "name": "userRoles",
             "plural": false,
             "selections": [
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "role",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "UserRoleRole",
+                "kind": "LinkedField",
+                "name": "role",
                 "plural": true,
                 "selections": [
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "levelDetails",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "levelDetails",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "ScalarField",
                         "alias": null,
-                        "name": "__typename",
                         "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
                         "storageKey": null
                       },
-                      (v0/*: any*/)
-                    ]
+                      (v11/*: any*/),
+                      (v12/*: any*/),
+                      (v13/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": (v10/*: any*/),
+                        "type": "Node",
+                        "abstractKey": "__isNode"
+                      }
+                    ],
+                    "storageKey": null
                   },
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "role",
-                    "storageKey": null,
                     "args": null,
                     "concreteType": "Role",
+                    "kind": "LinkedField",
+                    "name": "role",
                     "plural": false,
                     "selections": [
-                      (v12/*: any*/),
+                      (v15/*: any*/),
                       (v0/*: any*/)
-                    ]
+                    ],
+                    "storageKey": null
                   }
-                ]
+                ],
+                "storageKey": null
               },
               (v0/*: any*/)
-            ]
+            ],
+            "storageKey": null
           },
           {
-            "kind": "LinkedField",
             "alias": null,
-            "name": "groups",
-            "storageKey": null,
             "args": null,
             "concreteType": "Group",
+            "kind": "LinkedField",
+            "name": "groups",
             "plural": true,
             "selections": [
               (v0/*: any*/),
-              (v11/*: any*/),
+              (v14/*: any*/),
               {
-                "kind": "LinkedField",
                 "alias": null,
-                "name": "companies",
-                "storageKey": null,
                 "args": null,
                 "concreteType": "Company",
+                "kind": "LinkedField",
+                "name": "companies",
                 "plural": true,
                 "selections": [
                   (v0/*: any*/),
-                  (v13/*: any*/),
-                  (v14/*: any*/),
-                  (v15/*: any*/),
                   (v16/*: any*/),
                   (v17/*: any*/),
-                  {
-                    "kind": "LinkedField",
-                    "alias": null,
-                    "name": "companySettings",
-                    "storageKey": null,
-                    "args": null,
-                    "concreteType": "CompanySetting",
-                    "plural": false,
-                    "selections": [
-                      (v18/*: any*/),
-                      (v19/*: any*/),
-                      (v0/*: any*/)
-                    ]
-                  },
+                  (v18/*: any*/),
+                  (v19/*: any*/),
                   (v20/*: any*/),
                   {
-                    "kind": "LinkedField",
                     "alias": null,
-                    "name": "locations",
-                    "storageKey": "locations(first:500)",
-                    "args": (v21/*: any*/),
+                    "args": null,
+                    "concreteType": "CompanySetting",
+                    "kind": "LinkedField",
+                    "name": "companySettings",
+                    "plural": false,
+                    "selections": [
+                      (v21/*: any*/),
+                      (v22/*: any*/),
+                      (v0/*: any*/)
+                    ],
+                    "storageKey": null
+                  },
+                  (v23/*: any*/),
+                  {
+                    "alias": null,
+                    "args": (v24/*: any*/),
                     "concreteType": "ListLocationResponse",
+                    "kind": "LinkedField",
+                    "name": "locations",
                     "plural": false,
                     "selections": [
                       {
-                        "kind": "LinkedField",
                         "alias": null,
-                        "name": "edges",
-                        "storageKey": null,
                         "args": null,
                         "concreteType": "LocationNode",
+                        "kind": "LinkedField",
+                        "name": "edges",
                         "plural": true,
                         "selections": [
                           {
-                            "kind": "LinkedField",
                             "alias": null,
-                            "name": "node",
-                            "storageKey": null,
                             "args": null,
                             "concreteType": "Location",
+                            "kind": "LinkedField",
+                            "name": "node",
                             "plural": false,
                             "selections": [
                               (v0/*: any*/),
-                              (v11/*: any*/),
+                              (v14/*: any*/),
                               {
-                                "kind": "LinkedField",
                                 "alias": null,
-                                "name": "preference",
-                                "storageKey": null,
                                 "args": null,
                                 "concreteType": "LocationPreference",
+                                "kind": "LinkedField",
+                                "name": "preference",
                                 "plural": false,
                                 "selections": [
-                                  (v22/*: any*/),
+                                  (v25/*: any*/),
                                   (v0/*: any*/)
-                                ]
+                                ],
+                                "storageKey": null
                               }
-                            ]
+                            ],
+                            "storageKey": null
                           }
-                        ]
+                        ],
+                        "storageKey": null
                       }
-                    ]
+                    ],
+                    "storageKey": "locations(first:500)"
                   }
-                ]
+                ],
+                "storageKey": null
               }
-            ]
+            ],
+            "storageKey": null
           }
-        ]
+        ],
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "operationKind": "query",
-    "name": "WrapperQuery",
+    "cacheID": "af328ec8fa093dc33a135c1b9cc29ee2",
     "id": null,
-    "text": "query WrapperQuery {\n  viewer {\n    id\n    firstName\n    lastName\n    email\n    profileImage {\n      thumbImage\n    }\n    preferences {\n      dateFormat\n      language\n      timeFormat\n      timezone\n      id\n    }\n    userRoles {\n      role {\n        levelDetails {\n          __typename\n          ... on Location {\n            id\n          }\n          ... on Company {\n            id\n          }\n          ... on Group {\n            id\n          }\n          ... on Node {\n            id\n          }\n        }\n        role {\n          moduleRoles {\n            name\n          }\n          id\n        }\n      }\n      id\n    }\n    groups {\n      id\n      name\n      companies {\n        id\n        title\n        displayName\n        metadata\n        gallery {\n          default {\n            thumbImage\n          }\n        }\n        address {\n          country\n        }\n        companySettings {\n          navMenus\n          aliases(locale: \"en-US\")\n          id\n        }\n        apps {\n          id\n          appTypeId\n          name\n          active\n          serviceModules\n        }\n        locations(first: 500) {\n          edges {\n            node {\n              id\n              name\n              preference {\n                currency\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n",
-    "metadata": {}
+    "metadata": {},
+    "name": "WrapperQuery",
+    "operationKind": "query",
+    "text": "query WrapperQuery {\n  viewer {\n    id\n    firstName\n    lastName\n    email\n    profileImage {\n      thumbImage\n    }\n    preferences {\n      dateFormat\n      language\n      timeFormat\n      timezone\n      id\n    }\n    userRoles {\n      role {\n        levelDetails {\n          __typename\n          ... on Location {\n            id\n          }\n          ... on Company {\n            id\n          }\n          ... on Group {\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        role {\n          moduleRoles {\n            name\n          }\n          id\n        }\n      }\n      id\n    }\n    groups {\n      id\n      name\n      companies {\n        id\n        title\n        displayName\n        metadata\n        gallery {\n          default {\n            thumbImage\n          }\n        }\n        address {\n          country\n        }\n        companySettings {\n          navMenus\n          aliases(locale: \"en-US\")\n          id\n        }\n        apps {\n          id\n          appTypeId\n          name\n          active\n          serviceModules\n        }\n        locations(first: 500) {\n          edges {\n            node {\n              id\n              name\n              preference {\n                currency\n                id\n              }\n            }\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
