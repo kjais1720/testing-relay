@@ -4,7 +4,7 @@ import { LayoutProps } from '@saastack/layouts'
 import { useQuery } from '@saastack/relay'
 import { useDidMountEffect } from '@saastack/utils'
 import React from 'react'
-import { graphql } from 'react-relay'
+import { graphql } from 'relay-runtime'
 import { DesignationPageQuery } from '../__generated__/DesignationPageQuery.graphql'
 import DesignationMaster from '../components/DesignationMaster'
 
