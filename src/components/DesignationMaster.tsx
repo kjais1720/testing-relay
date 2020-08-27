@@ -2,7 +2,7 @@ import { Trans } from '@lingui/macro'
 import loadable from '@loadable/component'
 import { AddOutlined } from '@material-ui/icons'
 import { ActionItem } from '@saastack/components'
-import { Layout } from '@saastack/layouts'
+import { Layout, LayoutProps } from '@saastack/layouts'
 import { PubSub } from '@saastack/pubsub'
 import { Route, Routes, useNavigate } from '@saastack/router'
 import React from 'react'
@@ -21,11 +21,12 @@ const DesignationUpdate = loadable(() => import('./DesignationUpdate'))
 interface Props {
     parent: string,
     designations: DesignationMaster_designations,
+    layoutProps?: LayoutProps
 }
 
 const filterRoles = (roles: DesignationMaster_designations['roles']['role'], exclude: string[]) => roles.filter(r => (r && !r.isDefault) || (r.isDefault && !exclude.find(k => r.roleName.includes(k))))
 
-const DesignationMaster: React.FC<Props> = ({ designations: { designations: { designation: designations }, roles: { role: roles } }, parent }) => {
+const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { designations: { designation: designations }, roles: { role: roles } }, parent }) => {
     const navigate = useNavigate()
     const variables = { parent }
     const { companies, groupId } = useConfig()
@@ -61,7 +62,7 @@ const DesignationMaster: React.FC<Props> = ({ designations: { designations: { de
         <DesignationList designations={designations}/>
 
     return (
-        <Layout actions={actions} header={header} subHeader={subHeader} col1={col1}>
+        <Layout boxed actions={actions} header={header} subHeader={subHeader} col1={col1} {...layoutProps}>
             <Routes>
                 <Route path="add" element={<DesignationAdd roles={rolesArr} variables={variables}/>}/>
                 <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}

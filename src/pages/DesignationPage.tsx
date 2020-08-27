@@ -1,5 +1,6 @@
 import { ErrorComponent, Loading } from '@saastack/components'
 import { useConfig } from '@saastack/core'
+import { LayoutProps } from '@saastack/layouts'
 import { useQuery } from '@saastack/relay'
 import { useDidMountEffect } from '@saastack/utils'
 import React from 'react'
@@ -15,6 +16,7 @@ const query = graphql`
 
 interface PageProps {
     parent?: string,
+    layoutProps?: LayoutProps
 }
 
 const DesignationPage: React.FC<PageProps> = props => {
