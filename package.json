@@ -48,7 +48,7 @@
     "@saastack/layouts": "^0.1.102",
     "@saastack/logger": "^0.1.17",
     "@saastack/pubsub": "^0.1.11",
-    "@saastack/relay": "^0.1.102",
+    "@saastack/relay": "^0.1.104-alpha.1",
     "@saastack/router": "^0.1.60",
     "@saastack/utils": "^2.5.19",
     "@types/loadable__component": "^5.13.0",
@@ -64,6 +64,7 @@
     "@commitlint/config-conventional": "^9.1.2",
     "@commitlint/prompt-cli": "^9.1.2",
     "@lingui/macro": "^2.9.1",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.2.0",
     "@saastack/preset-react": "^2.0.48",
     "@saastack/templates": "^0.1.71",
     "@storybook/addons": "^6.0.19",
@@ -77,6 +78,7 @@
     "@types/node": "^14.6.1",
     "@types/react": "^16.9.48",
     "@types/react-dom": "^16.9.8",
+    "@types/relay-runtime": "^10.0.3",
     "@types/yup": "^0.29.6",
     "babel-core": "^7.0.0-bridge.0",
     "babel-plugin-import": "^1.13.0",
@@ -93,7 +95,6 @@
     "relay-compiler-language-typescript": "^13.0.1",
     "relay-compiler-webpack-plugin": "8.1.0",
     "standard-version": "^9.0.0",
-    "typescript": "^4.0.2",
-    "@pmmmwh/react-refresh-webpack-plugin": "^0.2.0"
+    "typescript": "^4.0.2"
   }
 }
