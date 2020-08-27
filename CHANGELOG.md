@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.42](https://gitlab.com/saastack/ui/designations/compare/v0.1.41...v0.1.42) (2020-08-27)
+
+
+### Bug Fixes
+
+* layoutProps ([c6b37db](https://gitlab.com/saastack/ui/designations/commit/c6b37dba35bdd6556bcf6799ce85288e7c06b4f4))
+
 ### [0.1.41](https://gitlab.com/saastack/ui/designations/compare/v0.1.40...v0.1.41) (2020-08-27)
 
 
