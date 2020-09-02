@@ -39,6 +39,7 @@
     "@material-ui/core": "4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "4.0.0-alpha.56",
+    "@material-ui/pickers": "^4.0.0-alpha.12",
     "@material-ui/styles": "4.10.0",
     "@saastack/components": "^0.3.129",
     "@saastack/core": "^0.1.165",
@@ -55,7 +56,7 @@
     "@types/lodash-es": "^4.17.3",
     "clsx": "^1.1.1",
     "lodash-es": "^4.17.15",
-    "@material-ui/pickers": "^4.0.0-alpha.12"
+    "react-refresh": "^0.8.3"
   },
   "devDependencies": {
     "@babel/core": "^7.11.4",

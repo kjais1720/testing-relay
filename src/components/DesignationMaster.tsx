@@ -11,7 +11,8 @@ import { DesignationMaster_designations } from '../__generated__/DesignationMast
 import namespace from '../namespace'
 import DesignationList from './DesignationList'
 import { useConfig } from '@saastack/core'
-import { Roles, useCan } from '@saastack/core/roles'
+import { useCan } from '@saastack/core/roles'
+import Roles from '@saastack/core/roles/Roles'
 
 const DesignationAdd = loadable(() => import('./DesignationAdd'))
 const DesignationDelete = loadable(() => import('./DesignationDelete'))
@@ -32,12 +33,14 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { desig
     const { companies, groupId } = useConfig()
     const can = useCan()
 
-    const header = <Trans>Designations</Trans>
-    const subHeader = <Trans>Designation is a official role or title of a person in your organization</Trans>
+    const canManage = (id: string) => can([Roles.DesignationsAdmin, Roles.DesignationsEditor], id)
 
-    const actions: ActionItem[] = [
+    const header = <Trans>Designations</Trans>
+    const subHeader = <Trans>Designation is an official role or title of a person in your organization</Trans>
+
+    const actions: ActionItem[] = canManage(parent) ? [
         { icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans> },
-    ]
+    ] : []
 
     if (!companies) {
         return null
@@ -58,16 +61,22 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { desig
     }, [designations])
 
 
-    const col1 = !designations.length ? <DesignationEmptyState onAction={() => navigate('add')}/> :
-        <DesignationList designations={designations}/>
+    const col1 = !designations.length ?
+        <DesignationEmptyState canManage={canManage(parent)} onAction={() => navigate('add')} /> :
+        <DesignationList designations={designations}
+                         onItemClick={canManage(parent) ? (id: string) => navigate(`${window.btoa(id!)}/update`) : undefined} />
 
     return (
         <Layout boxed actions={actions} header={header} subHeader={subHeader} col1={col1} {...layoutProps}>
             <Routes>
-                <Route path="add" element={<DesignationAdd roles={rolesArr} variables={variables}/>}/>
-                <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}
-                                                                     designations={designations}/>}/>
-                <Route path=":id/delete" element={<DesignationDelete variables={variables}/>}/>
+                {
+                    canManage(parent) && <>
+                        <Route path="add" element={<DesignationAdd roles={rolesArr} variables={variables} />} />
+                        <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}
+                                                                             designations={designations} />} />
+                        <Route path=":id/delete" element={<DesignationDelete variables={variables} />} />
+                    </>
+                }
             </Routes>
         </Layout>
     )
