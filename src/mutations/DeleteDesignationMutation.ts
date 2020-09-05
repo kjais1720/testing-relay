@@ -34,7 +34,6 @@ const commit = (environment: Environment, variables: Variables, id: string, call
         variables: {
             input,
         },
-        optimisticUpdater: (store: RecordSourceSelectorProxy) => sharedUpdater(store, id, variables),
         updater: (store: RecordSourceSelectorProxy) => sharedUpdater(store, id, variables),
         onError: (error: Error) => {
             if (callbacks && callbacks.onError) {

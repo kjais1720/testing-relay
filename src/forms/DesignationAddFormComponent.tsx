@@ -16,7 +16,7 @@ const DesignationAddFormComponent = <T extends ReadonlyArray<{}> = any>({ roles,
     return (
         <Form {...props}>
             <Input large name="name" label={<Trans>Title</Trans>} grid={{ xs: 12 }}/>
-            <Toggle label={isUpdate ? <Trans>Update Description</Trans> : <Trans>Add Description</Trans>} show={show} onShow={setShow}>
+            <Toggle label={isUpdate ? <Trans>Update description</Trans> : <Trans>Add description</Trans>} show={show} onShow={setShow}>
                 <Textarea grid={{ xs: 12 }} label={<Trans>Description</Trans>} name="description"/>
             </Toggle>
             <Grid item xs={12}>
