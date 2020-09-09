@@ -33,12 +33,13 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { desig
     const { companies, groupId } = useConfig()
     const can = useCan()
 
-    const canManage = (id: string) => can([Roles.DesignationsAdmin, Roles.DesignationsEditor], id)
+    const canManageAdmin = (id: string) => can([Roles.DesignationsAdmin], id)
+    const canManageEditor = (id: string) => can([Roles.DesignationsAdmin, Roles.DesignationsEditor], id)
 
     const header = <Trans>Designations</Trans>
     const subHeader = <Trans>Designation is an official role or title of a person in your organization</Trans>
 
-    const actions: ActionItem[] = canManage(parent) ? [
+    const actions: ActionItem[] = canManageAdmin(parent) ? [
         { icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans> },
     ] : []
 
@@ -62,19 +63,24 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { desig
 
 
     const col1 = !designations.length ?
-        <DesignationEmptyState canManage={canManage(parent)} onAction={() => navigate('add')} /> :
+        <DesignationEmptyState canManage={canManageAdmin(parent)} onAction={() => navigate('add')} /> :
         <DesignationList designations={designations}
-                         onItemClick={canManage(parent) ? (id: string) => navigate(`${window.btoa(id!)}/update`) : undefined} />
+                         onItemClick={canManageEditor(parent) ? (id: string) => navigate(`${window.btoa(id!)}/update`) : undefined} />
 
     return (
         <Layout boxed actions={actions} header={header} subHeader={subHeader} col1={col1} {...layoutProps}>
             <Routes>
                 {
-                    canManage(parent) && <>
+                    canManageAdmin(parent) && <>
                         <Route path="add" element={<DesignationAdd roles={rolesArr} variables={variables} />} />
-                        <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}
-                                                                             designations={designations} />} />
                         <Route path=":id/delete" element={<DesignationDelete variables={variables} />} />
+                    </>
+                }
+                {
+                    canManageEditor(parent) && <>
+                        <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}
+                                                                             designations={designations}
+                                                                             isAdmin={canManageAdmin(parent)} />} />
                     </>
                 }
             </Routes>
