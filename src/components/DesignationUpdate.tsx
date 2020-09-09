@@ -21,7 +21,7 @@ import DesignationAddValidations from '../utils/DesignationAddValidations'
 interface Props extends Omit<FormContainerProps, 'formId'> {
     designations: DesignationUpdate_designations,
     roles: DesignationUpdate_roles
-
+    isAdmin: boolean
 }
 
 const useStyles = makeStyles({
@@ -30,12 +30,12 @@ const useStyles = makeStyles({
         position: 'absolute',
         left: 16,
         bottom: 16,
-    }
+    },
 })
 
 const formId = 'designation-update-form'
 
-const DesignationUpdate: React.FC<Props> = ({ designations, roles, ...props }) => {
+const DesignationUpdate: React.FC<Props> = ({ designations, roles, isAdmin, ...props }) => {
     const classes = useStyles()
     const environment = useRelayEnvironment()
     const showAlert = useAlert()
@@ -59,15 +59,15 @@ const DesignationUpdate: React.FC<Props> = ({ designations, roles, ...props }) =
 
     const handleSubmit = (values: DesignationInput) => {
         setLoading(true)
-      const roleIds=values.roleIds
-      let updatedRoles
-         if (roleIds){
-              updatedRoles=roles.filter((role)=>roleIds.includes(role.id))
-         }
+        const roleIds = values.roleIds
+        let updatedRoles
+        if (roleIds) {
+            updatedRoles = roles.filter((role) => roleIds.includes(role.id))
+        }
 
         const designation = {
             ...values,
-            roles:updatedRoles
+            roles: updatedRoles,
         }
 
         UpdateDesignationMutation.commit(environment, designation, ['name', 'description', 'roleIds'], {
@@ -97,11 +97,17 @@ const DesignationUpdate: React.FC<Props> = ({ designations, roles, ...props }) =
     }
 
     return (
-        <FormContainer open={open} onClose={handleClose} onExited={navigateBack} header={<Trans>Update Designation</Trans>} formId={formId} loading={loading} {...props}>
-            <DesignationUpdateFormComponent<DesignationUpdate_roles> isUpdate roles={roles!} onSubmit={handleSubmit} id={formId} initialValues={initialValues} validationSchema={DesignationAddValidations}/>
-            <Button className={classes.button} variant="text" onClick={() => navigate('../delete')}>
-                <Trans>Remove Designation</Trans>
-            </Button>
+        <FormContainer open={open} onClose={handleClose} onExited={navigateBack}
+                       header={<Trans>Update Designation</Trans>} formId={formId} loading={loading} {...props}>
+            <DesignationUpdateFormComponent<DesignationUpdate_roles> isUpdate roles={roles!} onSubmit={handleSubmit}
+                                                                     id={formId} initialValues={initialValues}
+                                                                     validationSchema={DesignationAddValidations} />
+            {
+                isAdmin &&
+                <Button className={classes.button} variant="text" onClick={() => navigate('../delete')}>
+                    <Trans>Remove Designation</Trans>
+                </Button>
+            }
         </FormContainer>
     )
 }
