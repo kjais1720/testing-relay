@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.47](https://gitlab.com/saastack/ui/designations/compare/v0.1.46...v0.1.47) (2020-09-09)
+
+
+### Bug Fixes
+
+* roles n rights ([f7866e2](https://gitlab.com/saastack/ui/designations/commit/f7866e273e0bcab540c9ef8d10fde3304f5b4e50))
+
 ### [0.1.46](https://gitlab.com/saastack/ui/designations/compare/v0.1.45...v0.1.46) (2020-09-05)
 
 
