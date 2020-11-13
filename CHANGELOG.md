@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.49](https://gitlab.com/saastack/ui/designations/compare/v0.1.48...v0.1.49) (2020-11-13)
+
+
+### Bug Fixes
+
+* roles and designations filtering ([1ee2af5](https://gitlab.com/saastack/ui/designations/commit/1ee2af51a85f6eedb496c8ddd686cadf7bea8beb))
+
 ### [0.1.48](https://gitlab.com/saastack/ui/designations/compare/v0.1.47...v0.1.48) (2020-11-13)
 
 ### [0.1.47](https://gitlab.com/saastack/ui/designations/compare/v0.1.46...v0.1.47) (2020-09-09)
