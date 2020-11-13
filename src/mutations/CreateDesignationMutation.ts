@@ -19,6 +19,9 @@ const mutation = graphql`
                 roles {
                     id
                     roleName
+                    level
+                    priority
+                    isDefault
                 }
             }
         }

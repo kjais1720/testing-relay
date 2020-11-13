@@ -12,9 +12,9 @@ interface Props extends Omit<ListContainerProps<DesignationList_designations>, '
 }
 
 const DesignationList: React.FC<Props> = ({ designations, ...props }) => {
-
     const listProps = {
-        render: (e: DesignationList_designations[0]) => <ListItemText secondary={e.roles?.map(r => r.roleName).join(', ')} primary={e.name}/>,
+        render: (e: DesignationList_designations[0]) => <ListItemText
+            secondary={e.roles?.filter(Boolean).map(r => r.roleName).join(', ')} primary={e.name}/>,
     }
     const tableProps = {
         config: [
@@ -30,12 +30,13 @@ const DesignationList: React.FC<Props> = ({ designations, ...props }) => {
             },
         ],
         render: {
-            defaultRole: (e: DesignationList_designations[0]) => e.roles?.map(r => r.roleName).join(', '),
+            defaultRole: (e: DesignationList_designations[0]) => e.roles?.filter(Boolean).map(r => r.roleName).join(', '),
         },
 
     }
 
-    return <ListContainer<DesignationList_designations> tableProps={tableProps} items={designations} listProps={listProps} {...props}/>
+    return <ListContainer<DesignationList_designations> tableProps={tableProps} items={designations}
+                                                        listProps={listProps} {...props}/>
 }
 
 export default createFragmentContainer(DesignationList, {

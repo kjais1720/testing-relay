@@ -3,14 +3,12 @@ import loadable from '@loadable/component'
 import { AddOutlined } from '@material-ui/icons'
 import { ActionItem } from '@saastack/components'
 import { Layout, LayoutProps } from '@saastack/layouts'
-import { PubSub } from '@saastack/pubsub'
 import { Route, Routes, useNavigate } from '@saastack/router'
 import React from 'react'
 import { createFragmentContainer, graphql } from 'react-relay'
 import { DesignationMaster_designations } from '../__generated__/DesignationMaster_designations.graphql'
-import namespace from '../namespace'
 import DesignationList from './DesignationList'
-import { useConfig } from '@saastack/core'
+import { Company, useConfig } from '@saastack/core'
 import { useCan } from '@saastack/core/roles'
 import Roles from '@saastack/core/roles/Roles'
 
@@ -25,9 +23,27 @@ interface Props {
     layoutProps?: LayoutProps
 }
 
-const filterRoles = (roles: DesignationMaster_designations['roles']['role'], exclude: string[]) => roles.filter(r => (r && !r.isDefault) || (r.isDefault && !exclude.find(k => r.roleName.includes(k))))
+export const defaultRolesToExclude = (companies: Company[]): string[] => {
+    if (companies.length > 1) {
+        return []
+    }
+    const locationCount = companies!.reduce((a, b) => a + (b.locations ? b.locations!.edges!.length : 0), 0)
+    if (locationCount > 1) {
+        return ['Group', 'Company']
+    }
 
-const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { designations: { designation: designations }, roles: { role: roles } }, parent }) => {
+    return ['Group', 'Company', 'Location']
+}
+
+const filterRoles = (roles: DesignationMaster_designations['roles']['role'], exclude: string[]) => roles.filter(r => (r && !r.isDefault) || (r.isDefault && !exclude.find(k => r.roleName.includes(k))))
+const filterDesignations = (designations: DesignationMaster_designations['designations']['designation'], exclude: string[]) => {
+    return designations.filter(d => {
+        const roles = d.roles.filter(Boolean)
+        return !roles.length || !roles[0].isDefault || !exclude.find(k => d.name.includes(k))
+    })
+}
+
+const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { designations: { designation }, roles: { role: roles } }, parent }) => {
     const navigate = useNavigate()
     const variables = { parent }
     const { companies, groupId } = useConfig()
@@ -43,44 +59,31 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: { desig
         { icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans> },
     ] : []
 
-    if (!companies) {
-        return null
-    }
-    const allRoles = roles.filter(r => r && ['com', 'grp', 'loc', 'emp'].includes(r.level))
-
-
-    const locationCount = companies.reduce((a, b) => a + (b.locations ? b.locations!.edges!.length : 0), 0)
-    let rolesArr = companies.length > 1 ? allRoles : (locationCount > 1 ? filterRoles(allRoles, ['Group', 'Company']) : filterRoles(allRoles, ['Group', 'Company', 'Location']))
-
     const canManageGroup = can([Roles.GroupsAdmin, Roles.GroupsEditor], groupId!)
-    if (!canManageGroup)
-        rolesArr = filterRoles(rolesArr, ['Owner', 'Co-Owner'])
-
-
-    React.useEffect(() => {
-        PubSub.publish(namespace.fetch, designations)
-    }, [designations])
-
+    const allRoles = roles.filter(Boolean).filter(r => r && ['com', 'grp', 'loc', 'emp'].includes(r.level))
+    const exclude = defaultRolesToExclude(companies!)
+    const rolesArr = canManageGroup ? filterRoles(allRoles, exclude) : filterRoles(allRoles, [...exclude, 'Owner', 'Co-Owner'])
+    const designations = filterDesignations(designation, exclude)
 
     const col1 = !designations.length ?
-        <DesignationEmptyState canManage={canManageAdmin(parent)} onAction={() => navigate('add')} /> :
+        <DesignationEmptyState canManage={canManageAdmin(parent)} onAction={() => navigate('add')}/> :
         <DesignationList designations={designations}
-                         onItemClick={canManageEditor(parent) ? (id: string) => navigate(`${window.btoa(id!)}/update`) : undefined} />
+                         onItemClick={canManageEditor(parent) ? (id: string) => navigate(`${window.btoa(id!)}/update`) : undefined}/>
 
     return (
         <Layout boxed actions={actions} header={header} subHeader={subHeader} col1={col1} {...layoutProps}>
             <Routes>
                 {
                     canManageAdmin(parent) && <>
-                        <Route path="add" element={<DesignationAdd roles={rolesArr} variables={variables} />} />
-                        <Route path=":id/delete" element={<DesignationDelete variables={variables} />} />
+                        <Route path="add" element={<DesignationAdd roles={rolesArr} variables={variables}/>}/>
+                        <Route path=":id/delete" element={<DesignationDelete variables={variables}/>}/>
                     </>
                 }
                 {
                     canManageEditor(parent) && <>
                         <Route path=":id/update" element={<DesignationUpdate roles={rolesArr} variables={variables}
                                                                              designations={designations}
-                                                                             isAdmin={canManageAdmin(parent)} />} />
+                                                                             isAdmin={canManageAdmin(parent)}/>}/>
                     </>
                 }
             </Routes>
@@ -96,6 +99,12 @@ export default createFragmentContainer(
                 designations(parent: $parent) {
                     designation {
                         id
+                        name
+                        roles {
+                            level
+                            priority
+                            isDefault
+                        }
                         ...DesignationList_designations
                         ...DesignationUpdate_designations
                     }
@@ -106,6 +115,8 @@ export default createFragmentContainer(
                         level
                         isDefault
                         roleName
+                        level
+                        priority
                         ...DesignationUpdate_roles
                         ...DesignationAdd_roles
                     }

@@ -1,6 +1,6 @@
 import { Mutable, TemplateLoader } from '@saastack/core'
 import { withEnvironment, withQuery, WithQueryProps } from '@saastack/relay'
-import { ModernTemplate } from '@saastack/templates/templates'
+import { HashRouter } from '@saastack/router'
 import { compose } from '@saastack/utils'
 import React from 'react'
 import { graphql } from 'relay-runtime'
@@ -34,8 +34,18 @@ const query = graphql`
                         ... on Group {
                             id
                         }
+                        ... on Employee {
+                            id
+                        }
                     }
+                    levelId
+                    roleId
                     role {
+                        id
+                        roleName
+                        isDefault
+                        priority
+                        level
                         moduleRoles {
                             name
                         }
@@ -91,8 +101,9 @@ interface Props extends WithQueryProps<WrapperQuery> {
 
 const Wrapper: React.FC<Props> = props => {
     return (
-        <TemplateLoader template={ModernTemplate} getLocale={() => Promise.resolve({ messages: {} })} viewer={props.query?.viewer as Mutable<WrapperQuery['response']['viewer']>}>
-            {props.children}
+        <TemplateLoader getLocale={() => Promise.resolve({ messages: {} })}
+                        viewer={props.query?.viewer as Mutable<WrapperQuery['response']['viewer']>}>
+            <HashRouter> {props.children}</HashRouter>
         </TemplateLoader>
     )
 }

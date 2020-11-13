@@ -8,6 +8,12 @@ export type DesignationMaster_designations = {
     readonly designations: {
         readonly designation: ReadonlyArray<{
             readonly id: string;
+            readonly name: string;
+            readonly roles: ReadonlyArray<{
+                readonly level: string;
+                readonly priority: number;
+                readonly isDefault: boolean;
+            }>;
             readonly " $fragmentRefs": FragmentRefs<"DesignationList_designations" | "DesignationUpdate_designations">;
         }>;
     };
@@ -17,6 +23,7 @@ export type DesignationMaster_designations = {
             readonly level: string;
             readonly isDefault: boolean;
             readonly roleName: string;
+            readonly priority: number;
             readonly " $fragmentRefs": FragmentRefs<"DesignationUpdate_roles" | "DesignationAdd_roles">;
         }>;
     };
@@ -41,6 +48,27 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "level",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "priority",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isDefault",
   "storageKey": null
 };
 return {
@@ -74,6 +102,27 @@ return {
           "plural": true,
           "selections": [
             (v1/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "name",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Role",
+              "kind": "LinkedField",
+              "name": "roles",
+              "plural": true,
+              "selections": [
+                (v2/*: any*/),
+                (v3/*: any*/),
+                (v4/*: any*/)
+              ],
+              "storageKey": null
+            },
             {
               "args": null,
               "kind": "FragmentSpread",
@@ -114,20 +163,8 @@ return {
           "plural": true,
           "selections": [
             (v1/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "level",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "isDefault",
-              "storageKey": null
-            },
+            (v2/*: any*/),
+            (v4/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -135,6 +172,7 @@ return {
               "name": "roleName",
               "storageKey": null
             },
+            (v3/*: any*/),
             {
               "args": null,
               "kind": "FragmentSpread",
@@ -156,5 +194,5 @@ return {
   "abstractKey": null
 };
 })();
-(node as any).hash = '9b44a1b6fb32e72fb94b0756588e95d3';
+(node as any).hash = '718bec9ce8fa28f5067f6f8614517f02';
 export default node;

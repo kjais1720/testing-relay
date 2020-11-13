@@ -28,6 +28,9 @@ export type CreateDesignationMutationResponse = {
             readonly roles: ReadonlyArray<{
                 readonly id: string;
                 readonly roleName: string;
+                readonly level: string;
+                readonly priority: number;
+                readonly isDefault: boolean;
             }>;
         } | null;
     };
@@ -52,6 +55,9 @@ mutation CreateDesignationMutation(
       roles {
         id
         roleName
+        level
+        priority
+        isDefault
       }
     }
   }
@@ -133,6 +139,27 @@ v2 = [
                 "kind": "ScalarField",
                 "name": "roleName",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "level",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "priority",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isDefault",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -162,14 +189,14 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "1fb39d7e34141f33cc743116c7070358",
+    "cacheID": "50723d85fe9ad010822f6c304de71858",
     "id": null,
     "metadata": {},
     "name": "CreateDesignationMutation",
     "operationKind": "mutation",
-    "text": "mutation CreateDesignationMutation(\n  $input: CreateDesignationInput\n) {\n  createDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n      name\n      description\n      roles {\n        id\n        roleName\n      }\n    }\n  }\n}\n"
+    "text": "mutation CreateDesignationMutation(\n  $input: CreateDesignationInput\n) {\n  createDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n      name\n      description\n      roles {\n        id\n        roleName\n        level\n        priority\n        isDefault\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = '0a56ea7c11c72cf3c11b20e421a3c461';
+(node as any).hash = 'fdd6cddc0ba2fbf9501ec32baac9c8a3';
 export default node;

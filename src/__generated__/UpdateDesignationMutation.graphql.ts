@@ -31,6 +31,9 @@ export type UpdateDesignationMutationResponse = {
             readonly roles: ReadonlyArray<{
                 readonly id: string;
                 readonly roleName: string;
+                readonly level: string;
+                readonly priority: number;
+                readonly isDefault: boolean;
             }>;
         } | null;
     };
@@ -55,6 +58,9 @@ mutation UpdateDesignationMutation(
       roles {
         id
         roleName
+        level
+        priority
+        isDefault
       }
     }
   }
@@ -136,6 +142,27 @@ v2 = [
                 "kind": "ScalarField",
                 "name": "roleName",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "level",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "priority",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isDefault",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -165,14 +192,14 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "73ec19c5da813e472fdc6ef987c88510",
+    "cacheID": "2b5242d0a51894cc8d895c6a162fa82e",
     "id": null,
     "metadata": {},
     "name": "UpdateDesignationMutation",
     "operationKind": "mutation",
-    "text": "mutation UpdateDesignationMutation(\n  $input: UpdateDesignationInput\n) {\n  updateDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n      name\n      description\n      roles {\n        id\n        roleName\n      }\n    }\n  }\n}\n"
+    "text": "mutation UpdateDesignationMutation(\n  $input: UpdateDesignationInput\n) {\n  updateDesignation(input: $input) {\n    clientMutationId\n    payload {\n      id\n      name\n      description\n      roles {\n        id\n        roleName\n        level\n        priority\n        isDefault\n      }\n    }\n  }\n}\n"
   }
 };
 })();
-(node as any).hash = 'f4175f1291a9cf83e59f699bcbe71c09';
+(node as any).hash = 'f33c01eb2cf07793a72df3a4295a0b31';
 export default node;

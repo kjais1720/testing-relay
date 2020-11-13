@@ -1,7 +1,6 @@
-import { MutationCallbacks, setNodeValue } from '@saastack/relay'
-import { pick } from 'lodash-es'
+import { MutationCallbacks } from '@saastack/relay'
 import { commitMutation, graphql } from 'react-relay'
-import { Disposable, Environment, RecordSourceSelectorProxy } from 'relay-runtime'
+import { Disposable, Environment } from 'relay-runtime'
 import {
     DesignationInput,
     UpdateDesignationInput,
@@ -20,6 +19,9 @@ const mutation = graphql`
                 roles {
                     id
                     roleName
+                    level
+                    priority
+                    isDefault
                 }
             }
         }
@@ -27,15 +29,6 @@ const mutation = graphql`
 `
 
 let tempID = 0
-
-const sharedUpdater = (store: RecordSourceSelectorProxy, designation: DesignationInput, updateMask: string[]) => {
-    if (designation.id) {
-        const node = store.get(designation.id)
-        if (node) {
-            setNodeValue(store as any, node, designation)
-        }
-    }
-}
 
 const commit = (environment: Environment, designation: DesignationInput, updateMask: string[], callbacks?: MutationCallbacks<DesignationInput>): Disposable => {
     const input: UpdateDesignationInput = {
@@ -48,8 +41,6 @@ const commit = (environment: Environment, designation: DesignationInput, updateM
         variables: {
             input,
         },
-        optimisticUpdater: (store: RecordSourceSelectorProxy) => sharedUpdater(store, designation, updateMask),
-        updater: (store: RecordSourceSelectorProxy) => sharedUpdater(store, designation, updateMask),
         onError: (error: Error) => {
             if (callbacks && callbacks.onError) {
                 const message = error.message.split('\n')[1]
