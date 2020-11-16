@@ -38,7 +38,7 @@ export const defaultRolesToExclude = (companies: Company[]): string[] => {
 const filterRoles = (roles: DesignationMaster_designations['roles']['role'], exclude: string[]) => roles.filter(r => (r && !r.isDefault) || (r.isDefault && !exclude.find(k => r.roleName.includes(k))))
 const filterDesignations = (designations: DesignationMaster_designations['designations']['designation'], exclude: string[]) => {
     return designations.filter(d => {
-        const roles = d.roles.filter(Boolean)
+        const roles = d.roles?.filter(Boolean) ?? []
         return !roles.length || !roles[0].isDefault || !exclude.find(k => d.name.includes(k))
     })
 }
