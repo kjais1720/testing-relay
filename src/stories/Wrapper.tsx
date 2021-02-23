@@ -1,5 +1,5 @@
 import { Mutable, TemplateLoader } from '@saastack/core'
-import { withEnvironment, withQuery, WithQueryProps } from '@saastack/relay'
+import { useQuery, withEnvironment } from '@saastack/relay'
 import { HashRouter } from '@saastack/router'
 import { compose } from '@saastack/utils'
 import React from 'react'
@@ -96,20 +96,22 @@ const query = graphql`
     }
 `
 
-interface Props extends WithQueryProps<WrapperQuery> {
-}
+interface Props {}
 
-const Wrapper: React.FC<Props> = props => {
+const Wrapper: React.FC<Props> = (props) => {
+    const { data, loading } = useQuery<WrapperQuery>(query)
+    if (loading) {
+        return <>Loading logged in user...</>
+    }
+
     return (
-        <TemplateLoader getLocale={() => Promise.resolve({ messages: {} })}
-                        viewer={props.query?.viewer as Mutable<WrapperQuery['response']['viewer']>}>
+        <TemplateLoader
+            getLocale={() => Promise.resolve({ messages: {} })}
+            viewer={data?.viewer as Mutable<WrapperQuery['response']['viewer']>}
+        >
             <HashRouter> {props.children}</HashRouter>
         </TemplateLoader>
     )
 }
 
-
-export default compose(
-    withEnvironment({ graphqlUrl: process.env.REACT_APP_GRAPHQL_URL }),
-    withQuery<WrapperQuery>({ query, Loading: () => <>Loading logged in user...</> }),
-)(Wrapper)
+export default compose(withEnvironment({ graphqlUrl: process.env.REACT_APP_GRAPHQL_URL }))(Wrapper)

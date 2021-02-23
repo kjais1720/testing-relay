@@ -17,4 +17,4 @@ yarn-error.log*
 
 .vscode
 .idea
- /src/__generated__/ 
+/src/__generated__/
