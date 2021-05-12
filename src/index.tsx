@@ -25,6 +25,7 @@ const load = () => {
         parent: 'masters',
         role: [Roles.DesignationsAdmin, Roles.DesignationsEditor, Roles.DesignationsViewer],
         level: 'com',
+        appName: 'Designations'
     })
 }
 
