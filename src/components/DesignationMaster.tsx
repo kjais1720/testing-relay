@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/macro'
+import { t,Trans } from '@lingui/macro'
 import loadable from '@loadable/component'
 import { AddOutlined } from '@material-ui/icons'
 import { ActionItem } from '@saastack/components'
@@ -11,6 +11,7 @@ import DesignationList from './DesignationList'
 import { Company, useConfig } from '@saastack/core'
 import { useCan } from '@saastack/core/roles'
 import Roles from '@saastack/core/roles/Roles'
+import { useI18n } from '@saastack/i18n'
 
 const DesignationAdd = loadable(() => import('./DesignationAdd'))
 const DesignationDelete = loadable(() => import('./DesignationDelete'))
@@ -57,6 +58,7 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: _, pare
     const variables = { parent }
     const { companies, groupId } = useConfig()
     const can = useCan()
+    const {i18n} = useI18n()
 
     const canManageAdmin = (id: string) => can([Roles.DesignationsAdmin], id)
     const canManageEditor = (id: string) =>
@@ -68,7 +70,8 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: _, pare
     )
 
     const actions: ActionItem[] = canManageAdmin(parent)
-        ? [{ icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans> }]
+        ? [{ icon: AddOutlined, onClick: () => navigate('add'), title: <Trans>Add</Trans>,
+         iconButtonProps : {'aria-label': i18n._(t`Add designation`)}}]
         : []
 
     const canManageGroup = can([Roles.GroupsAdmin, Roles.GroupsEditor], groupId!)
@@ -106,8 +109,8 @@ const DesignationMaster: React.FC<Props> = ({ layoutProps, designations: _, pare
             header={header}
             subHeader={subHeader}
             col1={col1}
-            {...layoutProps}
-        >
+            role="main"
+            {...layoutProps}        >
             <Routes>
                 {canManageAdmin(parent) && (
                     <>
