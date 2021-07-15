@@ -43,7 +43,10 @@ const sharedUpdater = (store: RecordSourceSelectorProxy, node: RecordProxy, desi
 const commit = (environment: Environment, variables: Variables, designation: DesignationInput, callbacks?: MutationCallbacks<DesignationInput>): Disposable => {
     const input: CreateDesignationInput = {
         parent: variables.parent,
-        designation,
+        designation: {
+            ...designation,
+            description: window.btoa(designation.description || '')
+        },
         clientMutationId: `${tempID++}`,
     }
 

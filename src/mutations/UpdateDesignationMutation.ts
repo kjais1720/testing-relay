@@ -33,7 +33,10 @@ let tempID = 0
 const commit = (environment: Environment, designation: DesignationInput, updateMask: string[], callbacks?: MutationCallbacks<DesignationInput>): Disposable => {
     const input: UpdateDesignationInput = {
         updateMask: { paths: updateMask },
-        designation,
+        designation: {
+            ...designation,
+            description: window.btoa(designation.description || '')
+        },
         clientMutationId: `${tempID++}`,
     }
     return commitMutation<UpdateDesignationMutation>(environment, {
