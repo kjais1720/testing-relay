@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.58](https://gitlab.com/saastack/ui/designations/compare/v0.1.57...v0.1.58) (2021-07-16)
+
 ### [0.1.57](https://gitlab.com/saastack/ui/designations/compare/v0.1.56...v0.1.57) (2021-07-03)
 
 ### [0.1.56](https://gitlab.com/saastack/ui/designations/compare/v0.1.55...v0.1.56) (2021-06-29)
