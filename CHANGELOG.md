@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.59](https://gitlab.com/saastack/ui/designations/compare/v0.1.58...v0.1.59) (2021-08-27)
+
+
+### Bug Fixes
+
+* Unicode encoder change and packages update ([b37efff](https://gitlab.com/saastack/ui/designations/commit/b37efffea0482803d788eba79d50d21abb8c50ef))
+
 ### [0.1.58](https://gitlab.com/saastack/ui/designations/compare/v0.1.57...v0.1.58) (2021-07-16)
 
 ### [0.1.57](https://gitlab.com/saastack/ui/designations/compare/v0.1.56...v0.1.57) (2021-07-03)
