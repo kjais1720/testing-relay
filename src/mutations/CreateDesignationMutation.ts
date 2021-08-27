@@ -7,6 +7,7 @@ import {
     CreateDesignationMutationResponse,
     DesignationInput,
 } from '../__generated__/CreateDesignationMutation.graphql'
+import { encodeUnicode } from '@saastack/utils'
 
 const mutation = graphql`
     mutation CreateDesignationMutation($input: CreateDesignationInput) {
@@ -45,7 +46,7 @@ const commit = (environment: Environment, variables: Variables, designation: Des
         parent: variables.parent,
         designation: {
             ...designation,
-            description: window.btoa(designation.description || '')
+            description: encodeUnicode(designation.description || '')
         },
         clientMutationId: `${tempID++}`,
     }
