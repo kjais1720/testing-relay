@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.60](https://gitlab.com/saastack/ui/designations/compare/v0.1.59...v0.1.60) (2021-09-08)
+
+
+### Features
+
+* registered in master hooks ([0c91163](https://gitlab.com/saastack/ui/designations/commit/0c91163c0a0affeff32563d1dc1bc6bed9119206))
+
 ### [0.1.59](https://gitlab.com/saastack/ui/designations/compare/v0.1.58...v0.1.59) (2021-08-27)
 
 
