@@ -44,7 +44,7 @@
         "@saastack/components": "^0.5.41",
         "@saastack/core": "^0.2.51",
         "@saastack/forms": "^0.3.46",
-        "@saastack/hooks": "^0.2.127",
+        "@saastack/hooks": "^0.2.138",
         "@saastack/i18n": "^0.1.32",
         "@saastack/layouts": "^0.1.137",
         "@saastack/logger": "^0.1.19",

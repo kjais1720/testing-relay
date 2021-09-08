@@ -27,6 +27,15 @@ const load = () => {
         level: 'com',
         appName: 'Designations'
     })
+
+    hooks.master.items.registerHook('designations', {
+        component: DesignationPage,
+        path: 'designations',
+        title: t`Designations`,
+        role: [Roles.DesignationsAdmin, Roles.DesignationsEditor, Roles.DesignationsViewer],
+        level: 'com',
+        appName: 'Designations'
+    })
 }
 
 load()
