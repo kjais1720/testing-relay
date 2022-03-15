@@ -1,5 +1,5 @@
 import { useRelayEnvironment } from 'react-relay/hooks'
-import { Trans } from '@lingui/macro'
+import { t, Trans } from '@lingui/macro'
 import { useAlert } from '@saastack/core'
 import { ConfirmContainer } from '@saastack/layouts/containers'
 import { PubSub } from '@saastack/pubsub'
@@ -8,9 +8,10 @@ import { useNavigate, useParams } from '@saastack/router'
 import DeleteDesignationMutation from '../mutations/DeleteDesignationMutation'
 import React from 'react'
 import { Variables } from 'relay-runtime'
+import { useI18n } from '@saastack/i18n'
 
 interface Props {
-    variables: Variables,
+    variables: Variables
 }
 
 const DesignationDelete: React.FC<Props> = ({ variables }) => {
@@ -20,10 +21,14 @@ const DesignationDelete: React.FC<Props> = ({ variables }) => {
     const navigate = useNavigate()
     const [open, setOpen] = React.useState(true)
     const [loading, setLoading] = React.useState(false)
+    const { i18n } = useI18n()
 
     const handleDelete = () => {
         setLoading(true)
-        DeleteDesignationMutation.commit(environment, variables, window.atob(id!), { onSuccess, onError })
+        DeleteDesignationMutation.commit(environment, variables, window.atob(id!), {
+            onSuccess,
+            onError,
+        })
     }
 
     const navigateBack = () => navigate('../../')
@@ -46,10 +51,16 @@ const DesignationDelete: React.FC<Props> = ({ variables }) => {
     }
 
     return (
-        <ConfirmContainer loading={loading} header={<Trans>Delete Designation</Trans>} open={open} onClose={handleClose}
-                          onExited={navigateBack} onAction={handleDelete}/>
+        <ConfirmContainer
+            loading={loading}
+            header={<Trans>Delete Designation</Trans>}
+            open={open}
+            onClose={handleClose}
+            onExited={navigateBack}
+            onAction={handleDelete}
+            // PaperProps={{ 'aria-label': i18n._(t`Delete Designation`) }}
+        />
     )
 }
 
 export default DesignationDelete
-
