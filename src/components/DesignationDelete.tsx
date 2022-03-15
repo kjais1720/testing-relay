@@ -58,7 +58,7 @@ const DesignationDelete: React.FC<Props> = ({ variables }) => {
             onClose={handleClose}
             onExited={navigateBack}
             onAction={handleDelete}
-            // PaperProps={{ 'aria-label': i18n._(t`Delete Designation`) }}
+            PaperProps={{ 'aria-label': i18n._(t`Delete Designation`) }}
         />
     )
 }
