@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.62](https://gitlab.com/saastack/ui/designations/compare/v0.1.61...v0.1.62) (2022-03-17)
+
+
+### Bug Fixes
+
+* accessibility issues(AXN-3574) ([18c30fc](https://gitlab.com/saastack/ui/designations/commit/18c30fcc68d27f4cecc42fecfa40f7e303638867))
+* accessibility issues(AXN-3574) ([181542d](https://gitlab.com/saastack/ui/designations/commit/181542d83062feacc013153223a0da4f3d5d824f))
+
 ### [0.1.61](https://gitlab.com/saastack/ui/designations/compare/v0.1.60...v0.1.61) (2021-10-19)
 
 ### [0.1.60](https://gitlab.com/saastack/ui/designations/compare/v0.1.59...v0.1.60) (2021-09-08)
